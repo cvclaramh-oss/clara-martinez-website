@@ -1,0 +1,135 @@
+---
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import PageHeader from '@components/PageHeader.astro'
+import {
+  Form,
+  Input,
+  Button,
+  Textarea,
+  Checkbox,
+  Fieldset,
+  Heading,
+  Link,
+  Radio,
+  Switch,
+} from 'accessible-astro-components'
+import { Icon } from 'astro-icon/components'
+import { getLangFromUrl, useTranslations } from '@utils/i18n'
+
+const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
+---
+
+<DefaultLayout title={t('contact.title')}>
+  <PageHeader title={t('contact.title')} subtitle={t('contact.subtitle')} bgType="gradient" />
+  <section class="my-16">
+    <div class="container">
+      <Heading level="h2">{t('contact.lets_talk')}</Heading>
+    </div>
+  </section>
+  <section class="container">
+    <div class="grid grid-cols-1 gap-32 md:grid-cols-2">
+      <div class="space-content">
+        <Form name="contact" action="/thank-you" method="post">
+          <Input
+            name="firstname"
+            label={t('contact.form.first_name')}
+            required
+            data-validation={t('contact.form.first_name_validation')}
+            autocomplete="given-name"
+          />
+
+          <Input name="email" label={t('contact.form.email')} type="email" required autocomplete="email" />
+
+          <Input name="phone" label={t('contact.form.phone')} type="tel" required data-validation-pattern="^[0-9]{10}$" />
+
+          <Textarea name="message" label={t('contact.form.message')} required />
+
+          <Fieldset
+            name="interests"
+            legend={t('contact.form.interests_legend')}
+            required
+            data-validation={t('contact.form.interests_validation')}
+          >
+            <Checkbox name="education" value="education" label={t('contact.form.interest_education')} />
+            <Checkbox name="gender" value="gender" label={t('contact.form.interest_gender')} />
+            <Checkbox name="sexuality" value="sexuality" label={t('contact.form.interest_sexuality')} />
+            <Checkbox name="community" value="community" label={t('contact.form.interest_community')} />
+          </Fieldset>
+
+          <Fieldset name="experience" legend={t('contact.form.experience_legend')} required>
+            <Radio name="experience" value="beginner" label={t('contact.form.experience_beginner')} />
+            <Radio name="experience" value="intermediate" label={t('contact.form.experience_intermediate')} />
+            <Radio name="experience" value="advanced" label={t('contact.form.experience_advanced')} />
+          </Fieldset>
+
+          <Fieldset name="switches" legend={t('contact.form.preferences_legend')} required>
+            <Switch name="newsletter" label={t('contact.form.newsletter')} />
+            <Switch name="updates" label={t('contact.form.updates')} />
+          </Fieldset>
+
+          <Button htmlType="submit" type="primary">{t('contact.form.send')}</Button>
+        </Form>
+      </div>
+      <div class="space-content">
+        <Heading level="h3">{t('contact.info.title')}</Heading>
+        <p class="text-lg">
+          {t('contact.info.description')}
+        </p>
+
+        <div class="gap-2xs flex items-center">
+          <Icon aria-hidden="true" name="lucide:phone" size={20} class="flex-shrink-0" />
+          <p>
+            <span class="font-bold">{t('contact.info.phone_label')}</span>
+            <Link href="tel:+12345678900">+1 (234) 567-8900</Link>
+          </p>
+        </div>
+
+        <div class="gap-2xs flex items-center">
+          <Icon aria-hidden="true" name="lucide:mail" size={20} class="flex-shrink-0" />
+          <p>
+            <span class="font-bold">{t('contact.info.email_label')}</span>
+            <Link href="mailto:hello@accessibleastro.dev">hello@accessibleastro.dev</Link>
+          </p>
+        </div>
+
+        <div class="gap-2xs flex items-center">
+          <Icon aria-hidden="true" name="lucide:map-pin" size={20} class="flex-shrink-0" />
+          <p>
+            <span class="font-bold">{t('contact.info.address_label')}</span>
+            123 Accessibility Lane, Web Standards City
+          </p>
+        </div>
+
+        <div class="gap-2xs flex items-center">
+          <Icon aria-hidden="true" name="lucide:clock" size={20} class="flex-shrink-0" />
+          <p>
+            <span class="font-bold">{t('contact.info.hours_label')}</span>
+            {t('contact.info.hours')}
+          </p>
+        </div>
+
+        <ul class="flex flex-wrap gap-2">
+          <li>
+            <Link href="/" isButton isExternal hideIcon animateOnHover animationType="boop">
+              <Icon aria-hidden="true" name="lucide:facebook" size={32} />
+              <span class="sr-only">{t('contact.info.social_facebook')}</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/" isButton isExternal hideIcon animateOnHover animationType="boop">
+              <Icon aria-hidden="true" name="lucide:twitter" size={32} />
+              <span class="sr-only">{t('contact.info.social_twitter')}</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/" isButton isExternal hideIcon animateOnHover animationType="boop">
+              <Icon aria-hidden="true" name="lucide:linkedin" size={32} />
+              <span class="sr-only">{t('contact.info.social_linkedin')}</span>
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</DefaultLayout>

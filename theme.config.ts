@@ -7,9 +7,8 @@ export default defineThemeConfig({
   id: 'clara-martinez-website',
   logo: logoImage,
   seo: {
-    title: 'Clara Martínez Hernández | Educación, género y sexualidades',
-    description:
-      'Diseño y desarrollo proyectos educativos, materiales y procesos de formación desde una perspectiva feminista, interseccional y crítica.',
+    title: 'meta.title',
+    description: 'meta.description',
     author: 'Clara Martínez Hernández',
     image: previewImage, // Can also be a string e.g. '/social-preview-image.png', //TODO
   },
@@ -24,7 +23,7 @@ export default defineThemeConfig({
     items: [
       {
         type: 'link',
-        label: 'Inici',
+        label: 'nav.home',
         href: '/',
       },
       //TODO
@@ -35,56 +34,32 @@ export default defineThemeConfig({
       },*/
       {
         type: 'link',
-        label: 'Projectes',
+        label: 'nav.projects',
         href: '/projects',
       },
       //TODO
-     /* {
-        label: 'Materials',
+      /*{
+        label: 'nav.materials',
         type: 'dropdown',
         items: [
-          {
+          /*{
             label: 'Accessibility statement',
             href: '/accessibility-statement',
           },
           {
-            label: 'Accessible components',
-            href: '/accessible-components',
-          },
-          {
-            label: 'Accessible launcher',
-            href: '/accessible-launcher',
-          },
-          {
-            label: 'Color contrast checker',
-            href: '/color-contrast-checker',
-          },
-          {
-            label: 'Markdown page',
-            href: '/markdown-page',
-          },
-          {
-            label: 'MDX page',
-            href: '/mdx-page',
-          },
-          {
-            label: '404 page',
-            href: '/404',
-          },
-          {
-            label: 'Sitemap',
+            label: 'sitemap.title',
             href: '/sitemap',
           },
         ],
       },*/
       {
         type: 'link',
-        label: 'Contact',
+        label: 'nav.contact',
         href: '/contact',
       },
       {
         type: 'link',
-        label: 'Visita el meu perfil de LinkedIn, s’obre en una pestanya nova',
+        label: 'nav.linkedin_sr',
         href: 'https://www.linkedin.com/in/clara-martinez-/',
         icon: 'lucide:linkedin',
         external: true,

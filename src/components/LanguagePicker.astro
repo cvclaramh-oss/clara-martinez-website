@@ -1,0 +1,22 @@
+---
+import { getLangFromUrl } from '@utils/i18n'
+
+const locale = getLangFromUrl(Astro.url)
+
+// ruta canónica: la actual, sin el prefijo /es
+const canonicalPath = Astro.url.pathname.startsWith('/es')
+  ? Astro.url.pathname.slice(3) || '/'
+  : Astro.url.pathname
+
+const caHref = canonicalPath
+const esHref = canonicalPath === '/' ? '/es/' : `/es${canonicalPath}`
+---
+
+<ul class="language-picker">
+  <li>
+    <a href={caHref} class={locale === 'ca' ? 'is-active' : ''}>CA</a>
+  </li>
+  <li>
+    <a href={esHref} class={locale === 'es' ? 'is-active' : ''}>ES</a>
+  </li>
+</ul>

@@ -3,19 +3,23 @@ import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
 import { Link, Notification } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
+import { getLangFromUrl, useTranslations } from '@utils/i18n'
+
+const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
 ---
 
-<DefaultLayout title="Thank You">
-  <PageHeader title="Splendid!" subtitle="The form was successfully validated." bgType="gradient" />
+<DefaultLayout title={t('thank_you.title')}>
+  <PageHeader title={t('thank_you.title')} subtitle={t('thank_you.subtitle')} bgType="gradient" />
   <section class="container my-16">
     <div class="space-content">
       <Notification type="info">
         <Icon aria-hidden="true" name="lucide:info" size={24} />
-        <p>This was a test of the form validation system, no email was sent 😉.</p>
+        <p>{t('thank_you.notice')}</p>
       </Notification>
       <Link href="/contact" isButton type="primary" animateOnHover animation="boop" pulse>
         <Icon aria-hidden="true" name="lucide:mail" size={24} />
-        Send another message
+        {t('thank_you.send_another')}
       </Link>
     </div>
   </section>

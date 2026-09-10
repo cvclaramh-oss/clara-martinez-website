@@ -2,6 +2,7 @@
 import { Avatar, Breadcrumbs, BreadcrumbsItem, Heading } from 'accessible-astro-components'
 import { Image } from 'astro:assets'
 import sanitizeHtml from 'sanitize-html'
+import { getLangFromUrl, useTranslations } from '@utils/i18n'
 
 /**
  * PageHeader Component
@@ -69,9 +70,16 @@ const {
 } = Astro.props
 
 // Helper function to format segment names
+const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
+
 const formatSegment = (segment: string): string => {
   if (customBreadcrumbLabels?.[segment]) {
     return customBreadcrumbLabels[segment]
+  }
+  const translated = t(`breadcrumb.${segment}`)
+  if (translated !== `breadcrumb.${segment}`) {
+    return translated
   }
   return segment
     .split('-')
@@ -105,7 +113,7 @@ const sanitizedSubtitle: string = subtitle
 
           return (
             <Breadcrumbs>
-              <BreadcrumbsItem href="/" label="Home" />
+              <BreadcrumbsItem href="/" label={t('footer.home')} />
               {segments.map((segment, index) => {
                 if (joinLastBreadcrumb && index === segments.length - 1) {
                   return null

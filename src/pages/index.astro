@@ -2,17 +2,13 @@
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import Hero from '@components/Hero.astro'
 import FeaturedProjects from '@components/FeaturedProjects.astro'
+import { getLangFromUrl, useTranslations } from '@utils/i18n'
+
+const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
 ---
 
-<DefaultLayout title="Accessible Astro Starter - Build Faster, More Inclusive Websites" useTitleTemplate={false}>
+<DefaultLayout title={t('meta.title')} useTitleTemplate={false}>
   <Hero />
   <FeaturedProjects />
 </DefaultLayout>
-
-<style>
-  .avatar {
-    border: 1px solid var(--border-color-subtle);
-    border-radius: var(--radius-md);
-    padding: var(--space-s);
-  }
-</style>
