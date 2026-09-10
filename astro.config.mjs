@@ -1,6 +1,5 @@
 import { defineConfig, envField } from 'astro/config'
 import { fileURLToPath } from 'url'
-import compress from 'astro-compress'
 import icon from 'astro-icon'
 import mdx from '@astrojs/mdx'
 import sitemap from '@astrojs/sitemap'
@@ -39,7 +38,7 @@ const viteConfig = {
 export default defineConfig({
   compressHTML: true,
   site: 'https://accessible-astro-starter.incluud.dev',
-  integrations: [compress(), icon(), mdx(), sitemap()],
+  integrations: [icon(), mdx(), sitemap()],
   vite: viteConfig,
   env: {
     schema: {
