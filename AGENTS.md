@@ -1,404 +1,161 @@
-# Accessible Astro Starter
+# Radical Clarity — Clara Portfolio
+
+> Este documento sustituye a las versiones previas (AGENTS.md del proyecto + AGENTS.md heredado del starter + notas sueltas del Sprint). Es la única fuente de verdad a partir de hoy.
+
+## Contexto
+
+Portfolio profesional para Clara Martínez Hernández, educadora social, formadora e investigadora en educación afectivosexual, perspectiva de género y transformación comunitaria.
+
+- **Idioma principal: catalán.** Español preparado en la estructura de rutas, sin contenido todavía (fallback automático a CAT). *(Si en algún momento se decide lo contrario, hay que actualizar este párrafo y el ADR-004 — no dejar los dos idiomas circulando en distintos documentos.)*
+- Sitio sencillo, pensado para lanzarse rápido, accesible (WCAG 2.2 AA) y con SEO cuidado.
+
+## Stack
+
+- Astro + Accessible Astro Starter (base, en `main`, sin la rama de pruebas de colores fusionada)
+- Tailwind CSS 4
+- Sanity como CMS headless
+- Cloudflare Pages para hosting
+- Web3Forms para el formulario de contacto
+- GitHub para versionado — repo del cliente, tú como colaboradora
+
+## Base legal / atribución
+
+- El starter y `accessible-astro-components` son **MIT**. No hace falta atribución visible en la web pública.
+- **Conservar el archivo `LICENSE` del starter en la raíz del repo, sin tocar.**
+- Reescribir el `README.md` del starter por uno propio del proyecto (quitar badges, demo, roadmap de incluud).
+
+## Qué se queda del starter y qué se quita
+
+**Se queda:**
+- Infraestructura de accesibilidad: skip links, landmarks, foco visible, `prefers-reduced-motion`, toggles de modo oscuro/alto contraste
+- `SiteMeta.astro` (SEO)
+- `@astrojs/sitemap`
+- Content Collections (para `project`)
+- Componentes de formulario con validación (`Form`, `Input`, `Textarea`, `Checkbox`, `Radio`, `Fieldset`)
+- Página 404 personalizada
+- ESLint + `eslint-plugin-jsx-a11y`, Prettier
+
+**Se quita (no forma parte de la estructura de páginas del proyecto):**
+- Todo el blog (`src/pages/blog/`, content collection de posts, imágenes de `public/posts/`)
+- Página showcase `/accessible-components` (era referencia de desarrollo, no producción)
+- Launcher (ya eliminado en sesión 1)
+- Página `color-contrast.astro`: decidir si se deja oculta como herramienta interna o se elimina 
+
+## Decisiones de diseño
+
+- Paleta: ver DESIGN.md
+- Tipografías: Space Grotesk (display/headlines/labels) + Hanken Grotesk (body) — sustituyen a Atkinson Hyperlegible
+- Estilo: Minimalist-Brutalist Contemporary
+  - `border-radius: 0` en todos los elementos
+  - Sin `box-shadow` ni `drop-shadow`
+  - Bordes 1px solid `#0A0A0A` (hairline)
+  - Sin gradientes decorativos, sin blur ni translucidez
+  - Ángulos rectos estrictos
+- Mantener el sistema de accesibilidad del starter (no eliminar)
+
+### border-radius — resuelto correctamente esta vez
+En la rama de pruebas se usó `* { border-radius: 0 !important }` global. **No repetir ese approach en la versión definitiva.** Antes de tocar CSS, comprobar si los componentes de `accessible-astro-components` aceptan `class`/`style` por props para pasar `border-radius: 0` de forma nativa. Si no lo aceptan, documentar la excepción como ADR (no como parche silencioso).
+
+### Tokens problemáticos (NO usar como texto)
+- `outline-variant` (#c4c7c7): ratio 1.62:1 — solo bordes decorativos
+- `outline` (#747878): ratio 4.24:1 — solo texto ≥24px
+- `#FAFAFA` sobre `#F5CCD4`: ratio 1.39:1 — nunca usar
+
+### Requisitos WCAG AA
+- Texto normal (<24px o <18.67px bold): mínimo 4.5:1
+- Texto grande (≥24px o ≥18.67px bold): mínimo 3:1
+- Combinaciones seguras verificadas en DESIGN.md
+
+## Estructura de páginas
+
+- Inicio
+- Sobre mí (fase 2)
+- Proyectos
+- Materiales *(fase 2)*
+- Formaciones *(fase 2)*
+- Talleres *(fase 2)*
+- Contacto
+
+**Fase 1 (lanzamiento):** solo Inicio, Proyectos y Contacto.
+
+## Schema de Sanity
+
+### `project`
+- `title` (string, obligatorio)
+- `slug` (slug, automático desde título)
+- `description` (text, obligatorio)
+- `image` (image, alt text obligatorio)
+- `category` (string: "Guia Didàctica", "Taller", "Investigació", etc.)
+- `year` (string, ej: "2024")
+- `tags` (array de string, opcional)
+- `externalLink` (url, opcional)
+
+### `siteSettings` (singleton)
+- `siteName` (string)
+- `shortBio` (text)
+- `profileImage` (image, alt text obligatorio)
+- `socialLinks` (array: platform + url)
+- `contactEmail` — **pendiente: pedir a Clara**
+- `phone` — **pendiente: pedir a Clara (¿se publica o no?)**
+- `address` — **pendiente: pedir a Clara (¿se publica o no?)**
+- `welcomeText` — **pendiente: pedir a Clara**
 
-A ready-to-use, SEO and accessibility-focused Astro starter template with blog and portfolio functionality.
+## i18n
 
-## Project Overview
+- Rutas: `/` para catalán (default, sin prefijo), `/es/` para español (`prefixDefaultLocale: false`)
+- Fallback automático a CAT si falta traducción en ES
+- **Sin persistencia por cookie.** Selector visible en el navbar, cada visita empieza en catalán salvo que la URL indique lo contrario. Simplifica el desarrollo y evita banner de cookies.
+- **Regla: todos los textos visibles deben traducirse** (o quedar claramente marcados como pendientes) antes de cada commit — navegación, Hero, Footer, descripciones, proyectos, componentes, botones, labels
+- Antes de cada commit: verificar que no queden textos en inglés del starter ni castellano mezclado sin querer
 
-- **Type**: Starter theme (static site / blog / portfolio)
-- **Output Mode**: Static (SSG)
-- **Homepage**: https://accessible-astro-starter.incluud.dev/
-- **Repository**: https://github.com/incluud/accessible-astro-starter
+## Imágenes
 
-Check `package.json` for current version and all dependencies.
+- Alt text descriptivo obligatorio en Sanity para cada imagen de proyecto
+- Imágenes decorativas: `alt=""`
+- Formatos recomendados: WebP o JPG, mínimo 1200px de ancho
+- Astro gestiona lazy loading automáticamente
 
-### Key Dependencies
+## Comandos
 
-- `astro` - Framework (Astro 5.x+)
-- `accessible-astro-components` - Core component library
-- `tailwindcss` - Styling (v4.x with Vite plugin)
-- `@astrojs/mdx` - MDX support
-- `@astrojs/sitemap` - XML sitemap generation
-- `astro-icon` - Icon system (using Lucide icon set)
-- ESLint with `eslint-plugin-jsx-a11y` - Accessibility linting
-- Prettier with Astro and Tailwind plugins - Code formatting
+- `npm run dev` → servidor de desarrollo local
+- `npm run build` → build de producción (**validar siempre antes de dar algo por terminado**)
+- `npm run preview` → preview del build en local
 
-## Project Purpose
+## Flujo de trabajo (git)
 
-This is the **flagship starter theme** of the Accessible Astro ecosystem:
+- Trabajo en `main` con commits pequeños y frecuentes, uno por componente o bloque funcional.
+- Excepción: cambios estructurales grandes (configuración de i18n, conexión de Sanity, cambio de paleta/tipografía global) van en rama propia (`feat/nombre-corto`) y se fusionan a `main` solo después de correr `npm run build` sin errores y revisar visualmente.
+- Mensajes de commit en formato convencional: `feat(scope): subject`, `fix(scope): subject`, `docs`, `style`, `a11y`, `chore`
+- Nunca hacer commit sin parar primero a revisar el cambio
 
-- **Target Audience**: Developers building blogs, portfolios, or content-focused websites
-- **Features**: Blog with pagination, project portfolio, contact forms, MDX support
-- **Showcase**: Demonstrates all components from `accessible-astro-components`
-- **WCAG 2.2 AA**: Fully compliant with comprehensive accessibility features
-- **Reference Implementation**: Shows best practices for using the component library
+## Mi nivel técnico
 
-## Dev Environment Setup
+- Experiencia fuerte en lógica/backend
+- Poca experiencia en CSS/Tailwind y frontend visual — explicar cambios de estilo con detalle
+- Primera vez con Astro
+- Prefiero cambios incrementales, un componente a la vez
 
-1. **Install dependencies**:
+## Documentación de proyecto
 
-   ```bash
-   npm install
-   ```
+- `docs/ADR.md` — decisiones de arquitectura (registrar cada decisión técnica importante: contexto, estado, consecuencias)
+- `docs/private/sesiones.md` — diario de sesiones (objetivo, hecho, decisiones, pendiente, notas)
 
-2. **Start dev server**:
+### Reglas de documentación
+- Actualizar `ADR.md` cuando se tome una decisión técnica nueva (formato: ADR-XXX, fecha, estado, contexto, decisión, consecuencias)
+- Actualizar `sesiones.md` al final de cada sesión
+- Numerar ADR de forma incremental
+- Mantener sesiones en orden cronológico inverso (más reciente arriba)
 
-   ```bash
-   npm run dev
-   # or
-   npm start
-   ```
+## Reglas generales
 
-   Server starts at `http://localhost:4321`
+- Siempre correr `npm run build` para validar antes de dar algo por terminado
+- Priorizar accesibilidad básica (contraste, alt text, HTML semántico)
+- Un componente a la vez, no refactors grandes de golpe
+- Cuando algo no esté claro en el diseño, preguntar antes de implementar
+- Actualizar `docs/ADR.md` y `docs/sesiones.md` al final de cada sesión
 
-3. **Build production site**:
+## Pendientes abiertos (revisar antes de avanzar más)
 
-   ```bash
-   npm run build
-   ```
-
-   Output: `./dist/`
-
-4. **Preview production build**:
-   ```bash
-   npm run preview
-   ```
-
-### Workspace Development (Symlinked Components)
-
-This project can work with locally linked `accessible-astro-components`:
-
-- The `astro.config.mjs` automatically detects symlinked packages
-- When symlinks are detected, it enables:
-  - Auto-reload on component changes
-  - Filesystem access to parent directories
-  - Symlink preservation in Vite
-
-**To link local components**:
-
-```bash
-cd ../accessible-astro-components
-npm link
-cd ../accessible-astro-starter
-npm link accessible-astro-components
-```
-
-## Code Style Guidelines
-
-### TypeScript
-
-- Strict mode enabled
-- Path aliases configured for cleaner imports:
-  - `@components` → `./src/components`
-  - `@layouts` → `./src/layouts`
-  - `@assets` → `./src/assets`
-  - `@content` → `./src/content`
-  - `@pages` → `./src/pages`
-  - `@public` → `./public`
-  - `@post-images` → `./public/posts`
-  - `@project-images` → `./public/projects`
-
-### Formatting
-
-- **Prettier** is configured with:
-  - `prettier-plugin-astro`
-  - `prettier-plugin-css-order`
-  - `prettier-plugin-tailwindcss`
-- Run format manually: `npx prettier --write .`
-
-### Linting
-
-- **ESLint** configured with:
-  - `@typescript-eslint/eslint-plugin`
-  - `eslint-plugin-astro`
-  - `eslint-plugin-jsx-a11y` (strict accessibility rules)
-- Check manually: `npx eslint .`
-
-### Styling
-
-- **Tailwind CSS v4** with Vite plugin
-- **SCSS** with custom utilities in `src/assets/scss/`
-- **Modern OKLCH** color system with automatic palette generation
-- Use logical properties (e.g., `inline-start` instead of `left`)
-- Custom properties for theming
-- **Atkinson Hyperlegible** font for improved readability
-
-## Accessibility Requirements
-
-This project follows **WCAG 2.2 AA** standards and serves as a reference implementation.
-
-### Essential Practices
-
-1. **Semantic HTML**: Use appropriate elements (`<button>`, `<nav>`, `<main>`, etc.)
-2. **Keyboard Navigation**: All interactive elements must be keyboard accessible
-3. **Focus Indicators**: Never remove focus outlines without accessible alternatives
-4. **Alt Text**: Provide meaningful alt text for images (or use `alt=""` for decorative images)
-5. **Color Contrast**: Ensure text has 4.5:1 contrast (3:1 for large text)
-6. **ARIA**: Only use ARIA when native HTML is insufficient
-7. **Heading Hierarchy**: Maintain proper h1-h6 order
-8. **Forms**: Use `<label>`, proper input types, and error messages
-9. **Motion**: Respect `prefers-reduced-motion` for all animations
-
-### Testing
-
-- Test with keyboard only (no mouse)
-- Test with screen readers (VoiceOver, NVDA, JAWS)
-- Use ESLint's jsx-a11y rules to catch common issues
-- Check color contrast ratios
-- Verify `prefers-reduced-motion` is respected
-- Test responsive design on mobile
-
-## File Structure
-
-```
-src/
-├── components/          # Custom project-specific components
-│   ├── Header.astro
-│   ├── Footer.astro
-│   ├── Navigation.astro
-│   ├── SiteMeta.astro       # SEO component
-│   ├── ColorContrast.astro  # WCAG contrast checker
-│   ├── Featured*.astro      # Content showcase components
-│   └── ... (explore for more)
-├── content/             # MDX content collections
-│   └── projects/        # Project portfolio items
-├── layouts/
-│   ├── DefaultLayout.astro    # Main layout
-│   └── MarkdownLayout.astro   # Layout for MDX content
-├── pages/               # Route pages (file-based routing)
-│   ├── index.astro      # Homepage
-│   ├── accessible-components.astro  # Component showcase
-│   ├── blog/
-│   │   ├── [...page].astro    # Blog pagination (dynamic route)
-│   │   └── [post].astro       # Individual blog posts (dynamic route)
-│   ├── contact.astro    # Contact form with validation
-│   ├── color-contrast.astro   # Interactive contrast checker
-│   ├── 404.astro        # Custom 404 page
-│   └── ... (explore for more pages)
-├── assets/
-│   ├── images/          # Project images
-│   ├── img/             # SVG assets
-│   └── scss/            # SCSS utility classes
-├── styles/
-│   └── tailwind.css     # Global Tailwind styles
-├── utils/               # Utility functions
-├── content.config.ts    # Content collections config
-└── env.d.ts             # Type definitions
-
-public/                  # Static assets (served as-is)
-├── fonts/               # Atkinson Hyperlegible web fonts
-├── posts/               # Blog post images
-├── projects/            # Project images
-└── favicon.svg
-```
-
-## Working with Components
-
-### Using Accessible Astro Components
-
-Import from the package:
-
-```astro
----
-import { Accordion, AccordionItem, Button, Card, DarkMode, Modal } from 'accessible-astro-components'
----
-```
-
-Many files throughout this project import from `accessible-astro-components`. Check the `/accessible-components` page to see all available components in action.
-
-### Creating Custom Components
-
-- Place in `src/components/`
-- Use semantic HTML
-- Add proper ARIA attributes when needed
-- Ensure keyboard accessibility
-- Follow existing patterns in the codebase
-- Import and use components from the package when possible
-
-### Component Showcase Page
-
-The `/accessible-components` page (`src/pages/accessible-components.astro`) demonstrates:
-
-- All available components from the library
-- Usage examples and code snippets
-- Accessibility features of each component
-- Interactive demos
-
-## Content Collections
-
-The project uses Astro Content Collections for structured content:
-
-- **Projects**: `src/content/projects/` (7 MDX files)
-- Schema defined in `src/content.config.ts`
-- Use frontmatter for metadata
-- Query with `getCollection()` API
-- Dynamic routes generate pages from collections
-
-### Adding Blog Posts
-
-Blog posts are in `src/pages/blog/` as Astro files:
-
-1. Create a new `.astro` file in `src/pages/blog/`
-2. Add frontmatter with `title`, `description`, `publishDate`, etc.
-3. The `[...page].astro` file handles pagination automatically
-4. Add post images to `public/posts/`
-
-### Adding Projects
-
-Projects are MDX content in `src/content/projects/`:
-
-1. Create a new `.mdx` file in `src/content/projects/`
-2. Add frontmatter following the schema in `content.config.ts`
-3. Write content in MDX format
-4. Add project images to `public/projects/`
-
-## Key Pages and Features
-
-### Homepage (`index.astro`)
-
-- Hero section with CTA
-- Featured posts
-- Featured projects
-- Component showcases
-
-### Blog (`blog/[...page].astro` and `blog/[post].astro`)
-
-- Pagination support
-- Dynamic routes for individual posts
-- Breadcrumbs navigation
-- Social sharing
-
-### Contact Page (`contact.astro`)
-
-- Form validation showcase
-- Accessible form components
-- Error handling examples
-- Success page redirect
-
-### Accessible Components (`accessible-components.astro`)
-
-- Comprehensive component showcase
-- Live interactive examples
-- Component documentation
-- Accessibility features highlighted
-
-### Color Contrast Checker (`color-contrast.astro`)
-
-- Interactive WCAG contrast checker
-- Real-time contrast ratio calculation
-- Pass/fail indicators for AA and AAA levels
-
-## Deployment
-
-This is a **static site** (SSG) that can be deployed anywhere:
-
-### Popular Options
-
-1. **Netlify**: Drop-in deployment
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-
-2. **Vercel**: Zero-config deployment
-   - Auto-detects Astro
-   - Deploys on push
-
-3. **GitHub Pages**: Free hosting
-   - Configure base path in `astro.config.mjs`
-   - Use GitHub Actions for CI/CD
-
-4. **Cloudflare Pages**: Fast global CDN
-   - Build command: `npm run build`
-   - Output directory: `dist`
-
-### Build Configuration
-
-- Site URL configured in `astro.config.mjs`: `site: 'https://accessible-astro-starter.incluud.dev'`
-- Sitemap automatically generated via `@astrojs/sitemap`
-- Compressed HTML output for performance
-
-## Commit Guidelines
-
-Follow conventional commits format:
-
-```
-type(scope): subject
-
-[optional body]
-
-[optional footer]
-```
-
-**Types**: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
-
-**Examples**:
-
-- `feat(blog): add social sharing component`
-- `fix(navigation): resolve mobile menu keyboard trap`
-- `docs(readme): update installation instructions`
-- `a11y(forms): improve error message announcements`
-- `style(homepage): update hero section layout`
-
-## PR Instructions
-
-- **Title format**: `[starter] Brief description`
-- **Check before submitting**:
-  - Run `npm run build` - no errors
-  - Check `npx eslint .` - no accessibility violations
-  - Test keyboard navigation
-  - Verify no console errors
-  - Check responsive design on mobile
-  - Test with screen reader if accessibility-related
-  - Verify `prefers-reduced-motion` respected
-- **Include in PR description**:
-  - What changed and why
-  - Any accessibility considerations
-  - Screenshots/videos for UI changes
-  - Testing steps performed
-  - Which pages are affected
-
-## Troubleshooting
-
-### Symlinked Components Not Updating
-
-1. Check if symlink is detected: Look for "Workspace detected" message on dev server start
-2. Verify symlink: `ls -la node_modules/accessible-astro-components`
-3. Try restarting dev server
-4. Clear cache: `rm -rf node_modules/.astro node_modules/.vite`
-
-### Build Failures
-
-1. Clear cache: `rm -rf node_modules/.astro node_modules/.vite`
-2. Reinstall: `rm -rf node_modules && npm install`
-3. Check Node version compatibility (Node 18+)
-4. Verify all images exist in `public/` directory
-5. Check for TypeScript errors: `npx tsc --noEmit`
-
-### Content Collections Not Working
-
-1. Verify schema in `src/content.config.ts`
-2. Check frontmatter matches schema
-3. Restart dev server
-4. Clear Astro cache: `rm -rf node_modules/.astro`
-
-### Styles Not Loading
-
-1. Check Tailwind config: `tailwind.config.js`
-2. Verify Vite plugin in `astro.config.mjs`
-3. Clear cache and rebuild
-4. Check browser console for CSS errors
-
-## Related Projects
-
-This is part of the Accessible Astro ecosystem:
-
-- **[Accessible Astro Components](https://github.com/incluud/accessible-astro-components)**: Component library (dependency)
-- **[Accessible Astro Dashboard](https://github.com/incluud/accessible-astro-dashboard)**: Dashboard theme with auth
-- **[Accessible Astro Docs](https://github.com/incluud/accessible-astro-docs)**: Documentation site
-
-## Resources
-
-- [WCAG 2.2 Guidelines](https://www.w3.org/TR/WCAG22/)
-- [Astro Documentation](https://docs.astro.build/)
-- [Tailwind CSS v4](https://tailwindcss.com/docs)
-- [ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/)
-- [MDX Documentation](https://mdxjs.com/)
-- [Project Roadmap](https://github.com/orgs/incluud/projects/4/views/1)
+- [ ] Cuentas creadas y verificadas: Sanity, Cloudflare, Web3Forms
+- [ ] Campos de `siteSettings` sin definir: email, teléfono, dirección, texto de bienvenida
+- [ ] Resolver `border-radius` sin `!important` global (ver sección de diseño)
