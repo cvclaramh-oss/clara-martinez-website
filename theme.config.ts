@@ -3,15 +3,15 @@ import previewImage from '@assets/img/social-preview-image.png'
 import logoImage from '@assets/img/logo.svg'
 
 export default defineThemeConfig({
-  name: 'Accessible Astro',
-  id: 'accessible-astro-starter',
+  name: 'Clara Martínez Hernández',
+  id: 'clara-martinez-website',
   logo: logoImage,
   seo: {
-    title: 'Accessible Astro Starter',
+    title: 'Clara Martínez Hernández | Educación, género y sexualidades',
     description:
-      'An Accessible Starter Theme for Astro including several accessibility features and tools to help you build faster.',
-    author: 'Incluud',
-    image: previewImage, // Can also be a string e.g. '/social-preview-image.png',
+      'Diseño y desarrollo proyectos educativos, materiales y procesos de formación desde una perspectiva feminista, interseccional y crítica.',
+    author: 'Clara Martínez Hernández',
+    image: previewImage, // Can also be a string e.g. '/social-preview-image.png', //TODO
   },
   colors: {
     primary: '#d648ff',
@@ -24,21 +24,23 @@ export default defineThemeConfig({
     items: [
       {
         type: 'link',
-        label: 'Home',
+        label: 'Inici',
         href: '/',
       },
+      //TODO
+    /*{
+        type: 'link',
+        label: 'Sobre Mi',
+        href: '/about-me',
+      },*/
       {
         type: 'link',
-        label: 'Blog',
-        href: '/blog',
+        label: 'Projectes',
+        href: '/projects',
       },
-      {
-        type: 'link',
-        label: 'Portfolio',
-        href: '/portfolio',
-      },
-      {
-        label: 'Features',
+      //TODO
+     /* {
+        label: 'Materials',
         type: 'dropdown',
         items: [
           {
@@ -74,7 +76,7 @@ export default defineThemeConfig({
             href: '/sitemap',
           },
         ],
-      },
+      },*/
       {
         type: 'link',
         label: 'Contact',
@@ -82,9 +84,9 @@ export default defineThemeConfig({
       },
       {
         type: 'link',
-        label: 'Go to our GitHub page, opens in new tab',
-        href: 'https://github.com/incluud/accessible-astro-starter',
-        icon: 'lucide:github',
+        label: 'Visita el meu perfil de LinkedIn, s’obre en una pestanya nova',
+        href: 'https://www.linkedin.com/in/clara-martinez-/',
+        icon: 'lucide:linkedin',
         external: true,
         excludeFromLauncher: true,
       },
@@ -92,19 +94,9 @@ export default defineThemeConfig({
   },
   socials: [
     {
-      label: 'GitHub',
-      href: 'https://github.com/incluud/',
-      icon: 'lucide:github',
-    },
-    {
-      label: 'Bluesky',
-      href: 'https://bsky.app/profile/incluud.dev',
-      icon: 'lucide:bot-message-square',
-    },
-    {
-      label: 'Open Collective',
-      href: 'https://opencollective.com/incluud',
-      icon: 'lucide:hand-heart',
-    },
+      label: 'Instagram',
+      href: '/404',
+      icon: 'lucide:instagram',
+    }
   ],
 })
