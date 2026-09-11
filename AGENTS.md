@@ -24,9 +24,7 @@ Portfolio profesional para Clara Martínez Hernández, educadora social, formado
 - **Conservar el archivo `LICENSE` del starter en la raíz del repo, sin tocar.**
 - Reescribir el `README.md` del starter por uno propio del proyecto (quitar badges, demo, roadmap de incluud).
 
-## Qué se queda del starter y qué se quita
-
-**Se queda:**
+## Qué se queda del starter 
 - Infraestructura de accesibilidad: skip links, landmarks, foco visible, `prefers-reduced-motion`, toggles de modo oscuro/alto contraste
 - `SiteMeta.astro` (SEO)
 - `@astrojs/sitemap`
@@ -34,12 +32,6 @@ Portfolio profesional para Clara Martínez Hernández, educadora social, formado
 - Componentes de formulario con validación (`Form`, `Input`, `Textarea`, `Checkbox`, `Radio`, `Fieldset`)
 - Página 404 personalizada
 - ESLint + `eslint-plugin-jsx-a11y`, Prettier
-
-**Se quita (no forma parte de la estructura de páginas del proyecto):**
-- Todo el blog (`src/pages/blog/`, content collection de posts, imágenes de `public/posts/`)
-- Página showcase `/accessible-components` (era referencia de desarrollo, no producción)
-- Launcher (ya eliminado en sesión 1)
-- Página `color-contrast.astro`: decidir si se deja oculta como herramienta interna o se elimina 
 
 ## Decisiones de diseño
 
@@ -52,6 +44,7 @@ Portfolio profesional para Clara Martínez Hernández, educadora social, formado
   - Sin gradientes decorativos, sin blur ni translucidez
   - Ángulos rectos estrictos
 - Mantener el sistema de accesibilidad del starter (no eliminar)
+-  Priorizar accesibilidad básica (contraste, alt text, HTML semántico)
 
 ### border-radius — resuelto correctamente esta vez
 En la rama de pruebas se usó `* { border-radius: 0 !important }` global. **No repetir ese approach en la versión definitiva.** Antes de tocar CSS, comprobar si los componentes de `accessible-astro-components` aceptan `class`/`style` por props para pasar `border-radius: 0` de forma nativa. Si no lo aceptan, documentar la excepción como ADR (no como parche silencioso).
@@ -128,17 +121,19 @@ En la rama de pruebas se usó `* { border-radius: 0 !important }` global. **No r
 - Mensajes de commit en formato convencional: `feat(scope): subject`, `fix(scope): subject`, `docs`, `style`, `a11y`, `chore`
 - Nunca hacer commit sin parar primero a revisar el cambio
 
-## Mi nivel técnico
+## Reglas de código
 
-- Experiencia fuerte en lógica/backend
-- Poca experiencia en CSS/Tailwind y frontend visual — explicar cambios de estilo con detalle
-- Primera vez con Astro
-- Prefiero cambios incrementales, un componente a la vez
-
-## Documentación de proyecto
-
-- `docs/ADR.md` — decisiones de arquitectura (registrar cada decisión técnica importante: contexto, estado, consecuencias)
-- `docs/private/sesiones.md` — diario de sesiones (objetivo, hecho, decisiones, pendiente, notas)
+- Naming en inglés: clases PascalCase, métodos/funciones camelCase,
+  variables/IDs descriptivos. Sin comentarios que expliquen el "qué".
+- Estructura coherente de carpetas: mismo patrón en cada módulo/entidad nueva.
+- Configuración por variables de entorno (12-Factor). Nada hardcodeado;
+  valores nuevos → documentarlos en `.env.example`.
+- DRY/KISS/YAGNI: extraer duplicados, no sobre-diseñar, no construir "por si acaso".
+- Evidencias y documentación técnica (logs, capturas, notas de troubleshooting,
+  ADRs): sin datos personales del sistema — usar `$USER`, `~/`, redacción
+  impersonal. Excepción: `docs/daily.md` — ver su regla en
+  "Documentación de decisiones".
+- Atribución de autor en imágenes
 
 ### Reglas de documentación
 - Actualizar `ADR.md` cuando se tome una decisión técnica nueva (formato: ADR-XXX, fecha, estado, contexto, decisión, consecuencias)
@@ -154,8 +149,99 @@ En la rama de pruebas se usó `* { border-radius: 0 !important }` global. **No r
 - Cuando algo no esté claro en el diseño, preguntar antes de implementar
 - Actualizar `docs/ADR.md` y `docs/sesiones.md` al final de cada sesión
 
-## Pendientes abiertos (revisar antes de avanzar más)
+## Prohibiciones
+- No usar librerías fuera del stack ni añadir dependencias sin consultar y validar.
+- No ignorar errores de API ni devolver respuestas silenciosamente vacías.
+- No silenciar errores con try-catch vacío ni hardcodear resultados para
+  simular que algo funciona.
+- **No borrar comentarios sin preguntar primero.** Los comentarios JSDoc (`@description`, `@param`, etc.) pueden usarse para accesibilidad (screen readers) o herramientas de análisis. Si un comentario parece innecesario, preguntar antes de eliminarlo.
 
-- [ ] Cuentas creadas y verificadas: Sanity, Cloudflare, Web3Forms
-- [ ] Campos de `siteSettings` sin definir: email, teléfono, dirección, texto de bienvenida
-- [ ] Resolver `border-radius` sin `!important` global (ver sección de diseño)
+## Veracidad y verificación
+
+- Nunca afirmes que algo funciona sin haberlo ejecutado. Si no has corrido el
+  test/comando, no digas "esto debería funcionar" como si fuera un hecho.
+- Antes de usar una función, endpoint o archivo, búscalo con las herramientas
+  (grep/read). No asumas su firma ni su ubicación.
+- Está PROHIBIDO modificar un test, borrar un assert o cambiar un valor
+  esperado para que pase, salvo petición explícita del usuario en ese mensaje.
+- Si un resultado no es el esperado y no encuentras la causa, dilo:
+  "no consigo que pase, la causa probable es X necesito más información / decisión del usuario" — no camufles el síntoma.
+- Al reportar una tarea terminada, incluye el output real que lo demuestra, no un resumen de lo que "debería" pasar.
+- Si no estás seguro de un dato, dilo explícitamente y no rellenes con la respuesta más plausible.
+
+## Git / GitHub
+
+Flujo por tarea (**nunca commitear ni pushear directamente en `main`**):
+
+1. Actualizar main: `git switch main && git pull`
+2. Crear rama de tarea: `git switch -c <tipo>/<nombre-corto-en-ingles>`
+   (`feat/`, `fix/`, `refactor/`, `docs/`)
+3. Trabajo + commits en la rama (respetando la regla PARAR de abajo)
+4. Subir la rama: `git push -u origin <rama>`
+5. Abrir Pull Request con `gh pr create`: título y descripción los redacta
+   el agente y comparte el URL para revisión.
+   - Descripción breve (3-6 líneas o bullets), en qué cambia y por qué —
+     no un changelog de cada paso intermedio.
+   - Sin narrar el proceso de trabajo (typos corregidos, archivos
+     descartados antes de llegar a git, retoques de formato menores).
+   - Un lector que no siguió la sesión debe entender el PR en 20 segundos.
+6. El agente monitoriza la CI del PR (`gh pr checks`) y avisa cuando está
+   verde; si falla, corregir con más commits en la misma rama
+7. Con CI verde: revisión, **Rebase and merge** desde GitHub, borrar rama remota
+8. Volver a main: `git switch main && git pull && git branch -d <rama>`
+
+- **Antes de aplicar cualquier cambio de código**: explicar brevemente qué
+  se va a hacer y por qué, en el mismo mensaje donde se aplica. Si el
+  usuario pregunta "qué está pasando" después, es señal de que la
+  explicación fue insuficiente — no repetir el mismo nivel de detalle,
+  ampliarlo.
+
+- **PARAR y esperar aprobación explícita antes de**:
+  - hacer commit (mostrar `git status` + `git diff`)
+  - cualquier cambio que afecte a arquitectura, estructura de archivos,
+    o decisiones con trade-offs (ej. mover config, cambiar de librería,
+    tocar CI)
+  - cualquier cambio que no se pueda deshacer fácilmente
+
+  Para ediciones menores dentro de una tarea ya acordada (fix de un bug
+  concreto, ajuste de una función ya discutida), no es necesario parar en
+  cada paso — basta con explicar qué se hizo y por qué al terminar.
+- **Organizar los cambios pensando en los commits desde el inicio de cada
+  tarea**: definir las unidades de cambio antes de tocar código, agrupar los
+  ficheros por commit coherente y anunciárselo al usuario al presentar el plan.
+- `main` está protegida en GitHub (PR obligatorio): si un push directo es
+  rechazado, es el comportamiento esperado.
+- Conventional Commits en inglés: `feat:`, `fix:`, `docs:`, `refactor:`,
+  `test:`, `chore:`. Un commit = un cambio completo y coherente.
+- Si un PR necesita resolver conflictos para el *Rebase and merge*: rebase
+  local sobre `main` actualizada resolviendo DENTRO del commit afectado,
+  `git fetch` y `push --force-with-lease`. El resolvedor web de GitHub no
+  repara commits intermedios.
+- CI en `.github/workflows/ci.yml`: backend (`./mvnw verify`) y frontend
+  (lint + build) en cada push a `main` y PR.
+
+## Estilo de trabajo
+- Cuando el usuario pregunte si algo es posible o cómo funciona, **explica primero** sin ejecutar nada.
+- Solo ejecuta acciones cuando el usuario lo pida explícitamente.
+- Si necesitas investigar (leer archivos, buscar en el código), hazlo pero explica lo que encuentras antes de actuar.
+-  **Si una tarea toca más archivos de los informados, parar y avisar antes de continuar.** Ejemplo: si se informa "voy a actualizar Footer.astro" y eso implica también tocar Layout, Navigation, pages, etc., informar antes de modificar los archivos adicionales.
+
+## Documentación de decisiones
+
+- **ADRs** en `docs/adr/NNNN-titulo-corto.md` (formato: Fecha, Estado,
+  Contexto, Decisión, Alternativas). Índice en `docs/adr/README.md`.
+  Solo para decisiones que cambian el diseño del proyecto; ante la duda, preguntar.
+  Si un ADR sustituye otro: actualizar el Estado del antiguo, nunca borrarlo.
+- **Diario** en `docs/private/daily.md`: asiento al cierre de cada sesión. Lo redacta
+  el agente, pero es diario de portfolio, no un PR.
+  - Estructura por días: un bloque `## AAAA-MM-DD` por jornada con secciones
+    temáticas (qué se hizo, decisiones, verificación, conocimiento
+    generado); sin marcas de sesión tipo mañana/tarde/noche.
+  - Aquí SÍ vale narrar el proceso: qué problema apareció, por qué se tomó
+    una decisión y no otra, qué se probó y no funcionó.
+  - Puede incluir nombre propio y voz personal — no aplica la regla de
+    datos personales de las evidencias técnicas.
+  - Resume el «qué fue» en una línea y enlaza al PR/issue en vez de repetirlo.
+  - Objetivo: que quien lo lea entienda el criterio detrás de las decisiones,
+    no solo el resultado.
+
