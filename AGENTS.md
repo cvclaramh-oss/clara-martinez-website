@@ -131,13 +131,13 @@ En la rama de pruebas se usó `* { border-radius: 0 !important }` global. **No r
 - DRY/KISS/YAGNI: extraer duplicados, no sobre-diseñar, no construir "por si acaso".
 - Evidencias y documentación técnica (logs, capturas, notas de troubleshooting,
   ADRs): sin datos personales del sistema — usar `$USER`, `~/`, redacción
-  impersonal. Excepción: `docs/daily.md` — ver su regla en
+  impersonal. Excepción: `docs/private/daily.md` — ver su regla en
   "Documentación de decisiones".
 - Atribución de autor en imágenes
 
 ### Reglas de documentación
-- Actualizar `ADR.md` cuando se tome una decisión técnica nueva (formato: ADR-XXX, fecha, estado, contexto, decisión, consecuencias)
-- Actualizar `sesiones.md` al final de cada sesión
+- Actualizar `docs/adr/` cuando se tome una decisión técnica nueva (formato: ADR-XXX, fecha, estado, contexto, decisión, consecuencias)
+- Actualizar `docs/private/daily.md` al final de cada sesión
 - Numerar ADR de forma incremental
 - Mantener sesiones en orden cronológico inverso (más reciente arriba)
 
@@ -147,7 +147,6 @@ En la rama de pruebas se usó `* { border-radius: 0 !important }` global. **No r
 - Priorizar accesibilidad básica (contraste, alt text, HTML semántico)
 - Un componente a la vez, no refactors grandes de golpe
 - Cuando algo no esté claro en el diseño, preguntar antes de implementar
-- Actualizar `docs/ADR.md` y `docs/sesiones.md` al final de cada sesión
 
 ## Prohibiciones
 - No usar librerías fuera del stack ni añadir dependencias sin consultar y validar.
@@ -158,14 +157,14 @@ En la rama de pruebas se usó `* { border-radius: 0 !important }` global. **No r
 
 ## Veracidad y verificación
 
-- Nunca afirmes que algo funciona sin haberlo ejecutado. Si no has corrido el
-  test/comando, no digas "esto debería funcionar" como si fuera un hecho.
+- Nunca afirmes que algo funciona sin haberlo ejecutado. No digas "esto debería funcionar" como si fuera un hecho.
 - Antes de usar una función, endpoint o archivo, búscalo con las herramientas
   (grep/read). No asumas su firma ni su ubicación.
+-  Si no entiendes lo que pido pregntame cualquier duda que tengas, NUNCA intentes adivinar lo que he querido decir pregunta para confirmar.
 - Está PROHIBIDO modificar un test, borrar un assert o cambiar un valor
   esperado para que pase, salvo petición explícita del usuario en ese mensaje.
 - Si un resultado no es el esperado y no encuentras la causa, dilo:
-  "no consigo que pase, la causa probable es X necesito más información / decisión del usuario" — no camufles el síntoma.
+  "no consigo que pase, la causa probable es X necesito más información / decisión del usuario" — no camufles el síntoma. Si no encuentras la causa después de intentarlo para e informa de lo que ocurre.
 - Al reportar una tarea terminada, incluye el output real que lo demuestra, no un resumen de lo que "debería" pasar.
 - Si no estás seguro de un dato, dilo explícitamente y no rellenes con la respuesta más plausible.
 
@@ -212,7 +211,7 @@ Flujo por tarea (**nunca commitear ni pushear directamente en `main`**):
 - `main` está protegida en GitHub (PR obligatorio): si un push directo es
   rechazado, es el comportamiento esperado.
 - Conventional Commits en inglés: `feat:`, `fix:`, `docs:`, `refactor:`,
-  `test:`, `chore:`. Un commit = un cambio completo y coherente.
+  `test:`, `chore:`. Un commit = un cambio completo y coherente. Salvo si el usuario indica otra cosa.
 - Si un PR necesita resolver conflictos para el *Rebase and merge*: rebase
   local sobre `main` actualizada resolviendo DENTRO del commit afectado,
   `git fetch` y `push --force-with-lease`. El resolvedor web de GitHub no

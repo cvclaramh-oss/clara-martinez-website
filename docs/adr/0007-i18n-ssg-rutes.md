@@ -1,7 +1,8 @@
 # 0007 — i18n SSG: Estrategia de rutas
 
 - **Fecha:** 2026-09-10
-- **Estado:** Implementado (temporal)
+- **Estado:** Implementado (2026-09-11)
+- **Estado previo:** Implementado (temporal)
 
 ## Contexto
 
@@ -17,28 +18,9 @@ Duplicar temporalmente las páginas principales en `src/pages/es/` (index.astro,
 - **No escala:** Con muchas páginas, mantener dos copias es insostenible.
 - **Rutas sin traducir:** `/es/projects` en vez de `/es/proyectos` (el nombre del directori es en inglés).
 
-## Pla futur
+## Implementación completada (2026-09-11)
 
-Migrar a `[...slug].astro` + `getStaticPaths` per generar les rutes ES dinàmicament. Cada pàgina exportaria les seves rutes en els dos idiomes sense duplicar fitxers.
-
-### Com funcionaria
-
-```astro
----
-export function getStaticPaths() {
-  return [
-    { params: { locale: undefined } }, // CA: /projects
-    { params: { locale: 'es' } },      // ES: /es/projects
-  ]
-}
-
-const locale = Astro.params.locale || getLangFromUrl(Astro.url)
----
-```
-
-### Pendente
-
-Investigar per què l'intent anterior de getStaticPaths no va generar les rutes ES. Possible causa: configuració d'i18n a astro.config.mjs o estructura de params.
+El "Pla futur" quedó implementado: se migró a `src/pages/[...slug].astro` + `getStaticPaths` para generar todas las rutas en ambos idiomas desde `routes.ts`. El router unificado gestiona también las rutas dinámicas de proyectos (`/projectes/...` en CA y `/es/proyectos/...` en ES), eliminando la duplicación de páginas y el conflicto con `src/pages/es/projects/`. La duplicación temporal descrita en este ADR ya no existe; el plan inicial y el problema de `getStaticPaths` que aquí se documentaban quedaron superados.
 
 ## Alternatives
 
