@@ -2,7 +2,7 @@
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import { Heading, Link } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
-import { getLangFromUrl, useTranslations } from '@utils/i18n'
+import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 
 const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
@@ -17,7 +17,7 @@ const t = useTranslations(locale)
   <section class="my-12">
     <div class="space-content container">
       <p class="text-2xl">{t('page_404.message')}</p>
-      <Link href="/" isButton type="primary" animateOnHover animationType="nudge">
+      <Link href={getHref('/', false, locale)} isButton type="primary" animateOnHover animationType="nudge">
         {t('page_404.back_home')}
         <Icon aria-hidden="true" name="lucide:home" size="1.5rem" />
       </Link>

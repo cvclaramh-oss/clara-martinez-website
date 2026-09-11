@@ -2,7 +2,7 @@
 import { Card, Heading, Link } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
 import { getCollection } from 'astro:content'
-import { getLangFromUrl, useTranslations } from '@utils/i18n'
+import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 
 // Import images directly for optimization
 import projectImage1 from '@assets/images/projects/project-image-1.png'
@@ -65,7 +65,7 @@ const featuredProjects = projects.slice(0, limit).map((project, index) => ({
       }
     </div>
     <div class="mt-12">
-      <Link href="/projects" isButton animateOnHover animationType="nudge">
+      <Link href={getHref('/projects', false, locale)} isButton animateOnHover animationType="nudge">
         {t('featured_projects.view_all')}
         <Icon aria-hidden="true" name="lucide:arrow-right" size="1.5rem" />
       </Link>

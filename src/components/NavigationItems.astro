@@ -3,7 +3,7 @@ import themeConfig from '@theme-config'
 import { Link, DarkMode } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
 import LanguagePicker from './LanguagePicker.astro'
-import { getLangFromUrl, useTranslations } from '@utils/i18n'
+import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 
 /**
  * Navigation Items Component
@@ -27,7 +27,7 @@ const t = useTranslations(locale)
             <Icon aria-hidden="true" name="lucide:chevron-down" size="32" />
           </button>
         ) : !item.type || item.type === 'link' ? (
-          <Link href={item.href} isExternal={item.external ?? false} hideIcon={!!item.icon}>
+          <Link href={getHref(item.href, item.external ?? false, locale)} isExternal={item.external ?? false} hideIcon={!!item.icon}>
             {item.icon ? (
               <>
                 <Icon aria-hidden="true" name={item.icon} size="32" />
@@ -42,7 +42,7 @@ const t = useTranslations(locale)
           <ul class="dropdown-menu">
             {item.items.map((subItem) => (
               <li class="submenu-item">
-                <Link href={subItem.href} isExternal={subItem.external ?? false}>
+                <Link href={getHref(subItem.href, subItem.external ?? false, locale)} isExternal={subItem.external ?? false}>
                   {t(subItem.label)}
                 </Link>
               </li>

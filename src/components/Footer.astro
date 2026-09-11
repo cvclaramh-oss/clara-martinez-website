@@ -2,7 +2,7 @@
 import CallToAction from './CallToAction.astro'
 import Logo from './Logo.astro'
 import { Heading, Link } from 'accessible-astro-components'
-import { getLangFromUrl, useTranslations } from '@utils/i18n'
+import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 
 /**
  * Footer Component
@@ -23,16 +23,15 @@ const currentYear = new Date().getFullYear()
       <div class="flex flex-col gap-4">
         <Heading level="h3" size="h6">{t('footer.navigation')}</Heading>
         <ul class="flex flex-col gap-2">
-          <li><Link href="/">{t('footer.home')}</Link></li>
-          <li><Link href="/projects">{t('footer.projects')}</Link></li>
-          <li><Link href="/contact">{t('footer.contact')}</Link></li>
+          <li><Link href={getHref('/', false, locale)}>{t('footer.home')}</Link></li>
+          <li><Link href={getHref('/projects', false, locale)}>{t('footer.projects')}</Link></li>
+          <li><Link href={getHref('/contact', false, locale)}>{t('footer.contact')}</Link></li>
         </ul>
       </div>
       <div class="flex flex-col gap-4">
         <Heading level="h3" size="h6">{t('footer.accessibility')}</Heading>
         <ul class="flex flex-col gap-2">
-          <li><Link href="/accessibility-statement">{t('footer.accessibility_statement')}</Link></li>
-          <li><Link href="/sitemap">{t('footer.sitemap')}</Link></li>
+          <li><Link href={getHref('/sitemap', false, locale)}>{t('footer.sitemap')}</Link></li>
         </ul>
       </div>
       <div class="flex flex-col gap-4">

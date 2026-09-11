@@ -1,5 +1,4 @@
 ---
-import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
 import { Heading, Notification } from 'accessible-astro-components'
 import { getCollection } from 'astro:content'
@@ -39,10 +38,6 @@ const staticPages = [
 ]
 ---
 
-<DefaultLayout
-  title={t('sitemap.title')}
-  description={t('sitemap.subtitle')}
->
   <PageHeader
     title={t('sitemap.title')}
     subtitle={t('sitemap.subtitle')}
@@ -111,7 +106,6 @@ const staticPages = [
       </Notification>
     </div>
   </section>
-</DefaultLayout>
 
 <style>
   article {

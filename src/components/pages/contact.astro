@@ -1,5 +1,4 @@
 ---
-import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
 import {
   Form,
@@ -20,7 +19,6 @@ const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 ---
 
-<DefaultLayout title={t('contact.title')}>
   <PageHeader title={t('contact.title')} subtitle={t('contact.subtitle')} bgType="gradient" />
   <section class="my-16">
     <div class="container">
@@ -132,4 +130,3 @@ const t = useTranslations(locale)
       </div>
     </div>
   </section>
-</DefaultLayout>

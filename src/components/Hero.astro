@@ -2,7 +2,7 @@
 import { Link } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
-import { getLangFromUrl, useTranslations } from '@utils/i18n'
+import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 
 /**
  * Hero Component
@@ -31,7 +31,7 @@ const { src = '/astronaut-hero-img.webp' }: Props = Astro.props
         <p class="text-2xl">{t('hero.description')}</p>
         <div class="flex flex-col gap-3 min-[500px]:flex-row">
           <Link
-            href="/contact"
+            href={getHref('/contact', false, locale)}
             isButton
             type="primary"
             animateOnHover
@@ -41,7 +41,7 @@ const { src = '/astronaut-hero-img.webp' }: Props = Astro.props
             {t('hero.cta_primary')}
           </Link>
           <Link
-            href="/projects"
+            href={getHref('/projects', false, locale)}
             isButton
             type="secondary"
             animateOnHover

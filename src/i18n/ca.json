@@ -8,8 +8,7 @@
     "projects": "Projectes",
     "materials": "Materials",
     "contact": "Contacte",
-    "linkedin_sr": "Visita el meu perfil de LinkedIn, s'obre en una pestanya nova",
-    "materials": "Materials"
+    "linkedin_sr": "Visita el meu perfil de LinkedIn, s'obre en una pestanya nova"
   },
   "hero": {
     "title": "Clara Martínez Hernández",
@@ -22,6 +21,32 @@
     "title": "Projectes destacats",
     "author_prefix": "Autor/a: ",
     "view_all": "Veure tots els projectes"
+  },
+  "projects": {
+    "title": "Projectes",
+    "subtitle": "Col·lecció de projectes educatius, materials didàctics i investigacions en educació afectivosexual, perspectiva de gènere i transformació comunitària.",
+    "tags": "Etiquetes",
+    "all": "Tots els projectes",
+    "range_prefix": "Mostrant els projectes",
+    "range_suffix": "d'un total de",
+    "one": "projecte",
+    "many": "projectes",
+    "pagination_aria": "Paginació de projectes"
+  },
+  "tag": {
+    "subtitle_prefix": "Projectes amb l'etiqueta"
+  },
+  "project_share": {
+    "title": "Comparteix aquest projecte",
+    "description": "T'agrada aquest projecte? Comparteix-lo amb la teva xarxa!",
+    "back": "Tornar als projectes"
+  },
+  "accessibility": {
+    "title": "Declaració d'accessibilitat",
+    "subtitle": "El nostre compromís perquè aquest lloc web sigui accessible per a tothom.",
+    "pending_notice": "Aquest contingut és el text plantilla del starter i està pendent de redactar amb les dades reals.",
+    "commitment": "Compromís amb l'accessibilitat",
+    "placeholder": "Treballarem perquè aquest web sigui accessible per a totes les persones, independentment de la seva capacitat o circumstància. La declaració completa s'està redactant i es publicarà aquí properament."
   },
   "contact": {
     "title": "Contacte",
