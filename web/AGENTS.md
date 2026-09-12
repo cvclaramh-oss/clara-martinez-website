@@ -105,7 +105,7 @@ En la rama de pruebas se usó `* { border-radius: 0 !important }` global. **No r
 
 - Alt text descriptivo obligatorio en Sanity para cada imagen de proyecto
 - Imágenes decorativas: `alt=""`
-- Formatos recomendados: WebP o JPG, mínimo 1200px de ancho
+- Formatos recomendados: WebP o JPG
 - Astro gestiona lazy loading automáticamente
 
 ## Comandos
