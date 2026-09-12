@@ -1,0 +1,134 @@
+---
+import DefaultLayout from '@layouts/DefaultLayout.astro'
+import HomePage from '@components/pages/home.astro'
+import ContactPage from '@components/pages/contact.astro'
+import SitemapPage from '@components/pages/sitemap.astro'
+import ThankYouPage from '@components/pages/thank-you.astro'
+import AccessibilityStatementPage from '@components/pages/accessibility-statement.astro'
+import ProjectListing from '@components/pages/project-listing.astro'
+import ProjectDetail from '@components/pages/project-detail.astro'
+import { getCollection } from 'astro:content'
+import { useTranslations } from '@utils/i18n'
+import type { Locale } from '@utils/i18n'
+import { routes } from '../i18n/routes'
+import { PROJECTS_PAGE_SIZE, getTags, filterByTagSlug, type Tag } from '@utils/projects'
+
+/**
+ * Single catch-all router for every page in both locales.
+ *
+ * Generates localized URLs per language (see src/i18n/routes.ts) and renders
+ * the matching page component. In SSG this is the only way to get different
+ * translated slugs per locale without duplicating files.
+ *
+ * NOTE: Astro hoists getStaticPaths into its own scope, so locales and the
+ * segment helper must live inside it (they cannot reference frontmatter vars).
+ */
+
+export async function getStaticPaths() {
+  const locales: Locale[] = ['ca', 'es']
+
+  const routeSegment = (locale: Locale, canonical: string): string =>
+    (routes[locale] as Record<string, string>)[canonical] ?? canonical
+
+  const projects = (await getCollection('projects')).sort((a, b) => a.id.localeCompare(b.id))
+  const uniqueTags = getTags(projects)
+  const paths: {
+    params: { slug: string | undefined }
+    props: {
+      locale: Locale
+      pageType: string
+      pageNum?: number
+      tag?: Tag
+      projectId?: string
+    }
+  }[] = []
+
+  for (const locale of locales) {
+    const prefix = locale === 'es' ? 'es/' : ''
+
+    for (const page of ['home', 'contact', 'sitemap', 'thank-you', 'accessibility-statement']) {
+      paths.push({
+        params: {
+          slug: page === 'home' ? (locale === 'es' ? 'es' : undefined) : `${prefix}${routeSegment(locale, page)}`,
+        },
+        props: { locale, pageType: page },
+      })
+    }
+
+    const projectsPages = Math.max(1, Math.ceil(projects.length / PROJECTS_PAGE_SIZE))
+    for (let pageNum = 1; pageNum <= projectsPages; pageNum++) {
+      paths.push({
+        params: {
+          slug: `${prefix}${routeSegment(locale, 'projects')}${pageNum > 1 ? `/${pageNum}` : ''}`,
+        },
+        props: { locale, pageType: 'projects', pageNum },
+      })
+    }
+
+    for (const project of projects) {
+      paths.push({
+        params: {
+          slug: `${prefix}${routeSegment(locale, 'projects')}/${project.id}`,
+        },
+        props: { locale, pageType: 'project', projectId: project.id },
+      })
+    }
+
+    for (const tag of uniqueTags) {
+      const tagProjects = filterByTagSlug(projects, tag.slug)
+      const tagPages = Math.max(1, Math.ceil(tagProjects.length / PROJECTS_PAGE_SIZE))
+      for (let pageNum = 1; pageNum <= tagPages; pageNum++) {
+        paths.push({
+          params: {
+            slug: `${prefix}${routeSegment(locale, 'projects')}/${routeSegment(locale, 'tag')}/${tag.slug}${
+              pageNum > 1 ? `/${pageNum}` : ''
+            }`,
+          },
+          props: { locale, pageType: 'tag', tag, pageNum },
+        })
+      }
+    }
+  }
+
+  return paths
+}
+
+interface Props {
+  locale: Locale
+  pageType: string
+  pageNum?: number
+  tag?: Tag
+  projectId?: string
+}
+
+const { locale, pageType, pageNum = 1, tag, projectId } = Astro.props
+const t = useTranslations(locale)
+
+const isHome = pageType === 'home'
+const seoTitle = {
+  home: t('meta.title'),
+  projects: t('projects.title'),
+  tag: tag ? `${t('projects.title')}: ${tag.label}` : t('projects.title'),
+  project: projectId ?? t('projects.title'),
+  contact: t('nav.contact'),
+  sitemap: t('sitemap.title'),
+  'thank-you': t('thank_you.title'),
+  'accessibility-statement': t('accessibility.title'),
+}[pageType]
+
+const seoDescription = {
+  sitemap: t('sitemap.subtitle'),
+  'accessibility-statement': t('accessibility.subtitle'),
+}[pageType]
+---
+
+<DefaultLayout title={seoTitle} description={seoDescription} useTitleTemplate={!isHome}>
+  {pageType === 'home' && <HomePage />}
+  {pageType === 'projects' && <ProjectListing pageNum={pageNum} />}
+  {pageType === 'tag' && tag && <ProjectListing pageNum={pageNum} currentTag={tag} />}
+  {pageType === 'project' && projectId && <ProjectDetail projectId={projectId} />}
+  {pageType === 'contact' && <ContactPage />}
+  {pageType === 'sitemap' && <SitemapPage />}
+  {pageType === 'thank-you' && <ThankYouPage />}
+  {pageType === 'accessibility-statement' && <AccessibilityStatementPage />}
+</DefaultLayout>

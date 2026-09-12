@@ -1,0 +1,18 @@
+---
+import { getLangFromUrl, localizeUrl } from '@utils/i18n'
+
+const locale = getLangFromUrl(Astro.url)
+
+// Same page translated to each language, based on the current path
+const caHref = localizeUrl(Astro.url.pathname, 'ca')
+const esHref = localizeUrl(Astro.url.pathname, 'es')
+---
+
+<ul class="language-picker">
+  <li>
+    <a href={caHref} class={`lang-link ${locale === 'ca' ? 'is-active' : ''}`}>CA</a>
+  </li>
+  <li>
+    <a href={esHref} class={`lang-link ${locale === 'es' ? 'is-active' : ''}`}>ES</a>
+  </li>
+</ul>

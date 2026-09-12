@@ -1,0 +1,26 @@
+---
+import PageHeader from '@components/PageHeader.astro'
+import { Heading, Notification } from 'accessible-astro-components'
+import { getLangFromUrl, useTranslations } from '@utils/i18n'
+
+/**
+ * AccessibilityStatement Component
+ *
+ * @description The accessibility statement page. The body content is a
+ * placeholder pending real authoring with Clara's data.
+ * All internal strings are localized via the i18n dictionaries.
+ */
+const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
+---
+
+<PageHeader title={t('accessibility.title')} subtitle={t('accessibility.subtitle')} bgType="bordered" />
+<section class="my-16">
+  <div class="container space-content">
+    <Notification type="info">
+      <p>{t('accessibility.pending_notice')}</p>
+    </Notification>
+    <Heading level="h2">{t('accessibility.commitment')}</Heading>
+    <p>{t('accessibility.placeholder')}</p>
+  </div>
+</section>

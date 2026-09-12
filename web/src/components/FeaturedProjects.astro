@@ -2,6 +2,7 @@
 import { Card, Heading, Link } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
 import { getCollection } from 'astro:content'
+import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 
 // Import images directly for optimization
 import projectImage1 from '@assets/images/projects/project-image-1.png'
@@ -30,7 +31,9 @@ interface Props {
   title?: string
 }
 
-const { class: className, limit = 3, title = 'Featured projects' } = Astro.props
+const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
+const { class: className, limit = 3, title = t('featured_projects.title') } = Astro.props
 
 // Get projects from content collection
 const projects = await getCollection('projects')
@@ -51,10 +54,10 @@ const featuredProjects = projects.slice(0, limit).map((project, index) => ({
         featuredProjects.map((project) => (
           <Card
             imageComponent={project.featuredImage}
-            url={'/portfolio/' + project.id}
+            url={'/projects/' + project.id}
             headingLevel="h2"
             title={project.data.title}
-            footer={'Author: ' + project.data.author}
+            footer={t('featured_projects.author_prefix') + project.data.author}
           >
             {project.data.description}
           </Card>
@@ -62,8 +65,8 @@ const featuredProjects = projects.slice(0, limit).map((project, index) => ({
       }
     </div>
     <div class="mt-12">
-      <Link href="/portfolio/" isButton animateOnHover animationType="nudge">
-        View all projects
+      <Link href={getHref('/projects', false, locale)} isButton animateOnHover animationType="nudge">
+        {t('featured_projects.view_all')}
         <Icon aria-hidden="true" name="lucide:arrow-right" size="1.5rem" />
       </Link>
     </div>

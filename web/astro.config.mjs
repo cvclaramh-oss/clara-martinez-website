@@ -1,4 +1,4 @@
-import { defineConfig, envField } from 'astro/config'
+import { defineConfig } from 'astro/config'
 import { fileURLToPath } from 'url'
 import icon from 'astro-icon'
 import mdx from '@astrojs/mdx'
@@ -37,17 +37,15 @@ const viteConfig = {
 // https://astro.build/config
 export default defineConfig({
   compressHTML: true,
-  site: 'https://accessible-astro-starter.incluud.dev',
+  site: 'https://portfolio.pages.dev',
   integrations: [icon(), mdx(), sitemap()],
   vite: viteConfig,
-  env: {
-    schema: {
-      BLOG_API_URL: envField.string({
-        context: 'server',
-        access: 'secret',
-        optional: true,
-        default: 'https://jsonplaceholder.typicode.com/posts',
-      }),
-    },
-  },
+  i18n: {
+    locales: ['ca', 'es'],
+    defaultLocale: 'ca',
+    routing: {
+      prefixDefaultLocale: false,
+      fallback: { es: 'ca' }
+    }
+  }
 })

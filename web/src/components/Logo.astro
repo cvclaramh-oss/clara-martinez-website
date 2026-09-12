@@ -2,6 +2,7 @@
 import { Link } from 'accessible-astro-components'
 import { Image } from 'astro:assets'
 import themeConfig from '@theme-config'
+import { getLangFromUrl, getHref } from '@utils/i18n'
 
 /**
  * Logo Component
@@ -17,9 +18,10 @@ interface Props {
 }
 
 const { loading = 'eager' }: Props = Astro.props
+const locale = getLangFromUrl(Astro.url)
 ---
 
-<Link href="/" class="flex items-center gap-2">
+<Link href={getHref('/', false, locale)} class="flex items-center gap-2">
   {
     themeConfig.logo && (
       <Image

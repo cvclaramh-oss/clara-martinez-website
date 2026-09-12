@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "title": "Clara Martínez Hernández | Educación, género y sexualidades",
+    "description": "Diseño y desarrollo de proyectos educativos, materiales y procesos de formación desde una perspectiva feminista, interseccional y crítica.",
+    "author": "Clara Martínez Hernández"
+  },
+  "nav": {
+    "home": "Inicio",
+    "projects": "Proyectos",
+    "materials": "Materiales",
+    "contact": "Contacto",
+    "linkedin_sr": "Visita mi perfil de LinkedIn, se abre en una pestaña nueva"
+  },
+  "hero": {
+    "title": "Clara Martínez Hernández",
+    "subtitle": "Educación · Género · Sexualidades · Proyectos",
+    "description": "Diseño y desarrollo proyectos educativos, materiales y procesos de formación desde una perspectiva feminista, interseccional y crítica.",
+    "cta_primary": "Contactar",
+    "cta_secondary": "Ver proyectos"
+  },
+  "featured_projects": {
+    "title": "Proyectos destacados",
+    "author_prefix": "Autor/a: ",
+    "view_all": "Ver todos los proyectos"
+  },
+  "projects": {
+    "title": "Proyectos",
+    "subtitle": "Colección de proyectos educativos, materiales didácticos e investigaciones en educación afectivosexual, perspectiva de género y transformación comunitaria.",
+    "tags": "Etiquetas",
+    "all": "Todos los proyectos",
+    "range_prefix": "Mostrando los proyectos",
+    "range_suffix": "de un total de",
+    "one": "proyecto",
+    "many": "proyectos",
+    "pagination_aria": "Paginación de proyectos"
+  },
+  "tag": {
+    "subtitle_prefix": "Proyectos con la etiqueta"
+  },
+  "project_share": {
+    "title": "Comparte este proyecto",
+    "description": "¿Te gusta este proyecto? ¡Compártelo con tu red!",
+    "back": "Volver a los proyectos"
+  },
+  "accessibility": {
+    "title": "Declaración de accesibilidad",
+    "subtitle": "Nuestro compromiso para que este sitio web sea accesible para todas las personas.",
+    "pending_notice": "Este contenido es el texto plantilla del starter y está pendiente de redactar con los datos reales.",
+    "commitment": "Compromiso con la accesibilidad",
+    "placeholder": "Trabajaremos para que este sitio web sea accesible para todas las personas, independientemente de su capacidad o circunstancia. La declaración completa se está redactando y se publicará aquí próximamente."
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "¿Tienes alguna pregunta? ¡Ponte en contacto conmigo!",
+    "lets_talk": "Hablemos",
+    "form": {
+      "first_name": "Nombre",
+      "first_name_validation": "Necesito tu nombre para poder dirigirme a ti correctamente",
+      "email": "Correo electrónico",
+      "phone": "Teléfono",
+      "message": "Mensaje",
+      "interests_legend": "¿Cuál es tu interés?",
+      "interests_validation": "Por favor, selecciona al menos un área de interés",
+      "interest_education": "Educación y formación",
+      "interest_gender": "Perspectiva de género",
+      "interest_sexuality": "Educación afectivosexual",
+      "interest_community": "Transformación comunitaria",
+      "experience_legend": "Tu nivel de experiencia",
+      "experience_beginner": "Principiante",
+      "experience_intermediate": "Intermedio",
+      "experience_advanced": "Avanzado",
+      "preferences_legend": "Tus preferencias",
+      "newsletter": "Suscribirme al boletín",
+      "updates": "Recibir actualizaciones",
+      "send": "Enviar mensaje"
+    },
+    "info": {
+      "title": "Contáctame",
+      "description": "Puedes contactarme para cualquier consulta sobre formación, asesoramiento o colaboración en proyectos de educación afectivosexual, perspectiva de género o transformación comunitaria.",
+      "phone_label": "Teléfono:",
+      "email_label": "Correo electrónico:",
+      "address_label": "Dirección:",
+      "hours_label": "Horario de atención:",
+      "hours": "Pendiente de confirmar",
+      "social_facebook": "Ir a mi página de Facebook, se abre en una pestaña nueva",
+      "social_twitter": "Ir a mi página de Twitter, se abre en una pestaña nueva",
+      "social_linkedin": "Ir a mi perfil de LinkedIn, se abre en una pestaña nueva"
+    }
+  },
+  "page_404": {
+    "message": "Esta página no existe. No te preocupes, te ayudamos a volver.",
+    "back_home": "Volver al inicio"
+  },
+  "thank_you": {
+    "title": "¡Gracias!",
+    "subtitle": "El formulario se ha enviado correctamente.",
+    "notice": "Esto es una prueba del sistema de validación de formularios, no se ha enviado ningún correo electrónico.",
+    "send_another": "Enviar otro mensaje"
+  },
+  "breadcrumb": {
+    "projects": "Proyectos",
+    "tag": "Etiqueta",
+    "contact": "Contacto",
+    "accessibility-statement": "Declaración de accesibilidad",
+    "sitemap": "Mapa del sitio",
+    "thank-you": "Gracias"
+  },
+  "footer": {
+    "sr_only": "Pie de página",
+    "navigation": "Navegación",
+    "home": "Inicio",
+    "projects": "Proyectos",
+    "contact": "Contacto",
+    "accessibility": "Accesibilidad",
+    "accessibility_statement": "Declaración de accesibilidad",
+    "sitemap": "Mapa del sitio",
+    "rights": "Todos los derechos reservados."
+  },
+  "sitemap": {
+    "title": "Mapa del sitio",
+    "subtitle": "Una visión completa de todas las páginas y contenidos disponibles, organizados para una navegación fácil.",
+    "main_pages": "Páginas principales",
+    "portfolio_projects": "Proyectos",
+    "technical_info": "Información técnica",
+    "xml_sitemap": "Mapa del sitio XML:",
+    "xml_description": "Se genera automáticamente un mapa del sitio XML en",
+    "xml_for": "para la optimización de motores de búsqueda.",
+    "generated_by": "Generado por:",
+    "last_updated": "Última actualización:",
+    "auto_updated": "Actualizado automáticamente en cada construcción",
+    "explore": "Explora nuestra colección de",
+    "projects_suffix": "proyectos con enfoque en accesibilidad y diseño inclusivo.",
+    "pages": {
+      "home": {
+        "title": "Inicio",
+        "description": "Página principal del portfolio de Clara Martínez Hernández, especialista en diseño y desarrollo proyectos educativos, materiales y procesos de formación desde una perspectiva feminista, interseccional y crítica."
+      },
+      "projects": {
+        "title": "Proyectos",
+        "description": "Colección de proyectos educativos, materiales didácticos e investigaciones en educación afectivosexual y perspectiva de género."
+      },
+      "contact": {
+        "title": "Contacto",
+        "description": "Contacta con Clara Martínez Hernández para consultas sobre formación, asesoramiento o colaboración en proyectos educativos."
+      },
+      "accessibility_statement": {
+        "title": "Declaración de accesibilidad",
+        "description": "Nuestro compromiso con la accesibilidad e información sobre las características de accesibilidad de este sitio web."
+      },
+      "thank_you": {
+        "title": "Gracias",
+        "description": "Página de confirmación para envíos de formularios exitosos."
+      }
+    }
+  }
+}
