@@ -28,7 +28,7 @@ jobs:
       - name: Generate changelog
         uses: orhun/git-cliff-action@v4
         with:
-          config: cliff.toml
+          config: web/cliff.toml
           args: --unreleased --verbose
         env:
           OUTPUT: release_notes.md
