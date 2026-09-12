@@ -105,7 +105,7 @@ En la rama de pruebas se usó `* { border-radius: 0 !important }` global. **No r
 
 - Alt text descriptivo obligatorio en Sanity para cada imagen de proyecto
 - Imágenes decorativas: `alt=""`
-- Formatos recomendados: WebP o JPG, mínimo 1200px de ancho
+- Formatos recomendados: WebP o JPG
 - Astro gestiona lazy loading automáticamente
 
 ## Comandos
@@ -116,8 +116,15 @@ En la rama de pruebas se usó `* { border-radius: 0 !important }` global. **No r
 
 ## Flujo de trabajo (git)
 
-- Trabajo en `main` con commits pequeños y frecuentes, uno por componente o bloque funcional.
-- Excepción: cambios estructurales grandes (configuración de i18n, conexión de Sanity, cambio de paleta/tipografía global) van en rama propia (`feat/nombre-corto`) y se fusionan a `main` solo después de correr `npm run build` sin errores y revisar visualmente.
+- En local se trabaja en ramas de tarea (`feat/`, `fix/`, `refactor/`, `docs/`)
+  creadas desde `dev`, que se mergean a `dev` cuando están listas.
+- Siempre se comprueba que **corre y compila** (`npm run build`) antes de subir una rama.
+- Cloudflare construye automáticamente cualquier rama subida a GitHub y da una
+  URL de preview para comprobar que todo funciona.
+- Solo cuando `dev` esté en un punto que ya se pueda entregar o mostrar, se hace
+  el PR de `dev` a `main`. Si el PR ok → **squash & merge**; después se
+  actualiza `main` en local y se mergea `main` en `dev` para continuar.
+  En Cloudflare la **Production branch** será `main`.
 - Mensajes de commit en formato convencional: `feat(scope): subject`, `fix(scope): subject`, `docs`, `style`, `a11y`, `chore`
 - Nunca hacer commit sin parar primero a revisar el cambio
 
@@ -170,24 +177,50 @@ En la rama de pruebas se usó `* { border-radius: 0 !important }` global. **No r
 
 ## Git / GitHub
 
-Flujo por tarea (**nunca commitear ni pushear directamente en `main`**):
+Flujo por tarea (**nunca commitear ni pushear directamente en `main` ni en `dev`**):
 
-1. Actualizar main: `git switch main && git pull`
+1. Actualizar dev: `git switch dev && git pull`
 2. Crear rama de tarea: `git switch -c <tipo>/<nombre-corto-en-ingles>`
    (`feat/`, `fix/`, `refactor/`, `docs/`)
-3. Trabajo + commits en la rama (respetando la regla PARAR de abajo)
+3. Trabajo + commits en la rama (respetando la regla PARAR de abajo).
+   Siempre comprobar que **corre y compila** (`npm run build`) antes de subir.
 4. Subir la rama: `git push -u origin <rama>`
-5. Abrir Pull Request con `gh pr create`: título y descripción los redacta
-   el agente y comparte el URL para revisión.
+5. Cloudflare Pages construye automáticamente esa rama subida a GitHub y da
+   una **URL de preview** para comprobar que todo funciona — sin tocar
+   producción ni pedir que se mergee nada. Verificar el preview en esa URL.
+6. Cuando la rama esté lista, abrir Pull Request a `dev` con `gh pr create`:
+   título y descripción los redacta el agente y comparte el URL para revisión.
    - Descripción breve (3-6 líneas o bullets), en qué cambia y por qué —
      no un changelog de cada paso intermedio.
    - Sin narrar el proceso de trabajo (typos corregidos, archivos
      descartados antes de llegar a git, retoques de formato menores).
    - Un lector que no siguió la sesión debe entender el PR en 20 segundos.
-6. El agente monitoriza la CI del PR (`gh pr checks`) y avisa cuando está
+7. El agente monitoriza la CI del PR (`gh pr checks`) y avisa cuando está
    verde; si falla, corregir con más commits en la misma rama
-7. Con CI verde: revisión, **Rebase and merge** desde GitHub, borrar rama remota
-8. Volver a main: `git switch main && git pull && git branch -d <rama>`
+8. Con CI verde: revisión y merge a `dev` (squash & merge), borrar rama remota
+9. Volver a dev: `git switch dev && git pull && git branch -d <rama>`
+
+### Promoción a producción (dev → main)
+
+- `dev` es el entorno de pruebas. Solo cuando `dev` esté en un punto que ya se
+  pueda entregar o mostrar, se abre el PR de `dev` a `main`.
+- Si el PR ok: **squash & merge** desde GitHub.
+- En local se actualiza `main` (`git switch main && git pull`) y después se
+  mergea `main` en `dev` (`git switch dev && git merge main && git push`) para
+  continuar trabajando desde un `dev` al día.
+
+### Cloudflare Pages
+
+- La **Production branch** en Cloudflare será `main`:
+  - Cada push a `main` → despliega al dominio de producción real
+    (`clara-martinez-website.pages.dev` o el dominio real cuando esté).
+  - Cada push a cualquier otra rama (incluida `dev`) → genera automáticamente
+    un preview deployment con su propia URL única, sin tocar producción ni
+    pedir que se mergee nada.
+- Aliases automáticos por rama:
+  - `main` → `clara-martinez-website.pages.dev`
+  - `dev` → `dev.clara-martinez-website.pages.dev` + una URL con hash único
+    por cada commit.
 
 - **Antes de aplicar cualquier cambio de código**: explicar brevemente qué
   se va a hacer y por qué, en el mismo mensaje donde se aplica. Si el
@@ -208,16 +241,16 @@ Flujo por tarea (**nunca commitear ni pushear directamente en `main`**):
 - **Organizar los cambios pensando en los commits desde el inicio de cada
   tarea**: definir las unidades de cambio antes de tocar código, agrupar los
   ficheros por commit coherente y anunciárselo al usuario al presentar el plan.
-- `main` está protegida en GitHub (PR obligatorio): si un push directo es
-  rechazado, es el comportamiento esperado.
+- `main` (y por convención `dev`) están protegidas en GitHub (PR obligatorio):
+  si un push directo es rechazado, es el comportamiento esperado.
 - Conventional Commits en inglés: `feat:`, `fix:`, `docs:`, `refactor:`,
   `test:`, `chore:`. Un commit = un cambio completo y coherente. Salvo si el usuario indica otra cosa.
-- Si un PR necesita resolver conflictos para el *Rebase and merge*: rebase
-  local sobre `main` actualizada resolviendo DENTRO del commit afectado,
-  `git fetch` y `push --force-with-lease`. El resolvedor web de GitHub no
-  repara commits intermedios.
-- CI en `.github/workflows/ci.yml`: backend (`./mvnw verify`) y frontend
-  (lint + build) en cada push a `main` y PR.
+- Si un PR necesita resolver conflictos para el *squash & merge*: rebase local
+  sobre `dev` actualizada resolviendo DENTRO del commit afectado, `git fetch` y
+  `push --force-with-lease`. El resolvedor web de GitHub no repara commits
+  intermedios.
+- CI (a configurar): si existe `.github/workflows/ci.yml`, corre lint + build
+  en cada push y PR a `dev` y `main`.
 
 ## Estilo de trabajo
 - Cuando el usuario pregunte si algo es posible o cómo funciona, **explica primero** sin ejecutar nada.
