@@ -7,9 +7,12 @@ import {CogIcon} from '@sanity/icons/Cog'
 import type {ComponentType} from 'react'
 import {schemaTypes} from './schemaTypes'
 
-const LOCALES = ['ca', 'es']
+const LANGUAGES = [
+  {id: 'ca', title: 'Català'},
+  {id: 'es', title: 'Español'},
+]
+const LOCALES = LANGUAGES.map((language) => language.id)
 const LOCALIZED_TYPES = ['project']
-const BASE_LANGUAGE = 'ca'
 
 function createLocalizedSingleton(
   S: StructureBuilder,
@@ -59,24 +62,21 @@ export default defineConfig({
     structureTool({structure}),
     visionTool(),
     documentInternationalization({
-      supportedLanguages: (client) =>
-        client.fetch(`*[_type == "locale"]{ "id": tag, "title": name }`),
+      supportedLanguages: LANGUAGES,
       schemaTypes: LOCALIZED_TYPES,
     }),
   ],
 
   document: {
-    newDocumentOptions: (prev) => [
-      ...prev.filter(
+    newDocumentOptions: (prev) =>
+      prev.filter(
         (item) =>
           item.templateId !== 'siteSettings' &&
-          !LOCALIZED_TYPES.includes(item.templateId as string),
+          !LOCALIZED_TYPES.includes(item.templateId as string) &&
+          !LOCALIZED_TYPES.some(
+            (schemaType) => item.templateId === `${schemaType}-parameterized`,
+          ),
       ),
-      ...LOCALIZED_TYPES.map((schemaType) => ({
-        templateId: `${schemaType}-${BASE_LANGUAGE}`,
-        parameters: {language: BASE_LANGUAGE},
-      })),
-    ],
   },
 
   schema: {
