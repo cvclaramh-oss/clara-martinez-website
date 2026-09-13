@@ -11,7 +11,7 @@ Portfolio profesional para Clara Martínez Hernández, educadora social, formado
 
 ## Stack
 
-- Astro + Accessible Astro Starter (base, en `main`, sin la rama de pruebas de colores fusionada)
+- Astro + Accessible Astro Starter (base en `dev`, sin la rama de pruebas de colores `feat/prueba-colores` fusionada)
 - Tailwind CSS 4
 - Sanity como CMS headless
 - Cloudflare Pages para hosting
@@ -241,16 +241,17 @@ Flujo por tarea (**nunca commitear ni pushear directamente en `main` ni en `dev`
 - **Organizar los cambios pensando en los commits desde el inicio de cada
   tarea**: definir las unidades de cambio antes de tocar código, agrupar los
   ficheros por commit coherente y anunciárselo al usuario al presentar el plan.
-- `main` (y por convención `dev`) están protegidas en GitHub (PR obligatorio):
-  si un push directo es rechazado, es el comportamiento esperado.
+- **GitHub NO tiene activada protección de ramas actualmente** (ni `main` ni
+  `dev`): los merges vía PR son responsabilidad nuestra, no una restricción
+  técnica. Decisión de activarla: pendiente.
 - Conventional Commits en inglés: `feat:`, `fix:`, `docs:`, `refactor:`,
   `test:`, `chore:`. Un commit = un cambio completo y coherente. Salvo si el usuario indica otra cosa.
 - Si un PR necesita resolver conflictos para el *squash & merge*: rebase local
   sobre `dev` actualizada resolviendo DENTRO del commit afectado, `git fetch` y
   `push --force-with-lease`. El resolvedor web de GitHub no repara commits
   intermedios.
-- CI (a configurar): si existe `.github/workflows/ci.yml`, corre lint + build
-  en cada push y PR a `dev` y `main`.
+- CI real en `.github/workflows/cli.yml` (raíz del repo): `npm ci` + `npm run
+  build` en `web/` con Node 24.19.0, en cada push y PR a `main` y `dev`.
 
 ## Estilo de trabajo
 - Cuando el usuario pregunte si algo es posible o cómo funciona, **explica primero** sin ejecutar nada.
