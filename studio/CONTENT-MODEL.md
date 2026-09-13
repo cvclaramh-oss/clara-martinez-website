@@ -10,7 +10,7 @@ Contexto: sitio de Clara Martínez. Repo del cliente `cvclaramh-oss/clara-martin
 
 Un solo tipo de documento para Proyectos, Materiales (4 subcategorías), Formaciones y Talleres. Todos se agrupan por `category`/`subcategory` pero comparten estructura → una sola plantilla de tarjeta y una de detalle en el frontend.
 
-| Campo | Tipo | Obligatorio | Grupo | Notas |
+| Campo | Tipo | Obligatorio | Bloque | Notas |
 |---|---|---|---|---|
 | `language` | string | — | oculto | `initialValue: 'ca'`, lo gestiona el plugin i18n |
 | `title` | string | ✔ | Targeta | Título de la miniatura |

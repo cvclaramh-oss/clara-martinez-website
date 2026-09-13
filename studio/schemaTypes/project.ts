@@ -137,7 +137,7 @@ export const project = defineType({
       name: 'title',
       title: 'Títol',
       type: 'string',
-      group: 'card',
+      fieldset: 'card',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -145,7 +145,7 @@ export const project = defineType({
       title: 'Subtítol descriptiu',
       type: 'string',
       description: 'Text breu que es mostra sota el títol a la miniatura.',
-      group: 'card',
+      fieldset: 'card',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -153,7 +153,7 @@ export const project = defineType({
       title: 'Imatge de portada',
       type: 'image',
       options: {hotspot: true},
-      group: 'card',
+      fieldset: 'card',
       fields: [
         defineField({
           name: 'alt',
@@ -169,7 +169,7 @@ export const project = defineType({
       title: 'Slug',
       type: 'slug',
       options: {source: 'title', maxLength: 96},
-      group: 'card',
+      fieldset: 'card',
       validation: (rule) =>
         rule.required().custom((slug) => {
           if (!slug?.current) return 'Required'
@@ -184,7 +184,7 @@ export const project = defineType({
       title: 'Destacat a la portada (inici)',
       type: 'boolean',
       initialValue: false,
-      group: 'home',
+      fieldset: 'home',
     }),
     defineField({
       name: 'featuredOrder',
@@ -192,7 +192,7 @@ export const project = defineType({
       type: 'number',
       initialValue: 0,
       description: 'Número més baix = primer lloc a la portada.',
-      group: 'home',
+      fieldset: 'home',
       validation: (rule) => rule.integer().min(0),
     }),
     defineField({
@@ -208,7 +208,7 @@ export const project = defineType({
         ],
         layout: 'radio',
       },
-      group: 'taxonomy',
+      fieldset: 'taxonomy',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -223,7 +223,7 @@ export const project = defineType({
           {title: 'Campanyes', value: 'campaigns'},
         ],
       },
-      group: 'taxonomy',
+      fieldset: 'taxonomy',
       hidden: ({document}) => document?.category !== 'materials',
       validation: (rule) =>
         rule.custom((value, context) => {
@@ -239,7 +239,7 @@ export const project = defineType({
       type: 'array',
       of: [defineArrayMember({type: 'string'})],
       options: {layout: 'tags'},
-      group: 'taxonomy',
+      fieldset: 'taxonomy',
       validation: (rule) => rule.unique(),
     }),
     defineField({
@@ -247,34 +247,34 @@ export const project = defineType({
       title: 'Descripció llarga',
       type: 'array',
       of: [blockContent],
-      group: 'details',
+      fieldset: 'details',
     }),
     defineField({
       name: 'myWork',
       title: 'La meva feina',
       type: 'text',
       rows: 3,
-      group: 'details',
+      fieldset: 'details',
     }),
     defineField({
       name: 'institutionalAuthorship',
       title: 'Autoria institucional',
       type: 'text',
       rows: 2,
-      group: 'details',
+      fieldset: 'details',
     }),
     defineField({
       name: 'year',
       title: 'Any',
       type: 'string',
       description: 'Permet valors com «2023» o «2023–24».',
-      group: 'details',
+      fieldset: 'details',
     }),
     defineField({
       name: 'externalLink',
       title: 'Enllaç extern',
       type: 'url',
-      group: 'details',
+      fieldset: 'details',
       validation: (rule) => rule.uri({scheme: ['http', 'https']}),
     }),
     defineField({
@@ -283,7 +283,7 @@ export const project = defineType({
       description: 'Pot no contenir cap vídeo.',
       type: 'array',
       of: [videoMember],
-      group: 'multimedia',
+      fieldset: 'multimedia',
     }),
     defineField({
       name: 'gallery',
@@ -291,7 +291,7 @@ export const project = defineType({
       description: 'Fotos addicionals de la pàgina de detall. Pot no contenir cap.',
       type: 'array',
       of: [imageMember],
-      group: 'multimedia',
+      fieldset: 'multimedia',
     }),
     defineField({
       name: 'documents',
@@ -299,13 +299,13 @@ export const project = defineType({
       description: 'Arxius descarregables. Pot no contenir cap.',
       type: 'array',
       of: [documentMember],
-      group: 'multimedia',
+      fieldset: 'multimedia',
     }),
     defineField({
       name: 'button',
       title: 'Botó d’acció',
       type: 'object',
-      group: 'button',
+      fieldset: 'button',
       fields: [
         defineField({
           name: 'visible',
@@ -363,14 +363,14 @@ export const project = defineType({
       title: 'Elaborat per',
       type: 'text',
       rows: 2,
-      group: 'flex',
+      fieldset: 'flex',
     }),
     defineField({
       name: 'designedBy',
       title: 'Dissenyat i maquetat per',
       type: 'text',
       rows: 2,
-      group: 'flex',
+      fieldset: 'flex',
     }),
     defineField({
       name: 'sections',
@@ -379,7 +379,7 @@ export const project = defineType({
         'Afegeix blocs de títol + text per a qualsevol informació extra sense tocar el codi (equip, premis, col·laboradors…).',
       type: 'array',
       of: [sectionMember],
-      group: 'flex',
+      fieldset: 'flex',
     }),
   ],
   preview: {
