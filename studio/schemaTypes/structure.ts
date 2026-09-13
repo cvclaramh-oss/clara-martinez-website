@@ -54,7 +54,7 @@ function materialList(S: StructureBuilder, title: string, id: string, subcategor
       S.documentList()
         .id(`${id}-list`)
         .schemaType('project')
-        .filter(`category == 'Materiales' && subcategory == '${subcategory}'`),
+        .filter(`category == 'Materials' && subcategory == '${subcategory}'`),
     )
 }
 
@@ -64,7 +64,7 @@ export const structure: StructureResolver = (S) =>
     .items([
       S.documentTypeListItem('project').title('Tot el contingut'),
       S.divider(),
-      categoryList(S, 'Projectes', 'Proyectos'),
+      categoryList(S, 'Projectes', 'Projectes'),
       S.listItem()
         .id('materials')
         .title('Materials')
@@ -79,17 +79,17 @@ export const structure: StructureResolver = (S) =>
                   S.documentList()
                     .id('materials-tots-list')
                     .schemaType('project')
-                    .filter("category == 'Materiales'"),
+                    .filter("category == 'Materials'"),
                 ),
               S.divider(),
-              materialList(S, 'Guies i recursos didàctics', 'materials-guies', 'Guías y recursos didácticos'),
-              materialList(S, 'Jocs', 'materials-jocs', 'Juegos'),
-              materialList(S, 'Publicacions', 'materials-publicacions', 'Publicaciones'),
-              materialList(S, 'Campanyes', 'materials-campanyes', 'Campañas'),
+              materialList(S, 'Guies i recursos didàctics', 'materials-guies', 'Guies i recursos didàctics'),
+              materialList(S, 'Jocs', 'materials-jocs', 'Jocs'),
+              materialList(S, 'Publicacions', 'materials-publicacions', 'Publicacions'),
+              materialList(S, 'Campanyes', 'materials-campanyes', 'Campanyes'),
             ]),
         ),
-      categoryList(S, 'Formacions', 'Formaciones'),
-      categoryList(S, 'Tallers', 'Talleres'),
+      categoryList(S, 'Formacions', 'Formacions'),
+      categoryList(S, 'Tallers', 'Tallers'),
       S.divider(),
       createLocalizedSingleton(S, 'siteSettings', 'Configuració del lloc', CogIcon),
     ])

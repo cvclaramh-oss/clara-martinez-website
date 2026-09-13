@@ -23,7 +23,7 @@ const videoMember = defineArrayMember({
   type: 'object',
   fields: [
     defineField({
-      name: 'titulo',
+      name: 'title',
       title: 'Títol (opcional)',
       type: 'string',
     }),
@@ -31,7 +31,7 @@ const videoMember = defineArrayMember({
       name: 'url',
       title: 'Enllaç (YouTube / Vimeo)',
       type: 'url',
-      description: 'O el enllaç extern, o el fitxer. Mai ambdós.',
+      description: 'O l’enllaç extern, o el fitxer. Mai ambdós.',
       validation: (rule) => rule.uri({scheme: ['http', 'https']}),
     }),
     defineField({
@@ -53,7 +53,7 @@ const videoMember = defineArrayMember({
     }),
   preview: {
     select: {
-      title: 'titulo',
+      title: 'title',
       media: 'file',
     },
   },
@@ -78,7 +78,7 @@ const documentMember = defineArrayMember({
   type: 'object',
   fields: [
     defineField({
-      name: 'titulo',
+      name: 'title',
       title: 'Títol',
       type: 'string',
     }),
@@ -93,17 +93,17 @@ const documentMember = defineArrayMember({
 })
 
 const sectionMember = defineArrayMember({
-  name: 'seccio',
+  name: 'section',
   title: 'Secció',
   type: 'object',
   fields: [
     defineField({
-      name: 'titulo',
+      name: 'title',
       title: 'Títol de la secció',
       type: 'string',
     }),
     defineField({
-      name: 'texto',
+      name: 'text',
       title: 'Text',
       type: 'text',
       rows: 4,
@@ -118,11 +118,11 @@ export const project = defineType({
   icon: DocumentTextIcon,
   fieldsets: [
     {name: 'card', title: 'Targeta (portada del grid)', options: {collapsible: true, collapsed: false}},
-    {name: 'portada', title: 'Portada (inici)', options: {collapsible: true, collapsed: false}},
-    {name: 'taxonomia', title: 'Taxonomia i filtres', options: {collapsible: true, collapsed: false}},
-    {name: 'detall', title: 'Detall', options: {collapsible: true, collapsed: false}},
+    {name: 'home', title: 'Portada (inici)', options: {collapsible: true, collapsed: false}},
+    {name: 'taxonomy', title: 'Taxonomia i filtres', options: {collapsible: true, collapsed: false}},
+    {name: 'details', title: 'Detall', options: {collapsible: true, collapsed: false}},
     {name: 'multimedia', title: 'Multimèdia', options: {collapsible: true, collapsed: false}},
-    {name: 'boto', title: 'Botó (descarrega / enllaç)', options: {collapsible: true, collapsed: false}},
+    {name: 'button', title: 'Botó (descarrega / enllaç)', options: {collapsible: true, collapsed: false}},
     {name: 'flex', title: 'Informació flexible', options: {collapsible: true, collapsed: false}},
   ],
   fields: [
@@ -180,19 +180,19 @@ export const project = defineType({
         }),
     }),
     defineField({
-      name: 'destacado',
+      name: 'featured',
       title: 'Destacat a la portada (inici)',
       type: 'boolean',
       initialValue: false,
-      group: 'portada',
+      group: 'home',
     }),
     defineField({
-      name: 'ordenPortada',
+      name: 'featuredOrder',
       title: 'Ordre a la portada',
       type: 'number',
       initialValue: 0,
       description: 'Número més baix = primer lloc a la portada.',
-      group: 'portada',
+      group: 'home',
       validation: (rule) => rule.integer().min(0),
     }),
     defineField({
@@ -201,14 +201,14 @@ export const project = defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Projectes', value: 'Proyectos'},
-          {title: 'Materials', value: 'Materiales'},
-          {title: 'Formacions', value: 'Formaciones'},
-          {title: 'Tallers', value: 'Talleres'},
+          {title: 'Projectes', value: 'Projectes'},
+          {title: 'Materials', value: 'Materials'},
+          {title: 'Formacions', value: 'Formacions'},
+          {title: 'Tallers', value: 'Tallers'},
         ],
         layout: 'radio',
       },
-      group: 'taxonomia',
+      group: 'taxonomy',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -217,17 +217,17 @@ export const project = defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Guies i recursos didàctics', value: 'Guías y recursos didácticos'},
-          {title: 'Jocs', value: 'Juegos'},
-          {title: 'Publicacions', value: 'Publicaciones'},
-          {title: 'Campanyes', value: 'Campañas'},
+          {title: 'Guies i recursos didàctics', value: 'Guies i recursos didàctics'},
+          {title: 'Jocs', value: 'Jocs'},
+          {title: 'Publicacions', value: 'Publicacions'},
+          {title: 'Campanyes', value: 'Campanyes'},
         ],
       },
-      group: 'taxonomia',
-      hidden: ({document}) => document?.category !== 'Materiales',
+      group: 'taxonomy',
+      hidden: ({document}) => document?.category !== 'Materials',
       validation: (rule) =>
         rule.custom((value, context) => {
-          if (context.document?.category === 'Materiales' && !value) {
+          if (context.document?.category === 'Materials' && !value) {
             return 'Obligatori quan la categoria és Materials'
           }
           return true
@@ -239,7 +239,7 @@ export const project = defineType({
       type: 'array',
       of: [defineArrayMember({type: 'string'})],
       options: {layout: 'tags'},
-      group: 'taxonomia',
+      group: 'taxonomy',
       validation: (rule) => rule.unique(),
     }),
     defineField({
@@ -247,34 +247,34 @@ export const project = defineType({
       title: 'Descripció llarga',
       type: 'array',
       of: [blockContent],
-      group: 'detall',
+      group: 'details',
     }),
     defineField({
-      name: 'miTrabajo',
+      name: 'myWork',
       title: 'La meva feina',
       type: 'text',
       rows: 3,
-      group: 'detall',
+      group: 'details',
     }),
     defineField({
-      name: 'autoriaInstitucional',
+      name: 'institutionalAuthorship',
       title: 'Autoria institucional',
       type: 'text',
       rows: 2,
-      group: 'detall',
+      group: 'details',
     }),
     defineField({
       name: 'year',
       title: 'Any',
       type: 'string',
       description: 'Permet valors com «2023» o «2023–24».',
-      group: 'detall',
+      group: 'details',
     }),
     defineField({
       name: 'externalLink',
       title: 'Enllaç extern',
       type: 'url',
-      group: 'detall',
+      group: 'details',
       validation: (rule) => rule.uri({scheme: ['http', 'https']}),
     }),
     defineField({
@@ -286,7 +286,7 @@ export const project = defineType({
       group: 'multimedia',
     }),
     defineField({
-      name: 'galeria',
+      name: 'gallery',
       title: 'Galeria d’imatges',
       description: 'Fotos addicionals de la pàgina de detall. Pot no contenir cap.',
       type: 'array',
@@ -302,10 +302,10 @@ export const project = defineType({
       group: 'multimedia',
     }),
     defineField({
-      name: 'boton',
+      name: 'button',
       title: 'Botó d’acció',
       type: 'object',
-      group: 'boto',
+      group: 'button',
       fields: [
         defineField({
           name: 'visible',
@@ -321,17 +321,17 @@ export const project = defineType({
           description: 'Editable. Exemples: «Més informació», «Descarrega la guia».',
         }),
         defineField({
-          name: 'tipo',
+          name: 'type',
           title: 'Tipus',
           type: 'string',
           options: {
             list: [
-              {title: 'Enllaç extern', value: 'enlace'},
-              {title: 'Descarrega', value: 'descarga'},
+              {title: 'Enllaç extern', value: 'link'},
+              {title: 'Descarrega', value: 'download'},
             ],
             layout: 'radio',
           },
-          initialValue: 'enlace',
+          initialValue: 'link',
         }),
         defineField({
           name: 'url',
@@ -349,24 +349,24 @@ export const project = defineType({
       validation: (rule) =>
         rule.custom((value) => {
           if (!value?.visible) return true
-          if (value.tipo === 'descarga' && !value.file) {
+          if (value.type === 'download' && !value.file) {
             return 'Si el botó és visible i de descàrrega, cal un arxiu.'
           }
-          if (value.tipo === 'enlace' && !value.url) {
+          if (value.type === 'link' && !value.url) {
             return 'Si el botó és visible i d’enllaç, cal una URL.'
           }
           return true
         }),
     }),
     defineField({
-      name: 'elaboratPer',
+      name: 'createdBy',
       title: 'Elaborat per',
       type: 'text',
       rows: 2,
       group: 'flex',
     }),
     defineField({
-      name: 'dissenyatPer',
+      name: 'designedBy',
       title: 'Dissenyat i maquetat per',
       type: 'text',
       rows: 2,
