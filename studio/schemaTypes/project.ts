@@ -73,7 +73,7 @@ const imageMember = defineArrayMember({
 })
 
 const documentMember = defineArrayMember({
-  name: 'document',
+  name: 'documentFile',
   title: 'Document',
   type: 'object',
   fields: [

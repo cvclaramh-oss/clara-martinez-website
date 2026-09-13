@@ -86,6 +86,6 @@ Infraestructura (Cloudflare, ramas, CI): ver `web/docs/private/daily.md` y `web/
 ## 4. Notas técnicas para quien toque el Studio
 
 - UI del Studio, etiquetas **y valores de datos** (`category`, `subcategory`, `button.type`) en **catalán**; los `name` (claves de GROQ/código) en **inglés** (convención, decisión 17).
-- Los tipos auxiliares (`video`, `document`, `section`, etc.) van anidados en `project.ts`; `index.ts` solo exporta `project`, `siteSettings` y `socialLink`.
-- `structure.ts` sustituye la estructura que antes vivía inline en `sanity.config.ts`.
+- Los tipos auxiliares (`video`, `documentFile`, `section`, `link`) van anidados en `project.ts` o en tipos propios; `index.ts` solo exporta `project`, `siteSettings`, `socialLink` y `link`.
+- `structure.ts` sustituye la estructura que antes vivía inline en `sanity.config.ts`; todas las consultas se construyen con **parámetros** (`$cat`, `$sub`), nunca interpolando valores en la query (evita rupturas con apóstrofes/acentos).
 - Build: `npm run build` (`sanity build`). Lint: `npx eslint schemaTypes sanity.config.ts`.

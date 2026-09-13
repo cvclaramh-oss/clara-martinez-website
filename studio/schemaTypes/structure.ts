@@ -54,7 +54,8 @@ function materialList(S: StructureBuilder, title: string, id: string, subcategor
       S.documentList()
         .id(`${id}-list`)
         .schemaType('project')
-        .filter(`category == 'Materials' && subcategory == '${subcategory}'`),
+        .filter('category == $cat && subcategory == $sub')
+        .params({cat: 'Materials', sub: subcategory}),
     )
 }
 
