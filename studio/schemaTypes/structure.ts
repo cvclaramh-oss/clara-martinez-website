@@ -55,7 +55,7 @@ function materialList(S: StructureBuilder, title: string, id: string, subcategor
         .id(`${id}-list`)
         .schemaType('project')
         .filter('category == $cat && subcategory == $sub')
-        .params({cat: 'Materials', sub: subcategory}),
+        .params({cat: 'materials', sub: subcategory}),
     )
 }
 
@@ -65,7 +65,7 @@ export const structure: StructureResolver = (S) =>
     .items([
       S.documentTypeListItem('project').title('Tot el contingut'),
       S.divider(),
-      categoryList(S, 'Projectes', 'Projectes'),
+      categoryList(S, 'Projectes', 'projects'),
       S.listItem()
         .id('materials')
         .title('Materials')
@@ -80,17 +80,17 @@ export const structure: StructureResolver = (S) =>
                   S.documentList()
                     .id('materials-tots-list')
                     .schemaType('project')
-                    .filter("category == 'Materials'"),
+                    .filter("category == 'materials'"),
                 ),
               S.divider(),
-              materialList(S, 'Guies i recursos didàctics', 'materials-guies', 'Guies i recursos didàctics'),
-              materialList(S, 'Jocs', 'materials-jocs', 'Jocs'),
-              materialList(S, 'Publicacions', 'materials-publicacions', 'Publicacions'),
-              materialList(S, 'Campanyes', 'materials-campanyes', 'Campanyes'),
+              materialList(S, 'Guies i recursos didàctics', 'materials-guies', 'guides'),
+              materialList(S, 'Jocs', 'materials-jocs', 'games'),
+              materialList(S, 'Publicacions', 'materials-publicacions', 'publications'),
+              materialList(S, 'Campanyes', 'materials-campanyes', 'campaigns'),
             ]),
         ),
-      categoryList(S, 'Formacions', 'Formacions'),
-      categoryList(S, 'Tallers', 'Tallers'),
+      categoryList(S, 'Formacions', 'formations'),
+      categoryList(S, 'Tallers', 'workshops'),
       S.divider(),
       createLocalizedSingleton(S, 'siteSettings', 'Configuració del lloc', CogIcon),
     ])

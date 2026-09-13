@@ -201,10 +201,10 @@ export const project = defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Projectes', value: 'Projectes'},
-          {title: 'Materials', value: 'Materials'},
-          {title: 'Formacions', value: 'Formacions'},
-          {title: 'Tallers', value: 'Tallers'},
+          {title: 'Projectes', value: 'projects'},
+          {title: 'Materials', value: 'materials'},
+          {title: 'Formacions', value: 'formations'},
+          {title: 'Tallers', value: 'workshops'},
         ],
         layout: 'radio',
       },
@@ -217,17 +217,17 @@ export const project = defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Guies i recursos didàctics', value: 'Guies i recursos didàctics'},
-          {title: 'Jocs', value: 'Jocs'},
-          {title: 'Publicacions', value: 'Publicacions'},
-          {title: 'Campanyes', value: 'Campanyes'},
+          {title: 'Guies i recursos didàctics', value: 'guides'},
+          {title: 'Jocs', value: 'games'},
+          {title: 'Publicacions', value: 'publications'},
+          {title: 'Campanyes', value: 'campaigns'},
         ],
       },
       group: 'taxonomy',
-      hidden: ({document}) => document?.category !== 'Materials',
+      hidden: ({document}) => document?.category !== 'materials',
       validation: (rule) =>
         rule.custom((value, context) => {
-          if (context.document?.category === 'Materials' && !value) {
+          if (context.document?.category === 'materials' && !value) {
             return 'Obligatori quan la categoria és Materials'
           }
           return true

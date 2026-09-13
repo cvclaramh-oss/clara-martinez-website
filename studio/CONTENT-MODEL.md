@@ -19,8 +19,8 @@ Un solo tipo de documento para Proyectos, Materiales (4 subcategorías), Formaci
 | `slug` | slug (desde title) | ✔ | Targeta | Regex `^[a-z0-9-]+$` |
 | `featured` | boolean (`false`) | — | Portada | Sale en la home |
 | `featuredOrder` | number (≥0, `0`) | — | Portada | Menor = primero; empate → año descendente |
-| `category` | string | ✔ | Taxonomia | Radio fijo: `Projectes` \| `Materials` \| `Formacions` \| `Tallers` |
-| `subcategory` | string | solo si `category=Materials` | Taxonomia | Valores fijos: `Guies i recursos didàctics` \| `Jocs` \| `Publicacions` \| `Campanyes`. Oculto si no es Materials |
+| `category` | string | ✔ | Taxonomia | Radio fijo: `projects` \| `materials` \| `formations` \| `workshops` (claves neutrales; los títulos en el editor son catalanes) |
+| `subcategory` | string | solo si `category=materials` | Taxonomia | Claves: `guides` \| `games` \| `publications` \| `campaigns`. Oculto si no es materials |
 | `tags` | array de string, únicos | — | Taxonomia | Etiquetas libres |
 | `descriptionLong` | portable text (mínimo) | — | Detall | Negrita, cursiva, enlace, lista, h2 |
 | `myWork` | text (plano) | — | Detall | |
@@ -71,8 +71,9 @@ Eliminados vs. diseño anterior: `language` (sobra: el idioma ya está en el ID 
 | 14 | **`siteSettings` singleton por ID** (`siteSettings-{ca,es}`); sin campo `language` | El ID ya codifica el idioma | |
 | 15 | **Studio organizado**: `structure.ts` (árbol: Tot el contingut / categorías / Materials↳subcats / Configuració CA·ES) + camposets en el formulario | Clara ve "carpetas", no un tipo genérico | |
 | 16 | **Renombrar campos: ventana gratis AHORA** (sin datos reales + frontend sin conectar) | Los datos no siguen el cambio de nombre automáticamente; se evita la migración | Congelar nombres al aprobar el contenido real; luego rename = migración de datos + refactor frontend (rescatable con `sanity migration`) |
-| 17 | **Convención de nombres aplicada**: `name` (identificadores de GROQ) = **inglés**; `title`/`value` visibles en el editor = **catalán** | Identificadores estables y neutros; la editora ve todo en catalán | Se aplicó en el rename inicial (dataset vacío verificado: 0 docs); congelar ahora |
-| 18 | **Sin rediseño visual** en la entrega de 7 días (MVD) | El style actual del starter ya es accesible; identidad después de la 1ª entrega | |
+| 17 | **Convención de nombres aplicada**: `name` (GROQ/código) = **inglés**; `title` visibles en el editor = **catalán**; claves de `value` = **inglés neutro** | Identificadores estables y neutros; la editora ve todo en catalán | Se aplicó en el rename inicial (dataset vacío verificado: 0 docs); congelar ahora |
+| 18 | **Indirección valor↔etiqueta por construcción**: los `value` son claves inmutables; las etiquetas viven en el `title` del editor y en los diccionarios del frontend (`ca.json`/`es.json`) por valor | Renombrar una etiqueta —en el Studio o en la web— nunca requiere migrar datos | Solo si cambia una clave real: migración + refactor |
+| 19 | **Sin rediseño visual** en la entrega de 7 días (MVD) | El style actual del starter ya es accesible; identidad después de la 1ª entrega | |
 
 Infraestructura (Cloudflare, ramas, CI): ver `web/docs/private/daily.md` y `web/docs/private/cloudflare-pages-setup.md` (privados, gitignorados).
 
@@ -85,7 +86,7 @@ Infraestructura (Cloudflare, ramas, CI): ver `web/docs/private/daily.md` y `web/
 
 ## 4. Notas técnicas para quien toque el Studio
 
-- UI del Studio, etiquetas **y valores de datos** (`category`, `subcategory`, `button.type`) en **catalán**; los `name` (claves de GROQ/código) en **inglés** (convención, decisión 17).
+- UI del Studio y etiquetas (`title`) en **catalán**; los `name` (claves de GROQ/código) y los `value` (`category`, `subcategory`, `button.type`) en **inglés neutro** e inmutables (convención, decisiones 17–18).
 - Los tipos auxiliares (`video`, `documentFile`, `section`, `link`) van anidados en `project.ts` o en tipos propios; `index.ts` solo exporta `project`, `siteSettings`, `socialLink` y `link`.
 - `structure.ts` sustituye la estructura que antes vivía inline en `sanity.config.ts`; todas las consultas se construyen con **parámetros** (`$cat`, `$sub`), nunca interpolando valores en la query (evita rupturas con apóstrofes/acentos).
 - Build: `npm run build` (`sanity build`). Lint: `npx eslint schemaTypes sanity.config.ts`.
