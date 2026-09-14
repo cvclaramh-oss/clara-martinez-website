@@ -10,3 +10,4 @@
 | [0006](0006-i18n-cat-es.md) | i18n CAT/ES — Implementación | Implementado (parcial) |
 | [0007](0007-i18n-ssg-rutes.md) | i18n SSG: Estrategia de rutas | Implementado |
 | [0008](0008-tags-texto-libre.md) | Tags de proyectos como texto libre en Sanity | Vigente |
+| [0009](0009-token-governance-colores.md) | Gobernanza de tokens de color (fuente única) | Vigente |

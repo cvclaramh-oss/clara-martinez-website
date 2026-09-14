@@ -9,9 +9,9 @@ Sistema de diseño Minimalist-Brutalist Contemporary con monochrome + rosa carne
 
 ## Decisión
 
-Usar paleta de DESIGN.md. Tokens problemáticos (`outline-variant`, `outline`, `#FAFAFA/#F5CCD4`) solo para bordes decorativos, nunca como texto informativo.
+Usar paleta de DESIGN.md (Radical Clarity). Tokens problemáticos (`outline-variant`, `outline`, `#FAFAFA/#F5CCD4`) solo para bordes decorativos, nunca como texto informativo. Actualizado en ADR-0009: el *mecanismo* de implementación dejó de ser la generación OKLCH del starter y ahora es una paleta literal en `@theme static` (`tailwind.css`), fuente única de tokens.
 
 ## Alternativas
 
-- **Paleta del starter (OKLCH):** El sistema de colores del starter genera paleta desde 4 colores base. Más automático, pero no se ajusta al diseño Radical Clarity.
+- **Paleta del starter (OKLCH):** El sistema de colores del starter genera paleta desde 4 colores base. Más automático, pero no se ajusta al diseño Radical Clarity. **Descartado en implementación (ADR-0009).**
 - **Paleta completa de DESIGN.md con todos los tokens:** Aplicar todos los tokens de DESIGN.md desde el inicio. Más preciso, pero mayor superficie de error en la implementación.
