@@ -35,63 +35,80 @@ Portfolio profesional para Clara Martínez Hernández, educadora social, formado
 
 ## Decisiones de diseño
 
-- Paleta: ver DESIGN.md
-- Tipografías: Space Grotesk (display/headlines/labels) + Hanken Grotesk (body) — sustituyen a Atkinson Hyperlegible
-- Estilo: Minimalist-Brutalist Contemporary
-  - `border-radius: 0` en todos los elementos
-  - Sin `box-shadow` ni `drop-shadow`
-  - Bordes 1px solid `#0A0A0A` (hairline)
-  - Sin gradientes decorativos, sin blur ni translucidez
-  - Ángulos rectos estrictos
-- Mantener el sistema de accesibilidad del starter (no eliminar)
--  Priorizar accesibilidad básica (contraste, alt text, HTML semántico)
+**Referencias (fuera de git, rutas relativas a la raíz del repo):**
+- Sistema/tokens: `design/DESIGN_v2.md` → autoridad de paleta, tipografía y espaciado
+- Prototipos vigentes: `design//`
 
-### border-radius — resuelto correctamente esta vez
-En la rama de pruebas se usó `* { border-radius: 0 !important }` global. **No repetir ese approach en la versión definitiva.** Antes de tocar CSS, comprobar si los componentes de `accessible-astro-components` aceptan `class`/`style` por props para pasar `border-radius: 0` de forma nativa. Si no lo aceptan, documentar la excepción como ADR (no como parche silencioso).
+**Base del diseño:** páginas generadas en `design/`, sobre DESIGN_v2.md. Referencia por defecto para componer cualquier página pero no son diseño final.
 
-### Tokens problemáticos (NO usar como texto)
+**Flexibilidad permitida (regla de mezcla):**
+- Orden: usar el diseño de hoy como base; tomar elementos de capturas/iniciales solo cuando no resuelvan un bloque. Ante cualquier duda de qué referencia gana → preguntar antes de implementar.
+
+**Invariantes (comunes a todas las referencias):**
+- Estilo Minimalist-Brutalist Contemporary: `border-radius: 0`, sin `box-shadow` ni `drop-shadow`, bordes hairline 1px, sin gradientes/blur/translucidez, ángulos rectos estrictos
+- Tipografías: Space Grotesk (display/headlines/labels) + Hanken Grotesk (body)
+- Mantener el sistema de accesibilidad del starter (no eliminar nada)
+- Priorizar accesibilidad básica (contraste, alt text, HTML semántico)
+
+### border-radius — verificado contra v5.7.1
+En la rama de pruebas se usó `* { border-radius: 0 !important }` global. **No repetir ese approach en la versión definitiva.**
+
+Verificado en el paquete instalado (`accessible-astro-components` v5.7.1): **sí aceptan `class`/`style` por props** — todos hacen `class: className` + `{...rest}` en su elemento raíz, y sus estilos internos usan selectores `:where(...)` con **specificity 0**, así que cualquier clase propia gana nativamente, sin `!important`. Además la mayoría usa las variables `--radius-s` / `--radius-m` / `--radius-l` / `--radius-h` (definidas en `web/src/assets/scss/base/_root.scss`) → basta con fijarlas a `0` en la base.
+
+Excepciones con `border-radius` hardcodeado (no usan `var()`): `Modal`, `Toast`, `Card`, `Pagination`, `Media`, `Notification` y `Badge` usan `0.5rem` fijo; `Switch`, `Radio` y `Avatar` usan `50%` (formas circulares, prohibidas por el sistema). Para esos, pasar una clase propia por prop vence al `:where()`. Documentar la excepción como ADR (no como parche silencioso).
+
+### Tokens problemáticos
 - `outline-variant` (#c4c7c7): ratio 1.62:1 — solo bordes decorativos
-- `outline` (#747878): ratio 4.24:1 — solo texto ≥24px
+- `outline` (#666666): ratio 5.45:1 sobre surface — apto para texto normal y bordes (subido desde #747878 por contraste)
 - `#FAFAFA` sobre `#F5CCD4`: ratio 1.39:1 — nunca usar
 
 ### Requisitos WCAG AA
 - Texto normal (<24px o <18.67px bold): mínimo 4.5:1
 - Texto grande (≥24px o ≥18.67px bold): mínimo 3:1
-- Combinaciones seguras verificadas en DESIGN.md
+- Combinaciones seguras verificadas en DESIGN_v2.md
 
 ## Estructura de páginas
 
-- Inicio
-- Sobre mí (fase 2)
-- Proyectos
-- Materiales *(fase 2)*
-- Formaciones *(fase 2)*
-- Talleres *(fase 2)*
-- Contacto
+Todas las páginas se diseñan/implementan en la misma fase. Navegación (ver prototipos en `design/`):
 
-**Fase 1 (lanzamiento):** solo Inicio, Proyectos y Contacto.
+- Inici
+- Projectes
+- Materials (dropdown: Guies i recursos didàctics · Jocs · Publicacions · Campanyes)
+- Formacions
+- Tallers
+- Bio (página propia, con la foto de perfil)
+- Contacte
+
+Además de **listing pages** (Projectes, Materials con barra de filtros por subcategoría, Formacions, Tallers — todos con el mismo layout) y **detail pages** por documento (`{slug}`), según el modelo de contenido del prompt (`diseño/stitch_Design/PROMPT-STITCH.md`).
 
 ## Schema de Sanity
 
+Fuente de verdad: `studio/schemaTypes/`. Resumen (para GROQ/componentes, leer el schema real).
+
 ### `project`
-- `title` (string, obligatorio)
-- `slug` (slug, automático desde título)
-- `description` (text, obligatorio)
-- `image` (image, alt text obligatorio)
-- `category` (string: "Guia Didàctica", "Taller", "Investigació", etc.)
-- `year` (string, ej: "2024")
-- `tags` (array de string, opcional)
-- `externalLink` (url, opcional)
+Un único tipo de documento cubre projectes, materials, formacions y tallers (`category`).
+
+Campos organizados en fieldsets (card / home / taxonomy / details / multimedia / button / flex):
+
+- `language` (string, oculto, `ca` por defecto)
+- `title` (string, obligatorio) · `subtitle` (string, obligatorio) · `image` (image con `alt` obligatorio)
+- `slug` (auto desde `title`, lowercase + guiones)
+- `featured` (boolean) · `featuredOrder` (number, menor = primero) — portada del home
+- `category` (string enum: `projects` / `materials` / `formations` / `workshops`)
+- `subcategory` (string enum solo Materials, obligatorio si category=materials: `guides` / `games` / `publications` / `campaigns`)
+- `tags` (array de string, unique)
+- `descriptionLong` (portable text: h2, lista, strong, em, link)
+- `myWork` (text) · `institutionalAuthorship` (text) — solo proyectos
+- `year` (string, ej. "2023–24") · `externalLink` (url, solo http/https)
+- `videos` (array: `{ title, url XOR file }`, validación "uno o el otro") ·
+  `gallery` (image[]) · `documents` (array: `{ title, file }`)
+- `button` (object: `{ visible, label, type("link"/"download"), url, file }` — validación: tipo link→url, download→file)
+- `createdBy` (text) · `designedBy` (text) · `sections` (array: `{ title, text }` bloques libres)
 
 ### `siteSettings` (singleton)
-- `siteName` (string)
-- `shortBio` (text)
-- `profileImage` (image, alt text obligatorio)
-- `socialLinks` (array: platform + url)
-- `contactEmail` — **pendiente: pedir a Clara**
-- `phone` — **pendiente: pedir a Clara (¿se publica o no?)**
-- `address` — **pendiente: pedir a Clara (¿se publica o no?)**
-- `welcomeText` — **pendiente: pedir a Clara**
+- `siteName` (string) · `subtitle` (string, gancho de presentación)
+- `bio` (portable text, página Bio) · `profileImage` (image con `alt`)
+- `socialLinks` (array de `socialLink`) · `contactEmail` (string, validación email) · `cvFile` (PDF)
 
 ## i18n
 
