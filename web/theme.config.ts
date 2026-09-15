@@ -12,12 +12,6 @@ export default defineThemeConfig({
     author: 'Clara Martínez Hernández',
     image: previewImage, // Can also be a string e.g. '/social-preview-image.png', //TODO
   },
-  colors: {
-    primary: '#d648ff',
-    secondary: '#00d1b7',
-    neutral: '#b9bec4',
-    outline: '#ff4500',
-  },
   navigation: {
     darkmode: true,
     items: [
