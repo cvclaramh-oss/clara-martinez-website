@@ -69,22 +69,10 @@ const imageUrl = new URL(imagePath, Astro.site).href
     <!-- favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- theme colors from config -->
-    <style
-      define:vars={{
-        brandPrimary: themeConfig.colors.primary,
-        brandSecondary: themeConfig.colors.secondary,
-        brandNeutral: themeConfig.colors.neutral,
-        brandOutline: themeConfig.colors.outline,
-      }}
-    >
-      :global(:root) {
-        --brand-primary: var(--brandPrimary);
-        --brand-secondary: var(--brandSecondary);
-        --brand-neutral: var(--brandNeutral);
-        --brand-outline: var(--brandOutline);
-      }
-    </style>
+    <!-- Google Fonts: Space Grotesk + Hanken Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <SEO
       title={title}

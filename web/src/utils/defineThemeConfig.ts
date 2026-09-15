@@ -40,7 +40,7 @@ export type ThemeConfig = {
     author?: string
     image?: ImageMetadata | string | null
   }
-  colors: {
+  colors?: {
     primary: string
     secondary: string
     neutral: string
@@ -61,12 +61,6 @@ const defaultConfig: Omit<ThemeConfig, 'name' | 'id'> = {
     author: '',
     image: null,
   },
-  colors: {
-    primary: '#d648ff',
-    secondary: '#00d1b7',
-    neutral: '#b9bec4',
-    outline: '#ff4500',
-  },
   navigation: {
     darkmode: true,
     items: [],
@@ -80,10 +74,6 @@ export function defineThemeConfig(config: ThemeConfig): ThemeConfig {
     seo: {
       ...defaultConfig.seo,
       ...config.seo,
-    },
-    colors: {
-      ...defaultConfig.colors,
-      ...config.colors,
     },
     socials: config.socials ?? defaultConfig.socials,
     navigation: {
