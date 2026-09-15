@@ -4,6 +4,12 @@ description: Patrones de internacionalización CA/ES en Astro SSG de este proyec
 ---
 
 # i18n — Radical Clarity
+> Este documento describe patrones ya implementados en sesiones anteriores. Antes de asumir que algo sigue siendo así, verifícalo contra el código real — Comprobaciones rápidas:
+> - Router unificado activo → confirma que `src/pages/[...slug].astro` existe y que **no** hay `src/pages/es/` duplicando rutas manualmente.
+> - `getHref()` centralizada → confirma que está en `src/utils/i18n.ts` y que los componentes la importan de ahí (no lógica de URL repetida en el propio componente).
+> - Diccionarios → confirma que `ca.json`/`es.json` existen con las claves esperadas antes de dar por hecho un texto traducido.
+>
+> Si algo no coincide con lo descrito aquí, avisa al usuario antes de seguir — puede ser una skill desactualizada, no un bug tuyo.
 
 ## 1. Configuración
 
