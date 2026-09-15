@@ -1,12 +1,22 @@
-# Sanity Studio
-studio/node_modules/
-studio/dist/
-studio/.sanity/
-
-# Secretos
+# environment variables
 .env
 .env.local
 .env.*.local
+.env.production
+.env.*.production
+*.pem
+
+# Docs
+docs/private/*
 
 # Sistema
 .DS_Store
+
+# vscode settings and dictionaries
+.vscode
+
+# webstorm settings and dictionaries
+.idea
+
+# cursor
+.cursor

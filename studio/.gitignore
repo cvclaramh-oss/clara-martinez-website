@@ -18,10 +18,6 @@
 # Coverage directory used by testing tools
 /coverage
 
-# Misc
-.DS_Store
-*.pem
-
 # Typescript
 *.tsbuildinfo
 
