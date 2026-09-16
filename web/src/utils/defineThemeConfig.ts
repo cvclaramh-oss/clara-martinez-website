@@ -13,6 +13,7 @@ export type NavigationItem =
   | {
       type: 'dropdown'
       label: string
+      href?: string
       icon?: string
       items: {
         label: string

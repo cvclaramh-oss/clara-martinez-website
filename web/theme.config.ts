@@ -20,52 +20,60 @@ export default defineThemeConfig({
         label: 'nav.home',
         href: '/',
       },
-      //TODO
-    /*{
-        type: 'link',
-        label: 'Sobre Mi',
-        href: '/about-me',
-      },*/
       {
         type: 'link',
         label: 'nav.projects',
         href: '/projects',
       },
-      //TODO
-      /*{
-        label: 'nav.materials',
+      {
+        label: 'nav.materials.label',
         type: 'dropdown',
+        href: '/materials',
         items: [
-          /*{
-            label: 'Accessibility statement',
-            href: '/accessibility-statement',
+          {
+            label: 'nav.materials.guides',
+            href: '/materials-guides',
           },
           {
-            label: 'sitemap.title',
-            href: '/sitemap',
+            label: 'nav.materials.games',
+            href: '/materials-games',
+          },
+          {
+            label: 'nav.materials.publications',
+            href: '/materials-publications',
+          },
+          {
+            label: 'nav.materials.campaigns',
+            href: '/materials-campaigns',
           },
         ],
-      },*/
+      },
+      {
+        type: 'link',
+        label: 'nav.formations',
+        href: '/formations',
+      },
+      {
+        type: 'link',
+        label: 'nav.workshops',
+        href: '/workshops',
+      },
+      {
+        type: 'link',
+        label: 'nav.bio',
+        href: '/bio',
+      },
       {
         type: 'link',
         label: 'nav.contact',
         href: '/contact',
       },
-      {
-        type: 'link',
-        label: 'nav.linkedin_sr',
-        href: 'https://www.linkedin.com/in/clara-martinez-/',
-        icon: 'lucide:linkedin',
-        external: true,
-        excludeFromLauncher: true,
-      },
     ],
   },
   socials: [
-    {
-      label: 'Instagram',
-      href: '/404',
-      icon: 'lucide:instagram',
-    }
+    { label: 'LinkedIn', 
+      href: 'https://www.linkedin.com/in/clara-martinez-/', 
+      icon: 'lucide:linkedin', 
+      external: true }
   ],
 })

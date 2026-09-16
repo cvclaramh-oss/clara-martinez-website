@@ -6,10 +6,26 @@
   },
   "nav": {
     "home": "Inicio",
+    "tagline": "Educación · Género · Sexualidades",
+    "a11y": "Menú de navegación principal",
     "projects": "Proyectos",
-    "materials": "Materiales",
+    "formations": "Formaciones",
+    "workshops": "Talleres",
+    "bio": "Bio",
     "contact": "Contacto",
-    "linkedin_sr": "Visita mi perfil de LinkedIn, se abre en una pestaña nueva"
+    "lang_ca": "Cambiar a la versión en catalán",
+    "lang_es": "Cambiar a la versión en español",
+    "darkmode": "Cambiar modo de luz",
+    "open_menu": "Abrir el menú de navegación",
+    "close_menu": "Cerrar el menú de navegación",
+    "submenu": "Desplegar el submenú de",
+    "materials": {
+      "label": "Materiales",
+      "guides": "Guías y recursos didácticos",
+      "games": "Juegos educativos",
+      "publications": "Publicaciones",
+      "campaigns": "Campañas"
+    }
   },
   "hero": {
     "title": "Clara Martínez Hernández",
@@ -89,6 +105,11 @@
   },
   "page_404": {
     "message": "Esta página no existe. No te preocupes, te ayudamos a volver.",
+    "back_home": "Volver al inicio"
+  },
+  "coming_soon": {
+    "title": "En construcción",
+    "message": "Esta sección todavía se está elaborando. Próximamente encontrarás el contenido aquí.",
     "back_home": "Volver al inicio"
   },
   "thank_you": {

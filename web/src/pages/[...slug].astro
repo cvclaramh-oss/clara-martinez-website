@@ -7,11 +7,13 @@ import ThankYouPage from '@components/pages/thank-you.astro'
 import AccessibilityStatementPage from '@components/pages/accessibility-statement.astro'
 import ProjectListing from '@components/pages/project-listing.astro'
 import ProjectDetail from '@components/pages/project-detail.astro'
+import ComingSoonPage from '@components/pages/coming-soon.astro'
 import { getCollection } from 'astro:content'
 import { useTranslations } from '@utils/i18n'
 import type { Locale } from '@utils/i18n'
 import { routes } from '../i18n/routes'
 import { PROJECTS_PAGE_SIZE, getTags, filterByTagSlug, type Tag } from '@utils/projects'
+import { COMING_SOON_SECTIONS, SECTION_LABEL_KEYS } from '../utils/sections'
 
 /**
  * Single catch-all router for every page in both locales.
@@ -52,6 +54,15 @@ export async function getStaticPaths() {
           slug: page === 'home' ? (locale === 'es' ? 'es' : undefined) : `${prefix}${routeSegment(locale, page)}`,
         },
         props: { locale, pageType: page },
+      })
+    }
+
+    for (const section of COMING_SOON_SECTIONS) {
+      paths.push({
+        params: {
+          slug: `${prefix}${routeSegment(locale, section)}`,
+        },
+        props: { locale, pageType: 'coming-soon', section },
       })
     }
 
@@ -99,12 +110,14 @@ interface Props {
   pageNum?: number
   tag?: Tag
   projectId?: string
+  section?: string
 }
 
-const { locale, pageType, pageNum = 1, tag, projectId } = Astro.props
+const { locale, pageType, pageNum = 1, tag, projectId, section } = Astro.props
 const t = useTranslations(locale)
 
 const isHome = pageType === 'home'
+const sectionLabel = pageType === 'coming-soon' && section ? t(SECTION_LABEL_KEYS[section]) : undefined
 const seoTitle = {
   home: t('meta.title'),
   projects: t('projects.title'),
@@ -114,6 +127,7 @@ const seoTitle = {
   sitemap: t('sitemap.title'),
   'thank-you': t('thank_you.title'),
   'accessibility-statement': t('accessibility.title'),
+  'coming-soon': sectionLabel ? `${sectionLabel} · ${t('coming_soon.title')}` : t('coming_soon.title'),
 }[pageType]
 
 const seoDescription = {
@@ -131,4 +145,5 @@ const seoDescription = {
   {pageType === 'sitemap' && <SitemapPage />}
   {pageType === 'thank-you' && <ThankYouPage />}
   {pageType === 'accessibility-statement' && <AccessibilityStatementPage />}
+  {pageType === 'coming-soon' && section && <ComingSoonPage sectionLabel={sectionLabel} />}
 </DefaultLayout>
