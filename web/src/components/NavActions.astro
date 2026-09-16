@@ -1,0 +1,28 @@
+---
+import { DarkMode } from 'accessible-astro-components'
+import { Icon } from 'astro-icon/components'
+import themeConfig from '@theme-config'
+import LanguagePicker from './LanguagePicker.astro'
+import { getLangFromUrl, useTranslations } from '@utils/i18n'
+
+/**
+ * NavActions Component
+ *
+ * @description Language picker and dark mode toggle, shared between the desktop cluster
+ * and the mobile menu. Box styling (borders, height, padding) is applied contextually
+ * by whichever parent renders it (see Navigation.astro), not here.
+ */
+
+const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
+---
+
+{themeConfig.navigation.language && <LanguagePicker />}
+{
+  themeConfig.navigation.darkmode && (
+    <DarkMode class="nav-action-cell" label={t('nav.darkmode')}>
+      <Icon aria-hidden="true" name="lucide:moon" slot="light" />
+      <Icon aria-hidden="true" name="lucide:sun" slot="dark" />
+    </DarkMode>
+  )
+}

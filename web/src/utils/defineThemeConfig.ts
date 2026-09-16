@@ -13,7 +13,6 @@ export type NavigationItem =
   | {
       type: 'dropdown'
       label: string
-      href?: string
       icon?: string
       items: {
         label: string
@@ -50,6 +49,7 @@ export type ThemeConfig = {
   navigation: {
     darkmode?: boolean
     items: NavigationItem[]
+    language?: boolean
   }
   socials?: SocialItem[]
 }
@@ -65,6 +65,7 @@ const defaultConfig: Omit<ThemeConfig, 'name' | 'id'> = {
   navigation: {
     darkmode: true,
     items: [],
+    language: true,
   },
   socials: [],
 }

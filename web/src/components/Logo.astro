@@ -1,20 +1,72 @@
 ---
 import { Link } from 'accessible-astro-components'
 import themeConfig from '@theme-config'
-import { getLangFromUrl, getHref } from '@utils/i18n'
+import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 
 /**
  * Logo Component
  *
- * @description Logo description
+ * @description Brand cell (logo). Below the `nav` breakpoint (mobile/tablet)
+ * the tagline stacks under the name, right-aligned, inside the same cell.
+ * From `nav` up it's a single-line brand cell; from `xl` up the tagline gets
+ * its own separate bordered cell again (see .tagline below).
  */
 
 const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
 ---
 
-<Link
-  href={getHref('/', false, locale)}
-  class="font-[family-name:var(--font-family-special)] text-[1.25rem] leading-[1.625rem] uppercase tracking-tight text-[var(--foreground-color)] font-bold whitespace-nowrap"
->
-  {themeConfig.name}
+<Link href={getHref('/', false, locale)} class="brand-link flex h-full px-4 lg:px-8 hover:bg-neutral-100 transition-none">
+  <span
+    class="brand-name font-[family-name:var(--font-family-special)] font-bold uppercase tracking-tight text-[var(--foreground-color)] whitespace-nowrap"
+  >
+    {themeConfig.name}
+  </span>
+  <span
+    class="brand-tagline font-[family-name:var(--font-family-special)] font-bold uppercase tracking-[0.1em] text-[var(--color-neutral-800)] whitespace-nowrap"
+  >
+    {t('nav.tagline')}
+  </span>
 </Link>
+<span
+  class="tagline hidden xl:flex items-center h-full px-4 border-r border-[var(--border-color)] bg-neutral-50 font-[family-name:var(--font-family-special)] text-[0.6875rem] leading-[0.875rem] font-bold uppercase tracking-[0.12em] text-[var(--color-neutral-800)] whitespace-nowrap"
+>
+  {t('nav.tagline')}
+</span>
+
+<style lang="scss">
+  @use 'scss/base/breakpoint' as *;
+
+  .brand-link {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.125rem;
+
+    @include breakpoint('nav') {
+      flex-direction: row;
+      align-items: center;
+      gap: 0;
+      border-inline-end: 1px solid var(--border-color);
+    }
+  }
+
+  .brand-name {
+    font-size: 0.8125rem;
+    line-height: 1rem;
+
+    @include breakpoint('nav') {
+      font-size: 1.25rem;
+      line-height: 1.625rem;
+    }
+  }
+
+  .brand-tagline {
+    font-size: 0.5625rem;
+    line-height: 0.75rem;
+
+    @include breakpoint('nav') {
+      display: none;
+    }
+  }
+</style>

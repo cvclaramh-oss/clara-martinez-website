@@ -14,6 +14,7 @@ export default defineThemeConfig({
   },
   navigation: {
     darkmode: true,
+    language: true,
     items: [
       {
         type: 'link',
@@ -28,8 +29,11 @@ export default defineThemeConfig({
       {
         label: 'nav.materials.label',
         type: 'dropdown',
-        href: '/materials',
         items: [
+          {
+            label: 'nav.materials.all',
+            href: '/materials',
+          },
           {
             label: 'nav.materials.guides',
             href: '/materials-guides',
@@ -45,6 +49,10 @@ export default defineThemeConfig({
           {
             label: 'nav.materials.campaigns',
             href: '/materials-campaigns',
+          },
+          {
+            label: 'nav.materials.audiovisual',
+            href: '/materials-audiovisual',
           },
         ],
       },

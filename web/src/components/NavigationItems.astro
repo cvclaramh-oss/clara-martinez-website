@@ -1,8 +1,7 @@
 ---
 import themeConfig from '@theme-config'
-import { Link, DarkMode } from 'accessible-astro-components'
+import { Link } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
-import LanguagePicker from './LanguagePicker.astro'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 
 /**
@@ -22,12 +21,17 @@ const t = useTranslations(locale)
         class={`menu-item ${item.type === 'dropdown' ? 'has-dropdown' : ''} ${item.icon ? 'type-icon animate-rotate' : ''}`}
       >
         {item.type === 'dropdown' ? (
-          <button aria-haspopup="true" aria-expanded="false">
+          <button aria-haspopup="true" aria-expanded="false" class="menu-link">
             {t(item.label)}
-            <Icon aria-hidden="true" name="lucide:chevron-down" size="32" />
+            <Icon aria-hidden="true" name="lucide:chevron-down" size="16" />
           </button>
         ) : !item.type || item.type === 'link' ? (
-          <Link href={getHref(item.href, item.external ?? false, locale)} isExternal={item.external ?? false} hideIcon={!!item.icon}>
+          <Link
+            href={getHref(item.href, item.external ?? false, locale)}
+            isExternal={item.external ?? false}
+            hideIcon={!!item.icon}
+            class="menu-link"
+          >
             {item.icon ? (
               <>
                 <Icon aria-hidden="true" name={item.icon} size="32" />
@@ -42,7 +46,11 @@ const t = useTranslations(locale)
           <ul class="dropdown-menu">
             {item.items.map((subItem) => (
               <li class="submenu-item">
-                <Link href={getHref(subItem.href, subItem.external ?? false, locale)} isExternal={subItem.external ?? false}>
+                <Link
+                  href={getHref(subItem.href, subItem.external ?? false, locale)}
+                  isExternal={subItem.external ?? false}
+                  class="submenu-link"
+                >
                   {t(subItem.label)}
                 </Link>
               </li>
@@ -51,20 +59,5 @@ const t = useTranslations(locale)
         )}
       </li>
     ))
-  }
-  {
-    themeConfig.navigation.darkmode && (
-      <>
-        <li class="menu-item type-icon flex">
-          <LanguagePicker />
-        </li>
-        <li class="menu-item type-icon animate-rotate">
-          <DarkMode>
-            <Icon aria-hidden="true" name="lucide:moon" slot="light" />
-            <Icon aria-hidden="true" name="lucide:sun" slot="dark" />
-          </DarkMode>
-        </li>
-      </>
-    )
   }
 </ul>
