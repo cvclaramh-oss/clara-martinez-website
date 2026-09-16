@@ -11,3 +11,5 @@
 | [0007](0007-i18n-ssg-rutes.md) | i18n SSG: Estrategia de rutas | Implementado |
 | [0008](0008-tags-texto-libre.md) | Tags de proyectos como texto libre en Sanity | Vigente |
 | [0009](0009-token-governance-colores.md) | Gobernanza de tokens de color (fuente única) | Vigente |
+| [0010](0010-navegacion-dropdown-accesible.md) | Ítems de navegación con subpáginas: solo dropdown | Vigente |
+| [0011](0011-submenus-movil-acordeon.md) | Submenús del menú móvil: acordeón en flujo, no overlay | Vigente |
