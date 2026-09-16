@@ -1,7 +1,7 @@
 ---
+import Logo from './Logo.astro';
+import NavigationItems from './NavigationItems.astro';
 import ResponsiveToggle from './ResponsiveToggle.astro'
-import NavigationItems from './NavigationItems.astro'
-import Logo from './Logo.astro'
 
 /**
  * Navigation Component
@@ -10,19 +10,26 @@ import Logo from './Logo.astro'
  */
 ---
 
-<div id="main-navigation" class="py-8">
-  <div class="container">
-    <Logo />
+<div id="main-navigation" class="w-full">
+  <div class="nav-bar h-16 flex items-center justify-between px-4 lg:px-8">
+    <div class="nav-brand">
+      <Logo />
+      <!-- LOGO · fase 2 -->
+    </div>
+
     <div class="wrapper">
       <nav class="desktop-menu" aria-label="Main navigation desktop">
         <NavigationItems />
+        <!-- LINKS · fase 3 -->
       </nav>
       <ResponsiveToggle />
     </div>
-    <nav class="mobile-menu" aria-label="Main navigation mobile">
-      <NavigationItems />
-    </nav>
   </div>
+
+  <nav class="mobile-menu" aria-label="Main navigation mobile">
+    <NavigationItems />
+    <!-- LINKS MÓVILES · fase 3 -->
+  </nav>
 </div>
 
 <script>
@@ -217,11 +224,10 @@ import Logo from './Logo.astro'
   @use 'scss/base/breakpoint' as *;
 
   #main-navigation {
-    > .container {
+    .nav-bar {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
     }
 
     // Mobile-first: show mobile menu by default
