@@ -10,10 +10,12 @@
     "projects": "Projectes",
     "materials": {
       "label": "Materials",
+      "all": "Veure-ho tot",
       "guides": "Guies i recursos didàctics",
       "games": "Jocs",
       "publications": "Publicacions",
-      "campaigns": "Campanyes"
+      "campaigns": "Campanyes",
+      "audiovisual": "Audiovisuals"
     },
     "formations": "Formacions",
     "workshops": "Tallers",

@@ -21,10 +21,12 @@
     "submenu": "Desplegar el submenú de",
     "materials": {
       "label": "Materiales",
+      "all": "Ver todo",
       "guides": "Guías y recursos didácticos",
       "games": "Juegos educativos",
       "publications": "Publicaciones",
-      "campaigns": "Campañas"
+      "campaigns": "Campañas",
+      "audiovisual": "Audiovisuales"
     }
   },
   "hero": {
