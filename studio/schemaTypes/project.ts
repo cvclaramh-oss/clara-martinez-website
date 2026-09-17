@@ -221,6 +221,7 @@ export const project = defineType({
           {title: 'Jocs', value: 'games'},
           {title: 'Publicacions', value: 'publications'},
           {title: 'Campanyes', value: 'campaigns'},
+          {title: 'Audiovisuals', value: 'audiovisual'},
         ],
       },
       fieldset: 'taxonomy',
