@@ -3,15 +3,10 @@ import PageHeader from '@components/PageHeader.astro'
 import SocialShares from '@components/SocialShares.astro'
 import { Heading, Link } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
-import { getCollection, render } from 'astro:content'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
-
-import projectImage1 from '@assets/images/projects/project-image-1.png'
-import projectImage2 from '@assets/images/projects/project-image-2.png'
-import projectImage3 from '@assets/images/projects/project-image-3.png'
-import projectImage4 from '@assets/images/projects/project-image-4.png'
-import projectImage5 from '@assets/images/projects/project-image-5.png'
-import projectImage6 from '@assets/images/projects/project-image-6.png'
+import { getProjectsByCategory } from '@lib/sanity/catalogItemsQuery'
+import { urlFor } from '@lib/sanity/imageUrlBuilder'
+import { portableTextToHtml } from '@lib/sanity/renders/portableTextRender'
 
 /**
  * ProjectDetail Component
@@ -30,13 +25,9 @@ const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 const { projectId } = Astro.props
 
-const projects = (await getCollection('projects')).sort((a, b) => a.id.localeCompare(b.id))
-const project = projects.find((entry) => entry.id === projectId)
-const { Content } = project ? await render(project) : { Content: () => null }
-
-const projectImages = [projectImage1, projectImage2, projectImage3, projectImage4, projectImage5, projectImage6]
-const projectIndex = Math.max(0, projects.findIndex((entry) => entry.id === projectId))
-const featuredImage = projectImages[projectIndex % projectImages.length]
+const projects = await getProjectsByCategory(locale, 'projects')
+const project = projects.find((entry) => entry.slug === projectId)
+const bodyHtml = project ? portableTextToHtml(project.data.descriptionLong) : ''
 
 const author = {
   name: project?.data.author ?? '',
@@ -50,16 +41,14 @@ const author = {
     <>
       <PageHeader
         title={project.data.title}
-        subtitle={project.data.description}
+        subtitle={project.data.subtitle}
         author={author}
         bgType="bordered"
-        featuredImage={featuredImage}
-        customBreadcrumbLabels={{ [project.id]: project.data.title }}
+        featuredImage={urlFor(project.data.image, 1200, 250)}
+        customBreadcrumbLabels={{ [project.slug]: project.data.title }}
       />
       <section class="my-12">
-        <div class="narrow space-content container">
-          <Content />
-        </div>
+        <div class="narrow space-content container" set:html={bodyHtml} />
       </section>
       <section class="my-12">
         <div class="narrow space-content container">

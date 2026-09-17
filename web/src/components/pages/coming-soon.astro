@@ -4,7 +4,7 @@ import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 
 interface Props {
-  sectionLabel: string
+  sectionLabel?: string
 }
 
 const { sectionLabel } = Astro.props
@@ -14,7 +14,7 @@ const t = useTranslations(locale)
 
 <section class="my-12">
   <div class="container">
-    <Heading level="h1">{sectionLabel}</Heading>
+    <Heading level="h1">{sectionLabel ?? t('coming_soon.title')}</Heading>
   </div>
 </section>
 
