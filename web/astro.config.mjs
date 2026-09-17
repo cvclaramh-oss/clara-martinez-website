@@ -29,6 +29,7 @@ const viteConfig = {
       '@project-images': fileURLToPath(new URL('./public/projects', import.meta.url)),
       '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
       '@lib': fileURLToPath(new URL('./src/lib', import.meta.url)),
+      '@constants': fileURLToPath(new URL('./src/constants', import.meta.url)),
       '@theme-config': fileURLToPath(new URL('./theme.config.ts', import.meta.url)),
     },
   },
