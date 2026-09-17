@@ -23,7 +23,7 @@ function buildSegmentIndex(): Map<string, string> {
 
 const segmentToCanonical = buildSegmentIndex()
 
-export function getLangFromUrl(url: URL): string {
+export function getLangFromUrl(url: URL): Locale {
   return url.pathname.startsWith('/es') ? 'es' : 'ca'
 }
 
