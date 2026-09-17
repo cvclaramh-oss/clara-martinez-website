@@ -1,13 +1,15 @@
 ---
 import CallToAction from './CallToAction.astro'
-import Logo from './Logo.astro'
-import { Heading, Link } from 'accessible-astro-components'
+import { Link } from 'accessible-astro-components'
+import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
+import themeConfig from '@theme-config'
 
 /**
  * Footer Component
  *
- * @description A component that displays the footer of the website
+ * @description Site footer: CTA band, 4-column info grid (brand, portfolio
+ * index, contact, accessibility) and a bottom copyright bar.
  */
 
 const locale = getLangFromUrl(Astro.url)
@@ -17,39 +19,132 @@ const currentYear = new Date().getFullYear()
 
 <footer>
   <CallToAction />
-  <section class="py-20">
-    <Heading level="h2" class="sr-only">{t('footer.sr_only')}</Heading>
-    <div class="container grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-      <div class="flex flex-col gap-4">
-        <Heading level="h3" size="h6">{t('footer.navigation')}</Heading>
-        <ul class="flex flex-col gap-2">
-          <li><Link href={getHref('/', false, locale)}>{t('footer.home')}</Link></li>
-          <li><Link href={getHref('/projects', false, locale)}>{t('footer.projects')}</Link></li>
-          <li><Link href={getHref('/contact', false, locale)}>{t('footer.contact')}</Link></li>
-        </ul>
+
+  <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[max-content_1fr_1fr_1fr]">
+    <div class="cell flex flex-col gap-1">
+      <p class="text-sm font-bold tracking-tight text-(--foreground-color) uppercase lg:text-lg">
+        {themeConfig.name}
+      </p>
+      <p class="text-xs tracking-widest text-(--color-neutral-800) uppercase">{t('nav.tagline')}</p>
+    </div>
+
+    <div class="cell">
+      <span class="mb-4 block text-xs font-bold tracking-widest text-(--color-accent-rose-dark) uppercase">
+        {t('footer.portfolio_index')}
+      </span>
+      <ul class="columns-2 gap-x-4 text-xs font-bold tracking-wide uppercase [&>li]:pb-1">
+        <li><Link href={getHref('/', false, locale)} class="footer-link">{t('nav.home')}</Link></li>
+        <li><Link href={getHref('/projects', false, locale)} class="footer-link">{t('nav.projects')}</Link></li>
+        <li><Link href={getHref('/materials', false, locale)} class="footer-link">{t('nav.materials.label')}</Link></li>
+        <li><Link href={getHref('/formations', false, locale)} class="footer-link">{t('nav.formations')}</Link></li>
+        <li><Link href={getHref('/workshops', false, locale)} class="footer-link">{t('nav.workshops')}</Link></li>
+        <li><Link href={getHref('/bio', false, locale)} class="footer-link">{t('nav.bio')}</Link></li>
+        <li><Link href={getHref('/contact', false, locale)} class="footer-link">{t('nav.contact')}</Link></li>
+      </ul>
+    </div>
+
+    <div class="cell flex flex-col gap-1">
+      <div class="flex flex-col gap-2">
+        <span class="block text-xs font-bold tracking-widest text-(--color-accent-rose-dark) uppercase">
+          {t('footer.contact_heading')}
+        </span>
+        <Link href={`mailto:${themeConfig.contactEmail}`} class="footer-link pt-2 text-sm font-bold tracking-wide">
+          {themeConfig.contactEmail}
+        </Link>
       </div>
-      <div class="flex flex-col gap-4">
-        <Heading level="h3" size="h6">{t('footer.accessibility')}</Heading>
-        <ul class="flex flex-col gap-2">
-          <li><Link href={getHref('/sitemap', false, locale)}>{t('footer.sitemap')}</Link></li>
-        </ul>
+      {
+        themeConfig.socials && themeConfig.socials.length > 0 && (
+          <ul class="flex flex-col gap-1 text-sm">
+            {themeConfig.socials.map((social) => (
+              <li>
+                <Link href={social.href} isExternal={social.external} hideIcon class="footer-link pt-2 text-xs font-bold tracking-wide uppercase">
+                  {social.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+      {/* TODO: point href at Clara's real cvFile once Bio/Sanity is wired up. */}
+      <Link
+        href="#"
+        class="footer-link mt-2 inline-flex w-fit items-center gap-1 border border-(--border-color) px-2 py-1 text-xs font-bold tracking-wide uppercase hover:bg-neutral-100"
+      >
+        <Icon aria-hidden="true" name="lucide:download" size={14} />
+        {t('footer.cv_download')}
+      </Link>
+    </div>
+
+    <div class="cell flex flex-col justify-between gap-6">
+      <div class="flex flex-col gap-2">
+        <span class="block text-xs font-bold tracking-widest text-(--color-accent-rose-dark) uppercase">
+          {t('footer.accessibility_heading')}
+        </span>
+        <p class="text-sm text-neutral-800">{t('footer.accessibility_description')}</p>
+        <p class="pt-2 text-xs font-bold tracking-wide uppercase">
+          <Link href={getHref('/accessibility-statement', false, locale)} class="footer-link">
+            {t('footer.accessibility_statement')}
+          </Link>
+        </p>
       </div>
-      <div class="flex flex-col gap-4">
-        <Logo />
-      </div>
+      <span
+        class="inline-block self-start border border-(--border-color) bg-neutral-100 px-2 py-1 text-xs font-bold tracking-wide text-(--foreground-color) uppercase"
+      >
+        {t('footer.wcag_badge')}
+      </span>
     </div>
   </section>
-  <section class="py-8">
-    <div class="container flex flex-col gap-4 md:flex-row md:justify-between">
-      <p>
-        &copy; {currentYear} Clara Martínez Hernández. {t('footer.rights')}
-      </p>
-    </div>
+
+  <section
+    class="flex flex-col items-center justify-center gap-2 border-t border-(--border-color) px-4 py-4 text-center text-xs tracking-wide text-neutral-800 uppercase sm:flex-row sm:justify-between lg:px-8"
+  >
+    <p>&copy; {currentYear} {themeConfig.name}. {t('footer.rights')}</p>
+    <Link href={getHref('/sitemap', false, locale)} class="footer-link">{t('footer.sitemap')}</Link>
   </section>
 </footer>
 
 <style>
-  section {
-    border-top: 1px solid var(--border-color-subtle);
+  footer {
+    border-block-start: 1px solid var(--border-color);
+  }
+
+  .cell {
+    padding: 1.5rem;
+    border-block-end: 1px solid var(--border-color);
+  }
+
+  @media (min-width: 48rem) {
+    .cell {
+      border-inline-end: 1px solid var(--border-color);
+    }
+
+    .cell:nth-child(2n) {
+      border-inline-end: none;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .cell {
+      border-block-end: none;
+    }
+
+    .cell:nth-child(2n) {
+      border-inline-end: 1px solid var(--border-color);
+    }
+
+    .cell:last-child {
+      border-inline-end: none;
+    }
+  }
+
+  .footer-link {
+    color: var(--color-neutral-800);
+    text-decoration: none;
+    transition: none;
+  }
+
+  .footer-link:where(:hover, :focus-visible) {
+    color: var(--foreground-color);
+    text-decoration: underline;
   }
 </style>

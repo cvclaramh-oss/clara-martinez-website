@@ -1,57 +1,51 @@
 ---
 import { Heading, Link } from 'accessible-astro-components'
-import { Icon } from 'astro-icon/components'
+import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 
 /**
  * CallToAction Component
  *
- * @description A prominent call-to-action section with a title and link
+ * @description Monolithic call-to-action block shown right before the footer
+ * on every page, inviting collaboration/hiring enquiries.
  */
-interface Props {
-  /**
-   * The title text to display
-   * @default "Get this theme on GitHub"
-   */
-  title?: string
-  /**
-   * The URL the button should link to
-   * @default "https://github.com/incluud/accessible-astro-starter"
-   */
-  link?: string
-  /**
-   * The text to display on the button
-   * @default "Get Started"
-   */
-  linkText?: string
-}
 
-const {
-  title = 'Get this theme on GitHub',
-  link = 'https://github.com/incluud/accessible-astro-starter',
-  linkText = 'Use this theme',
-} = Astro.props
+const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
 ---
 
-<div class="container">
-  <div class="call-to-action mt-24 mb-32 flex flex-col items-center gap-12 rounded-xl px-12 py-20 md:px-24">
-    <Heading level="h2" class="text-center text-3xl md:text-6xl">{title}</Heading>
-    <Link href={link} isButton size="lg" animateOnHover animationType="nudge">
-      {linkText}
-      <Icon aria-hidden="true" name="lucide:rocket" size="1.5rem" />
-    </Link>
+<section class="cta">
+  <div class="container flex flex-col gap-4 py-12 md:py-16">
+    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <div class="flex-1">
+        <div class="mb-2 flex items-center gap-2">
+          <span class="inline-block h-3 w-3 bg-(--foreground-color)"></span>
+          <span class="text-xs font-bold tracking-widest text-(--foreground-color) uppercase">
+            {t('footer.cta_eyebrow')}
+          </span>
+        </div>
+        <Heading
+          level="h2"
+          class="max-w-[36ch] text-wrap! text-2xl leading-tight font-bold tracking-tight uppercase md:text-4xl"
+        >
+          {t('footer.cta_heading')}
+        </Heading>
+      </div>
+      <Link
+        href={getHref('/contact', false, locale)}
+        isButton
+        size="md"
+        class="bg-(--foreground-color)! text-white! border-(--foreground-color)! uppercase tracking-widest whitespace-nowrap"
+      >
+        {t('footer.cta_button')}
+      </Link>
+    </div>
+    <p class="max-w-2xl text-(--foreground-color)">{t('footer.cta_description')}</p>
   </div>
-</div>
+</section>
 
-<style lang="scss">
-  @use 'scss/base/mixins' as *;
-
-  .call-to-action {
-    position: relative;
-    background-image: linear-gradient(
-      315deg,
-      light-dark(var(--color-primary-100), var(--color-secondary-100)) 25%,
-      light-dark(var(--color-secondary-100), var(--color-primary-200))
-    );
-    color: var(--color-neutral-900);
+<style>
+  .cta {
+    background-color: var(--color-accent-rose);
+    border-block-end: 1px solid var(--border-color);
   }
 </style>

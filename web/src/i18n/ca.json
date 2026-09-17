@@ -136,7 +136,17 @@
     "accessibility": "Accessibilitat",
     "accessibility_statement": "Declaració d'accessibilitat",
     "sitemap": "Mapa del lloc",
-    "rights": "Tots els drets reservats."
+    "rights": "Tots els drets reservats.",
+    "portfolio_index": "Índex de continguts",
+    "contact_heading": "Contacte & documentació",
+    "cv_download": "Descarregar CV (PDF)",
+    "accessibility_heading": "Accessibilitat & criteris",
+    "accessibility_description": "Arquitectura web d'alt contrast, tipografia llegible i navegació semàntica conforme a WCAG 2.2 nivell AA.",
+    "wcag_badge": "WCAG 2.2 AA",
+    "cta_eyebrow": "Col·laboracions & contractació",
+    "cta_heading": "Tens un projecte o vols organitzar una formació?",
+    "cta_description": "Assessoro administracions, centres educatius i entitats socials per construir programes efectius amb solvència tècnica i visió transformadora.",
+    "cta_button": "Iniciar conversa"
   },
   "sitemap": {
     "title": "Mapa del lloc",

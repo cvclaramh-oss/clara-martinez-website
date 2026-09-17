@@ -79,9 +79,11 @@ export default defineThemeConfig({
     ],
   },
   socials: [
-    { label: 'LinkedIn', 
-      href: 'https://www.linkedin.com/in/clara-martinez-/', 
-      icon: 'lucide:linkedin', 
+    { label: 'LinkedIn',
+      href: 'https://www.linkedin.com/in/clara-martinez-/',
+      icon: 'lucide:linkedin',
       external: true }
   ],
+  // Provisional — pending Clara's business email (see docs/private/daily.md, 2026-09-17).
+  contactEmail: 'cvclaramh@gmail.com',
 })

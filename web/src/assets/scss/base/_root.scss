@@ -25,6 +25,9 @@
   // Radical Clarity accent rose — dusty/muted, not Tailwind's saturated pink scale.
   // Placeholder value until the final brand tokens are defined (see conversation with Laura).
   --color-accent-rose: hsl(344, 50%, 80%);
+  // Darker rose for text on light backgrounds (the light accent above fails WCAG as text,
+  // ~1.8:1). Value taken from Stitch's own `secondary` (#75565d) — 6.47:1 on white.
+  --color-accent-rose-dark: #75565d;
 
   // pallet neutral
   --color-neutral-100: oklch(from var(--brand-neutral) 100% 0 0);

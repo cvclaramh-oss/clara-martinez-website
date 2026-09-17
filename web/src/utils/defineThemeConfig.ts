@@ -52,6 +52,7 @@ export type ThemeConfig = {
     language?: boolean
   }
   socials?: SocialItem[]
+  contactEmail?: string
 }
 
 const defaultConfig: Omit<ThemeConfig, 'name' | 'id'> = {

@@ -137,7 +137,17 @@
     "accessibility": "Accesibilidad",
     "accessibility_statement": "Declaración de accesibilidad",
     "sitemap": "Mapa del sitio",
-    "rights": "Todos los derechos reservados."
+    "rights": "Todos los derechos reservados.",
+    "portfolio_index": "Índice de contenidos",
+    "contact_heading": "Contacto & documentación",
+    "cv_download": "Descargar CV (PDF)",
+    "accessibility_heading": "Accesibilidad & criterios",
+    "accessibility_description": "Arquitectura web de alto contraste, tipografía legible y navegación semántica conforme a WCAG 2.2 nivel AA.",
+    "wcag_badge": "WCAG 2.2 AA",
+    "cta_eyebrow": "Colaboraciones & contratación",
+    "cta_heading": "¿Tienes un proyecto o quieres organizar una formación?",
+    "cta_description": "Asesoro a administraciones, centros educativos y entidades sociales para construir programas efectivos con solvencia técnica y visión transformadora.",
+    "cta_button": "Iniciar conversación"
   },
   "sitemap": {
     "title": "Mapa del sitio",
