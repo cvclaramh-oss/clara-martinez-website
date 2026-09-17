@@ -92,5 +92,5 @@ export const structure: StructureResolver = (S) =>
       categoryList(S, 'Formacions', 'formations'),
       categoryList(S, 'Tallers', 'workshops'),
       S.divider(),
-      createLocalizedSingleton(S, 'siteSettings', 'Configuració del lloc', CogIcon),
+      createLocalizedSingleton(S, 'siteSettings', 'Perfil Personal', CogIcon),
     ])
