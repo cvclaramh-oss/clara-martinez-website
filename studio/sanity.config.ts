@@ -1,4 +1,4 @@
-import {defineConfig} from 'sanity'
+import {defineConfig, type NewDocumentOptionsResolver} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {documentInternationalization} from '@sanity/document-internationalization'
@@ -11,12 +11,16 @@ const LANGUAGES = [
 ]
 const LOCALIZED_TYPES = ['catalogItem']
 
-export default defineConfig({
-  name: 'default',
-  title: 'clara-martinez-website',
+const newDocumentOptions: NewDocumentOptionsResolver = (prev) =>
+  prev.filter(
+    (item) =>
+      item.templateId !== 'siteSettings' &&
+      !LOCALIZED_TYPES.includes(item.templateId as string) &&
+      !LOCALIZED_TYPES.some((schemaType) => item.templateId === `${schemaType}-parameterized`),
+  )
 
+const sharedConfig = {
   projectId: 'o65rl8jj',
-  dataset: 'production',
 
   plugins: [
     structureTool({structure}),
@@ -27,19 +31,26 @@ export default defineConfig({
     }),
   ],
 
-  document: {
-    newDocumentOptions: (prev) =>
-      prev.filter(
-        (item) =>
-          item.templateId !== 'siteSettings' &&
-          !LOCALIZED_TYPES.includes(item.templateId as string) &&
-          !LOCALIZED_TYPES.some(
-            (schemaType) => item.templateId === `${schemaType}-parameterized`,
-          ),
-      ),
-  },
+  document: {newDocumentOptions},
 
   schema: {
     types: schemaTypes,
   },
-})
+}
+
+export default defineConfig([
+  {
+    ...sharedConfig,
+    name: 'production',
+    title: 'clara-martinez-website',
+    basePath: '/production',
+    dataset: 'production',
+  },
+  {
+    ...sharedConfig,
+    name: 'testing',
+    title: 'clara-martinez-website (testing)',
+    basePath: '/testing',
+    dataset: 'testing',
+  },
+])
