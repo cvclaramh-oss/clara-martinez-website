@@ -44,7 +44,7 @@ const featuredProjects = (await getFeaturedProjects(locale)).slice(0, limit)
           <Card
             img={urlFor(project.data.image, 640, 360)}
             imageAlt={project.data.imageAlt}
-            url={getHref(`/projects/${project.slug}`, false, locale)}
+            url={getHref(`/${project.data.category}/${project.slug}`, false, locale)}
             headingLevel="h2"
             title={project.data.title}
             footer={project.data.author ? t('featured_projects.author_prefix') + project.data.author : undefined}

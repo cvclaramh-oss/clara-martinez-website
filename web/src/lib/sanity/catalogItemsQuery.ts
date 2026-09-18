@@ -12,6 +12,7 @@ export interface CatalogItem {
     title: string
     subtitle: string
     author: string
+    category: ProjectCategory
     tags: string[]
     image: SanityImage
     imageAlt: string
@@ -27,6 +28,7 @@ const catalogItemProjection = `{
     title,
     subtitle,
     "author": coalesce(createdBy, ""),
+    category,
     "tags": coalesce(tags, []),
     "image": image,
     "imageAlt": image.alt,
