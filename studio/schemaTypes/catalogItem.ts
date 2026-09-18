@@ -1,5 +1,32 @@
-import {defineType, defineField, defineArrayMember} from 'sanity'
+import {defineType, defineField, defineArrayMember, type SlugIsUniqueValidator} from 'sanity'
 import {DocumentTextIcon} from '@sanity/icons/DocumentText'
+
+/**
+ * Sanity's default slug uniqueness check ignores `language`, so the same
+ * slug can't be reused across ca/es translations of the same item. This
+ * mirrors Sanity's own default implementation (same GROQ shape, same use
+ * of `sanity::versionOf()` for the draft/published pair) and adds only
+ * the `language` constraint.
+ */
+const isSlugUniquePerLanguage: SlugIsUniqueValidator = (slug, context) => {
+  const {getClient, document} = context
+  if (!document) return true
+  const language = (document as {language?: string}).language
+  const constraints = [
+    '_type == $docType',
+    'language == $language',
+    '!sanity::versionOf($published)',
+    'slug.current == $slug',
+  ].join(' && ')
+  return getClient({apiVersion: '2026-09-17'})
+    .withConfig({perspective: 'raw'})
+    .fetch<boolean>(`!defined(*[${constraints}][0]._id)`, {
+      docType: document._type,
+      language,
+      published: document._id.replace(/^drafts\./, ''),
+      slug,
+    })
+}
 
 const blockContent = defineArrayMember({
   type: 'block',
@@ -168,7 +195,7 @@ export const catalogItem = defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: {source: 'title', maxLength: 96},
+      options: {source: 'title', maxLength: 96, isUnique: isSlugUniquePerLanguage},
       fieldset: 'card',
       validation: (rule) =>
         rule.required().custom((slug) => {
