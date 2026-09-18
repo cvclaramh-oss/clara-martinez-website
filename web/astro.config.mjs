@@ -10,7 +10,7 @@ const viteConfig = {
   css: {
     preprocessorOptions: {
       scss: {
-        loadPaths: [fileURLToPath(new URL('./src/assets', import.meta.url))],
+        loadPaths: [fileURLToPath(new URL('./src/styles', import.meta.url))],
         logger: {
           warn: () => {},
         },
@@ -26,8 +26,6 @@ const viteConfig = {
       '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
       '@pages': fileURLToPath(new URL('./src/pages', import.meta.url)),
       '@public': fileURLToPath(new URL('./public', import.meta.url)),
-      '@post-images': fileURLToPath(new URL('./public/posts', import.meta.url)),
-      '@project-images': fileURLToPath(new URL('./public/projects', import.meta.url)),
       '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
       '@lib': fileURLToPath(new URL('./src/lib', import.meta.url)),
       '@constants': fileURLToPath(new URL('./src/constants', import.meta.url)),
