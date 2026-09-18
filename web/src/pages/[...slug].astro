@@ -1,13 +1,13 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
-import HomePage from '@components/pages/home.astro'
-import ContactPage from '@components/pages/contact.astro'
-import SitemapPage from '@components/pages/sitemap.astro'
-import ThankYouPage from '@components/pages/thank-you.astro'
-import AccessibilityStatementPage from '@components/pages/accessibility-statement.astro'
-import ProjectListing from '@components/pages/project-listing.astro'
-import ProjectDetail from '@components/pages/project-detail.astro'
-import ComingSoonPage from '@components/pages/coming-soon.astro'
+import HomeView from '@views/HomeView.astro'
+import ContactView from '@views/ContactView.astro'
+import SitemapView from '@views/SitemapView.astro'
+import ThankYouView from '@views/ThankYouView.astro'
+import AccessibilityStatementView from '@views/AccessibilityStatementView.astro'
+import ProjectListingView from '@views/ProjectListingView.astro'
+import ProjectDetailView from '@views/ProjectDetailView.astro'
+import ComingSoonView from '@views/ComingSoonView.astro'
 import { getProjectsByCategory } from '@lib/sanity/catalogItemsQuery'
 import { useTranslations } from '@utils/i18n'
 import type { Locale } from '@utils/i18n'
@@ -140,13 +140,13 @@ const seoDescription = {
 ---
 
 <DefaultLayout title={seoTitle} description={seoDescription} useTitleTemplate={!isHome}>
-  {pageType === 'home' && <HomePage />}
-  {pageType === 'projects' && <ProjectListing pageNum={pageNum} />}
-  {pageType === 'tag' && tag && <ProjectListing pageNum={pageNum} currentTag={tag} />}
-  {pageType === 'project' && projectId && <ProjectDetail projectId={projectId} />}
-  {pageType === 'contact' && <ContactPage />}
-  {pageType === 'sitemap' && <SitemapPage />}
-  {pageType === 'thank-you' && <ThankYouPage />}
-  {pageType === 'accessibility-statement' && <AccessibilityStatementPage />}
-  {pageType === 'coming-soon' && section && <ComingSoonPage sectionLabel={sectionLabel} />}
+  {pageType === 'home' && <HomeView />}
+  {pageType === 'projects' && <ProjectListingView pageNum={pageNum} />}
+  {pageType === 'tag' && tag && <ProjectListingView pageNum={pageNum} currentTag={tag} />}
+  {pageType === 'project' && projectId && <ProjectDetailView projectId={projectId} />}
+  {pageType === 'contact' && <ContactView />}
+  {pageType === 'sitemap' && <SitemapView />}
+  {pageType === 'thank-you' && <ThankYouView />}
+  {pageType === 'accessibility-statement' && <AccessibilityStatementView />}
+  {pageType === 'coming-soon' && section && <ComingSoonView sectionLabel={sectionLabel} />}
 </DefaultLayout>
