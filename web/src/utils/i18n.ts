@@ -27,16 +27,23 @@ export function getLangFromUrl(url: URL): Locale {
   return url.pathname.startsWith('/es') ? 'es' : 'ca'
 }
 
+const defaultLocale: Locale = 'ca'
+
+function lookup(dict: unknown, key: string): string | undefined {
+  let value: any = dict
+  for (const k of key.split('.')) {
+    value = value?.[k]
+  }
+  return typeof value === 'string' ? value : undefined
+}
+
 export function useTranslations(locale: string) {
   return function t(key: string): string {
-    const keys = key.split('.')
-    let value: any = translations[locale as keyof typeof translations]
-
-    for (const k of keys) {
-      value = value?.[k]
-    }
-
-    return value || key
+    return (
+      lookup(translations[locale as keyof typeof translations], key) ??
+      lookup(translations[defaultLocale], key) ??
+      key
+    )
   }
 }
 
