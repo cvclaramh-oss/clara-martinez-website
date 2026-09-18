@@ -1,6 +1,6 @@
 // Minimal Portable Text -> HTML renderer.
 // The `descriptionLong` schema only allows: paragraph/h2 styles, bullet
-// lists, and bold/italic/link marks (see studio/schemaTypes/project.ts) —
+// lists, and bold/italic/link marks (see studio/schemaTypes/catalogItem.ts) —
 // small enough that a hand-rolled renderer beats adding a dependency for it.
 
 interface PortableTextSpan {

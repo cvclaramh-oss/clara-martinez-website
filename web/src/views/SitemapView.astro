@@ -2,12 +2,12 @@
 import PageHeader from '@components/PageHeader.astro'
 import { Heading, Notification } from 'accessible-astro-components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
-import { getProjectsByCategory } from '@lib/sanity/catalogItemsQuery'
+import { getCatalogItemsByCategory } from '@lib/sanity/catalogItemsQuery'
 
 const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 
-const projects = await getProjectsByCategory(locale, 'projects')
+const projects = await getCatalogItemsByCategory(locale, 'projects')
 
 const staticPages = [
   {

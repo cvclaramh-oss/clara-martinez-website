@@ -1,6 +1,6 @@
 import { slugify } from './slugify'
 
-export const PROJECTS_PAGE_SIZE = 6
+export const CATALOGS_PAGE_SIZE = 6
 
 export interface Tag {
   label: string

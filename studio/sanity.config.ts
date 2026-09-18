@@ -9,7 +9,7 @@ const LANGUAGES = [
   {id: 'ca', title: 'Català'},
   {id: 'es', title: 'Español'},
 ]
-const LOCALIZED_TYPES = ['project']
+const LOCALIZED_TYPES = ['catalogItem']
 
 export default defineConfig({
   name: 'default',

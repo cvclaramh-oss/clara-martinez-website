@@ -1,4 +1,4 @@
-/** Matches studio/schemaTypes/project.ts `category` and `subcategory` field options. */
+/** Matches studio/schemaTypes/catalogItem.ts `category` and `subcategory` field options. */
 export const CATEGORY_LABEL_KEYS: Record<string, string> = {
   projects: 'nav.projects',
   materials: 'nav.materials.label',
@@ -24,7 +24,7 @@ export const COMING_SOON_SECTIONS = [
   'bio',
 ] as const
 
-// `bio` isn't a project category — it's a standalone page — so it's not in CATEGORY_LABEL_KEYS.
+// `bio` isn't a catalogItem category — it's a standalone page — so it's not in CATEGORY_LABEL_KEYS.
 export const SECTION_LABEL_KEYS: Record<string, string> = {
   ...CATEGORY_LABEL_KEYS,
   bio: 'nav.bio',

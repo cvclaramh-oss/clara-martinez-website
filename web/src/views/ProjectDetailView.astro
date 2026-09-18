@@ -4,7 +4,7 @@ import SocialShares from '@components/SocialShares.astro'
 import { Heading, Link } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
-import { getProjectsByCategory } from '@lib/sanity/catalogItemsQuery'
+import { getCatalogItemsByCategory } from '@lib/sanity/catalogItemsQuery'
 import { urlFor } from '@lib/sanity/imageUrlBuilder'
 import { portableTextToHtml } from '@lib/sanity/renders/portableTextRender'
 
@@ -25,7 +25,7 @@ const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 const { projectId } = Astro.props
 
-const projects = await getProjectsByCategory(locale, 'projects')
+const projects = await getCatalogItemsByCategory(locale, 'projects')
 const project = projects.find((entry) => entry.slug === projectId)
 const bodyHtml = project ? portableTextToHtml(project.data.descriptionLong) : ''
 

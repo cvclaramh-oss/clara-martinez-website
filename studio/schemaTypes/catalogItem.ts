@@ -111,9 +111,9 @@ const sectionMember = defineArrayMember({
   ],
 })
 
-export const project = defineType({
-  name: 'project',
-  title: 'Projecte',
+export const catalogItem = defineType({
+  name: 'catalogItem',
+  title: 'Element',
   type: 'document',
   icon: DocumentTextIcon,
   fieldsets: [

@@ -40,7 +40,7 @@ function categoryList(S: StructureBuilder, title: string, value: string) {
     .child(
       S.documentList()
         .id(`${id}-list`)
-        .schemaType('project')
+        .schemaType('catalogItem')
         .filter('category == $cat')
         .params({cat: value}),
     )
@@ -53,7 +53,7 @@ function materialList(S: StructureBuilder, title: string, id: string, subcategor
     .child(
       S.documentList()
         .id(`${id}-list`)
-        .schemaType('project')
+        .schemaType('catalogItem')
         .filter('category == $cat && subcategory == $sub')
         .params({cat: 'materials', sub: subcategory}),
     )
@@ -63,7 +63,7 @@ export const structure: StructureResolver = (S) =>
   S.list()
     .title('Contingut')
     .items([
-      S.documentTypeListItem('project').title('Tot el contingut'),
+      S.documentTypeListItem('catalogItem').title('Tot el contingut'),
       S.divider(),
       categoryList(S, 'Projectes', 'projects'),
       S.listItem()
@@ -79,7 +79,7 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentList()
                     .id('materials-tots-list')
-                    .schemaType('project')
+                    .schemaType('catalogItem')
                     .filter("category == 'materials'"),
                 ),
               S.divider(),
