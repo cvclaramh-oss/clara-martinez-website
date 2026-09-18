@@ -1,6 +1,6 @@
 import { defineThemeConfig } from '@utils/defineThemeConfig'
 import previewImage from '@assets/img/social-preview-image.png'
-import logoImage from '@assets/img/logo.svg'
+import logoImage from '@assets/img/logoImageRosa.svg'
 
 export default defineThemeConfig({
   name: 'Clara Martínez Hernández',
@@ -9,8 +9,8 @@ export default defineThemeConfig({
   seo: {
     title: 'meta.title',
     description: 'meta.description',
-    author: 'Clara Martínez Hernández',
-    image: previewImage, // Can also be a string e.g. '/social-preview-image.png', //TODO
+    author: 'Clara Martínez Hernández', 
+    image: previewImage,
   },
   navigation: {
     darkmode: true,
@@ -84,6 +84,5 @@ export default defineThemeConfig({
       icon: 'lucide:linkedin',
       external: true }
   ],
-  // Provisional — pending Clara's business email (see docs/private/daily.md, 2026-09-17).
-  contactEmail: 'cvclaramh@gmail.com',
+  contactEmail: 'hola@claramartinezhernandez.net',
 })
