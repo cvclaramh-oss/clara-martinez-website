@@ -1,11 +1,7 @@
-import ca from '../i18n/ca.json'
-import es from '../i18n/es.json'
 import { routes } from '../i18n/routes'
 import { ui } from '../i18n/ui'
 
-const translations = { ca, es }
-
-export type Locale = keyof typeof translations
+export type Locale = keyof typeof ui
 export type TranslationKey = keyof (typeof ui)['ca']
 
 /**
@@ -31,21 +27,10 @@ export function getLangFromUrl(url: URL): Locale {
 
 const defaultLocale: Locale = 'ca'
 
-function lookup(dict: unknown, key: string): string | undefined {
-  let value: any = dict
-  for (const k of key.split('.')) {
-    value = value?.[k]
-  }
-  return typeof value === 'string' ? value : undefined
-}
-
-function find(locale: Locale, key: string): string | undefined {
-  return (ui[locale] as Record<string, string> | undefined)?.[key] ?? lookup(translations[locale], key)
-}
-
 export function useTranslations(locale: string) {
   return function t(key: TranslationKey): string {
-    return find(locale as Locale, key) ?? find(defaultLocale, key) ?? key
+    const dictionary = ui[locale as Locale] as Record<TranslationKey, string> | undefined
+    return dictionary?.[key] ?? ui[defaultLocale][key] ?? key
   }
 }
 

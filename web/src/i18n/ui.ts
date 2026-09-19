@@ -1,4 +1,4 @@
-// Flat dictionary; keys here win over ca.json/es.json. `es` is typed from `ca`, so both languages always share the same keys.
+// Flat dictionary of every text shown on the site. `es` is typed from `ca`, so both languages always share the same keys.
 // One key per concept, named by what it is, not where it is used. Page names are `<page>.label`, so a different heading can later be `<page>.title`.
 // Prefix only zone-specific text (`footer.rights`).
 // Sections in order: metadata (SEO only), personal data, shared names, common actions, navigation accessibility, PAGES (one subsection per page). Alphabetical inside each.
