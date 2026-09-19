@@ -8,14 +8,9 @@
     "close_menu": "Tancar el menú de navegació",
     "submenu": "Desplegar el submenú de"
   },
-  "hero": {
-    "cta_primary": "Contactar",
-    "cta_secondary": "Veure projectes"
-  },
   "featured_projects": {
     "title": "Projectes destacats",
-    "author_prefix": "Autor/a: ",
-    "view_all": "Veure tots els projectes"
+    "author_prefix": "Autor/a: "
   },
   "projects": {
     "subtitle": "Col·lecció de projectes educatius, materials didàctics i investigacions en educació afectivosexual, perspectiva de gènere i transformació comunitària.",
@@ -101,7 +96,6 @@
     "rights": "Tots els drets reservats.",
     "portfolio_index": "Índex de continguts",
     "contact_heading": "Contacte & documentació",
-    "cv_download": "Descarregar CV (PDF)",
     "accessibility_heading": "Accessibilitat & criteris",
     "accessibility_description": "Arquitectura web d'alt contrast, tipografia llegible i navegació semàntica conforme a WCAG 2.2 nivell AA.",
     "wcag_badge": "WCAG 2.2 AA",

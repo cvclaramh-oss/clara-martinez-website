@@ -35,6 +35,9 @@ const ca = {
 
   // Common actions
   back_home: "Tornar a l'inici",
+  button_contact: 'Contactar',
+  button_cv_download: 'Descarregar CV (PDF)',
+  view_all_projects: 'Veure tots els projectes',
 } as const
 
 const es: Record<keyof typeof ca, string> = {
@@ -69,6 +72,9 @@ const es: Record<keyof typeof ca, string> = {
 
   // Common actions
   back_home: 'Volver al inicio',
+  button_contact: 'Contactar',
+  button_cv_download: 'Descargar CV (PDF)',
+  view_all_projects: 'Ver todos los proyectos',
 }
 
 export const ui = { ca, es }

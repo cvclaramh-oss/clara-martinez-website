@@ -8,14 +8,9 @@
     "close_menu": "Cerrar el menú de navegación",
     "submenu": "Desplegar el submenú de"
   },
-  "hero": {
-    "cta_primary": "Contactar",
-    "cta_secondary": "Ver proyectos"
-  },
   "featured_projects": {
     "title": "Proyectos destacados",
-    "author_prefix": "Autor/a: ",
-    "view_all": "Ver todos los proyectos"
+    "author_prefix": "Autor/a: "
   },
   "projects": {
     "subtitle": "Colección de proyectos educativos, materiales didácticos e investigaciones en educación afectivosexual, perspectiva de género y transformación comunitaria.",
@@ -101,7 +96,6 @@
     "rights": "Todos los derechos reservados.",
     "portfolio_index": "Índice de contenidos",
     "contact_heading": "Contacto & documentación",
-    "cv_download": "Descargar CV (PDF)",
     "accessibility_heading": "Accesibilidad & criterios",
     "accessibility_description": "Arquitectura web de alto contraste, tipografía legible y navegación semántica conforme a WCAG 2.2 nivel AA.",
     "wcag_badge": "WCAG 2.2 AA",
