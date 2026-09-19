@@ -17,7 +17,7 @@ Portfolio profesional para Clara Martínez Hernández, educadora social, formado
 ## Base legal / atribución
 
 - Starter y `accessible-astro-components`: MIT, sin atribución visible obligatoria en la web pública.
-- Conservar `LICENSE` del starter en la raíz, sin tocar.
+- Conservar `web/LICENSE` del starter, sin tocar.
 
 ## Skills disponibles — cuándo usar cada una
 
