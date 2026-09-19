@@ -30,22 +30,6 @@
     "notice": "Esto es una prueba del sistema de validación de formularios, no se ha enviado ningún correo electrónico.",
     "send_another": "Enviar otro mensaje"
   },
-  "breadcrumb": {
-    "tag": "Etiqueta"
-  },
-  "footer": {
-    "accessibility": "Accesibilidad",
-    "rights": "Todos los derechos reservados.",
-    "portfolio_index": "Índice de contenidos",
-    "contact_heading": "Contacto & documentación",
-    "accessibility_heading": "Accesibilidad & criterios",
-    "accessibility_description": "Arquitectura web de alto contraste, tipografía legible y navegación semántica conforme a WCAG 2.2 nivel AA.",
-    "wcag_badge": "WCAG 2.2 AA",
-    "cta_eyebrow": "Colaboraciones & contratación",
-    "cta_heading": "¿Tienes un proyecto o quieres organizar una formación?",
-    "cta_description": "Asesoro a administraciones, centros educativos y entidades sociales para construir programas efectivos con solvencia técnica y visión transformadora.",
-    "cta_button": "Iniciar conversación"
-  },
   "sitemap": {
     "subtitle": "Una visión completa de todas las páginas y contenidos disponibles, organizados para una navegación fácil.",
     "main_pages": "Páginas principales",

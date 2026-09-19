@@ -1,7 +1,7 @@
 // Flat dictionary; keys here win over ca.json/es.json. `es` is typed from `ca`, so both languages always share the same keys.
 // One key per concept, named by what it is, not where it is used. Page names are `<page>.label`, so a different heading can later be `<page>.title`.
 // Prefix only zone-specific text (`footer.rights`).
-// Sections in order: metadata (SEO only), personal data, page names, common actions, navigation accessibility, PAGES (one subsection per page). Alphabetical inside each.
+// Sections in order: metadata (SEO only), personal data, shared names, common actions, navigation accessibility, PAGES (one subsection per page). Alphabetical inside each.
 
 const ca = {
   // Metadata (SEO only)
@@ -15,10 +15,11 @@ const ca = {
     "Disseny i desenvolupament de projectes educatius, materials i processos de formació des d'una perspectiva feminista, interseccional i crítica.",
   tagline: 'Educació · Gènere · Sexualitats',
 
-  // Page names
+  // Shared names
   'accessibility.label': "Declaració d'accessibilitat",
   'home.label': 'Inici',
   'sitemap.label': 'Mapa del lloc',
+  'tag.label': 'Etiqueta',
   'thank_you.label': 'Gràcies',
 
   // Common actions
@@ -34,6 +35,20 @@ const ca = {
   'nav.lang_ca': 'Canviar a la versió en català',
   'nav.lang_es': 'Canviar a la versió en espanyol',
   'nav.open_menu': 'Obrir el menú de navegació',
+
+  // Footer
+  'footer.accessibility_description':
+    "Arquitectura web d'alt contrast, tipografia llegible i navegació semàntica conforme a WCAG 2.2 nivell AA.",
+  'footer.accessibility_heading': 'Accessibilitat & criteris',
+  'footer.contact_heading': 'Contacte & documentació',
+  'footer.cta_button': 'Iniciar conversa',
+  'footer.cta_description':
+    'Assessoro administracions, centres educatius i entitats socials per construir programes efectius amb solvència tècnica i visió transformadora.',
+  'footer.cta_eyebrow': 'Col·laboracions & contractació',
+  'footer.cta_heading': 'Tens un projecte o vols organitzar una formació?',
+  'footer.portfolio_index': 'Índex de continguts',
+  'footer.rights': 'Tots els drets reservats.',
+  'footer.wcag_badge': 'WCAG 2.2 AA',
 
   // PAGES
 
@@ -119,10 +134,11 @@ const es: Record<keyof typeof ca, string> = {
     'Diseño y desarrollo proyectos educativos, materiales y procesos de formación desde una perspectiva feminista, interseccional y crítica.',
   tagline: 'Educación · Género · Sexualidades',
 
-  // Page names
+  // Shared names
   'accessibility.label': 'Declaración de accesibilidad',
   'home.label': 'Inicio',
   'sitemap.label': 'Mapa del sitio',
+  'tag.label': 'Etiqueta',
   'thank_you.label': 'Gracias',
 
   // Common actions
@@ -138,6 +154,20 @@ const es: Record<keyof typeof ca, string> = {
   'nav.lang_ca': 'Cambiar a la versión en catalán',
   'nav.lang_es': 'Cambiar a la versión en español',
   'nav.open_menu': 'Abrir el menú de navegación',
+
+  // Footer
+  'footer.accessibility_description':
+    'Arquitectura web de alto contraste, tipografía legible y navegación semántica conforme a WCAG 2.2 nivel AA.',
+  'footer.accessibility_heading': 'Accesibilidad & criterios',
+  'footer.contact_heading': 'Contacto & documentación',
+  'footer.cta_button': 'Iniciar conversación',
+  'footer.cta_description':
+    'Asesoro a administraciones, centros educativos y entidades sociales para construir programas efectivos con solvencia técnica y visión transformadora.',
+  'footer.cta_eyebrow': 'Colaboraciones & contratación',
+  'footer.cta_heading': '¿Tienes un proyecto o quieres organizar una formación?',
+  'footer.portfolio_index': 'Índice de contenidos',
+  'footer.rights': 'Todos los derechos reservados.',
+  'footer.wcag_badge': 'WCAG 2.2 AA',
 
   // PAGES
 
