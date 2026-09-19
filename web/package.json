@@ -10,7 +10,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "check": "astro check"
   },
   "keywords": [
     "astro",
@@ -27,6 +28,7 @@
     "directory": "web"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@astrojs/partytown": "^2.1.7",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^9.39.2",
@@ -48,7 +50,8 @@
     "sanitize-html": "^2.17.3",
     "sass": "^1.99.0",
     "svgo": "^4.0.1",
-    "tailwindcss": "^4.2.4"
+    "tailwindcss": "^4.2.4",
+    "typescript": "^6.0.3"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
