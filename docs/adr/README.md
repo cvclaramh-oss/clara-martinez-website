@@ -13,3 +13,4 @@
 | [0009](0009-token-governance-colores.md) | Gobernanza de tokens de color (fuente única) | Vigente |
 | [0010](0010-navegacion-dropdown-accesible.md) | Ítems de navegación con subpáginas: solo dropdown | Vigente |
 | [0011](0011-submenus-movil-acordeon.md) | Submenús del menú móvil: acordeón en flujo, no overlay | Vigente |
+| [0012](0012-arquitectura-capa-datos-sanity.md) | Arquitectura de la capa de datos Sanity | Vigente |
