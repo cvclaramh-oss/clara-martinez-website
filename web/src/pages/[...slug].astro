@@ -91,11 +91,10 @@ export async function getStaticPaths() {
       const tagProjects = filterByTagSlug(projects, tag.slug)
       const tagPages = Math.max(1, Math.ceil(tagProjects.length / CATALOGS_PAGE_SIZE))
       for (let pageNum = 1; pageNum <= tagPages; pageNum++) {
+        const pageSuffix = pageNum > 1 ? `/${pageNum}` : ''
         paths.push({
           params: {
-            slug: `${prefix}${routeSegment(locale, 'projects')}/${routeSegment(locale, 'tag')}/${tag.slug}${
-              pageNum > 1 ? `/${pageNum}` : ''
-            }`,
+            slug: `${prefix}${routeSegment(locale, 'projects')}/${routeSegment(locale, 'tag')}/${tag.slug}${pageSuffix}`,
           },
           props: { locale, pageType: 'tag', tag, pageNum },
         })
