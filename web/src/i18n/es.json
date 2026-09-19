@@ -1,11 +1,5 @@
 {
-  "meta": {
-    "title": "Clara Martínez Hernández | Educación, género y sexualidades",
-    "description": "Diseño y desarrollo de proyectos educativos, materiales y procesos de formación desde una perspectiva feminista, interseccional y crítica.",
-    "author": "Clara Martínez Hernández"
-  },
   "nav": {
-    "tagline": "Educación · Género · Sexualidades",
     "a11y": "Menú de navegación principal",
     "lang_ca": "Cambiar a la versión en catalán",
     "lang_es": "Cambiar a la versión en español",
@@ -15,9 +9,6 @@
     "submenu": "Desplegar el submenú de"
   },
   "hero": {
-    "title": "Clara Martínez Hernández",
-    "subtitle": "Educación · Género · Sexualidades · Proyectos",
-    "description": "Diseño y desarrollo proyectos educativos, materiales y procesos de formación desde una perspectiva feminista, interseccional y crítica.",
     "cta_primary": "Contactar",
     "cta_secondary": "Ver proyectos"
   },

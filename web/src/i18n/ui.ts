@@ -1,9 +1,20 @@
 // Flat dictionary; keys here win over ca.json/es.json. `es` is typed from `ca`, so both languages always share the same keys.
 // One key per concept, named by what it is, not where it is used. Page names are `<page>.label`, so a different heading can later be `<page>.title`.
 // Prefix only zone-specific text (`footer.rights`).
-// Sections in order: page names, common actions, zone-specific text, accessibility labels. Alphabetical inside each.
+// Sections in order: metadata (SEO only), personal data, page names, common actions, zone-specific text, accessibility labels. Alphabetical inside each.
 
 const ca = {
+  // Metadata (SEO only)
+  'meta.description':
+    "Disseny i desenvolupament de projectes educatius, materials i processos de formació des d'una perspectiva feminista, interseccional i crítica.",
+  'meta.title': 'Clara Martínez Hernández | Educació, gènere i sexualitats',
+
+  // Personal data
+  name: 'Clara Martínez Hernández',
+  short_bio:
+    "Disseny i desenvolupament de projectes educatius, materials i processos de formació des d'una perspectiva feminista, interseccional i crítica.",
+  tagline: 'Educació · Gènere · Sexualitats',
+
   // Page names
   'accessibility.label': "Declaració d'accessibilitat",
   'bio.label': 'Bio',
@@ -27,6 +38,17 @@ const ca = {
 } as const
 
 const es: Record<keyof typeof ca, string> = {
+  // Metadata (SEO only)
+  'meta.description':
+    'Diseño y desarrollo de proyectos educativos, materiales y procesos de formación desde una perspectiva feminista, interseccional y crítica.',
+  'meta.title': 'Clara Martínez Hernández | Educación, género y sexualidades',
+
+  // Personal data
+  name: 'Clara Martínez Hernández',
+  short_bio:
+    'Diseño y desarrollo proyectos educativos, materiales y procesos de formación desde una perspectiva feminista, interseccional y crítica.',
+  tagline: 'Educación · Género · Sexualidades',
+
   // Page names
   'accessibility.label': 'Declaración de accesibilidad',
   'bio.label': 'Bio',
