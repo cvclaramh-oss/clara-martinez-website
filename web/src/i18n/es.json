@@ -1,26 +1,7 @@
 {
-  "nav": {
-    "a11y": "Menú de navegación principal",
-    "lang_ca": "Cambiar a la versión en catalán",
-    "lang_es": "Cambiar a la versión en español",
-    "darkmode": "Cambiar modo de luz",
-    "open_menu": "Abrir el menú de navegación",
-    "close_menu": "Cerrar el menú de navegación",
-    "submenu": "Desplegar el submenú de"
-  },
   "featured_projects": {
     "title": "Proyectos destacados",
     "author_prefix": "Autor/a: "
-  },
-  "projects": {
-    "subtitle": "Colección de proyectos educativos, materiales didácticos e investigaciones en educación afectivosexual, perspectiva de género y transformación comunitaria.",
-    "tags": "Etiquetas",
-    "all": "Todos los proyectos",
-    "range_prefix": "Mostrando los proyectos",
-    "range_suffix": "de un total de",
-    "one": "proyecto",
-    "many": "proyectos",
-    "pagination_aria": "Paginación de proyectos"
   },
   "tag": {
     "subtitle_prefix": "Proyectos con la etiqueta"
@@ -67,10 +48,7 @@
       "email_label": "Correo electrónico:",
       "address_label": "Dirección:",
       "hours_label": "Horario de atención:",
-      "hours": "Pendiente de confirmar",
-      "social_facebook": "Ir a mi página de Facebook, se abre en una pestaña nueva",
-      "social_twitter": "Ir a mi página de Twitter, se abre en una pestaña nueva",
-      "social_linkedin": "Ir a mi perfil de LinkedIn, se abre en una pestaña nueva"
+      "hours": "Pendiente de confirmar"
     }
   },
   "page_404": {
@@ -90,8 +68,6 @@
     "tag": "Etiqueta"
   },
   "footer": {
-    "sr_only": "Pie de página",
-    "navigation": "Navegación",
     "accessibility": "Accesibilidad",
     "rights": "Todos los derechos reservados.",
     "portfolio_index": "Índice de contenidos",

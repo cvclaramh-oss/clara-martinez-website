@@ -1,26 +1,7 @@
 {
-  "nav": {
-    "a11y": "Menú de navegació principal",
-    "lang_ca": "Canviar a la versió en català",
-    "lang_es": "Canviar a la versió en espanyol",
-    "darkmode": "Canviar mode de llum",
-    "open_menu": "Obrir el menú de navegació",
-    "close_menu": "Tancar el menú de navegació",
-    "submenu": "Desplegar el submenú de"
-  },
   "featured_projects": {
     "title": "Projectes destacats",
     "author_prefix": "Autor/a: "
-  },
-  "projects": {
-    "subtitle": "Col·lecció de projectes educatius, materials didàctics i investigacions en educació afectivosexual, perspectiva de gènere i transformació comunitària.",
-    "tags": "Etiquetes",
-    "all": "Tots els projectes",
-    "range_prefix": "Mostrant els projectes",
-    "range_suffix": "d'un total de",
-    "one": "projecte",
-    "many": "projectes",
-    "pagination_aria": "Paginació de projectes"
   },
   "tag": {
     "subtitle_prefix": "Projectes amb l'etiqueta"
@@ -67,10 +48,7 @@
       "email_label": "Correu electrònic:",
       "address_label": "Adreça:",
       "hours_label": "Horari d'atenció:",
-      "hours": "Pendent de confirmar",
-      "social_facebook": "Vés a la meva pàgina de Facebook, s'obre en una pestanya nova",
-      "social_twitter": "Vés a la meva pàgina de Twitter, s'obre en una pestanya nova",
-      "social_linkedin": "Vés al meu perfil de LinkedIn, s'obre en una pestanya nova"
+      "hours": "Pendent de confirmar"
     }
   },
   "page_404": {
@@ -90,8 +68,6 @@
     "tag": "Etiqueta"
   },
   "footer": {
-    "sr_only": "Peu de pàgina",
-    "navigation": "Navegació",
     "accessibility": "Accessibilitat",
     "rights": "Tots els drets reservats.",
     "portfolio_index": "Índex de continguts",
