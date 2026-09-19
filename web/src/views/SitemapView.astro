@@ -11,27 +11,27 @@ const projects = await getCatalogItemsByCategory(locale, 'projects')
 
 const staticPages = [
   {
-    title: t('sitemap.pages.home.title'),
+    title: t('home.label'),
     url: '/',
     description: t('sitemap.pages.home.description'),
   },
   {
-    title: t('sitemap.pages.projects.title'),
+    title: t('projects.label'),
     url: '/projects',
     description: t('sitemap.pages.projects.description'),
   },
   {
-    title: t('sitemap.pages.contact.title'),
+    title: t('contact.label'),
     url: '/contact',
     description: t('sitemap.pages.contact.description'),
   },
   {
-    title: t('sitemap.pages.accessibility_statement.title'),
+    title: t('accessibility.label'),
     url: '/accessibility-statement',
     description: t('sitemap.pages.accessibility_statement.description'),
   },
   {
-    title: t('sitemap.pages.thank_you.title'),
+    title: t('thank_you.label'),
     url: '/thank-you',
     description: t('sitemap.pages.thank_you.description'),
   },
@@ -39,7 +39,7 @@ const staticPages = [
 ---
 
   <PageHeader
-    title={t('sitemap.title')}
+    title={t('sitemap.label')}
     subtitle={t('sitemap.subtitle')}
     bgType="gradient"
   />
@@ -69,7 +69,7 @@ const staticPages = [
       </div>
 
       <div>
-        <Heading level="h2">{t('sitemap.portfolio_projects')}</Heading>
+        <Heading level="h2">{t('projects.label')}</Heading>
         <p class="mb-6">
           {t('sitemap.explore')} {projects.length} {t('sitemap.projects_suffix')}
         </p>

@@ -113,7 +113,7 @@ const sanitizedSubtitle: string = subtitle
 
           return (
             <Breadcrumbs>
-              <BreadcrumbsItem href={getHref('/', false, locale)} label={t('footer.home')} />
+              <BreadcrumbsItem href={getHref('/', false, locale)} label={t('home.label')} />
               {segments.map((segment, index) => {
                 if (joinLastBreadcrumb && index === segments.length - 1) {
                   return null

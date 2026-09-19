@@ -1,6 +1,7 @@
 import ca from '../i18n/ca.json'
 import es from '../i18n/es.json'
 import { routes } from '../i18n/routes'
+import { ui } from '../i18n/ui'
 
 const translations = { ca, es }
 
@@ -37,13 +38,13 @@ function lookup(dict: unknown, key: string): string | undefined {
   return typeof value === 'string' ? value : undefined
 }
 
+function find(locale: Locale, key: string): string | undefined {
+  return (ui[locale] as Record<string, string> | undefined)?.[key] ?? lookup(translations[locale], key)
+}
+
 export function useTranslations(locale: string) {
   return function t(key: string): string {
-    return (
-      lookup(translations[locale as keyof typeof translations], key) ??
-      lookup(translations[defaultLocale], key) ??
-      key
-    )
+    return find(locale as Locale, key) ?? find(defaultLocale, key) ?? key
   }
 }
 

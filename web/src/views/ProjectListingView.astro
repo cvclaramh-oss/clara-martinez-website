@@ -43,7 +43,7 @@ function pageHref(page: number, tag?: Tag): string {
   return getHref(page === 1 ? root : `${root}/${page}`, false, locale)
 }
 
-const headerTitle = currentTag ? `${t('projects.title')}: ${currentTag.label}` : t('projects.title')
+const headerTitle = currentTag ? `${t('projects.label')}: ${currentTag.label}` : t('projects.label')
 const headerSubtitle = currentTag
   ? `${t('tag.subtitle_prefix')} «${currentTag.label}». ${filteredProjects.length} ${plural(filteredProjects.length)}`
   : t('projects.subtitle')

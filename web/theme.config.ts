@@ -18,62 +18,62 @@ export default defineThemeConfig({
     items: [
       {
         type: 'link',
-        label: 'nav.home',
+        label: 'home.label',
         href: '/',
       },
       {
         type: 'link',
-        label: 'nav.projects',
+        label: 'projects.label',
         href: '/projects',
       },
       {
-        label: 'nav.materials.label',
+        label: 'materials.label',
         type: 'dropdown',
         items: [
           {
-            label: 'nav.materials.all',
+            label: 'materials.all.label',
             href: '/materials',
           },
           {
-            label: 'nav.materials.guides',
+            label: 'materials.guides.label',
             href: '/materials-guides',
           },
           {
-            label: 'nav.materials.games',
+            label: 'materials.games.label',
             href: '/materials-games',
           },
           {
-            label: 'nav.materials.publications',
+            label: 'materials.publications.label',
             href: '/materials-publications',
           },
           {
-            label: 'nav.materials.campaigns',
+            label: 'materials.campaigns.label',
             href: '/materials-campaigns',
           },
           {
-            label: 'nav.materials.audiovisual',
+            label: 'materials.audiovisual.label',
             href: '/materials-audiovisual',
           },
         ],
       },
       {
         type: 'link',
-        label: 'nav.formations',
+        label: 'formations.label',
         href: '/formations',
       },
       {
         type: 'link',
-        label: 'nav.workshops',
+        label: 'workshops.label',
         href: '/workshops',
       },
       {
         type: 'link',
-        label: 'nav.bio',
+        label: 'bio.label',
         href: '/bio',
       },
       {
         type: 'link',
-        label: 'nav.contact',
+        label: 'contact.label',
         href: '/contact',
       },
     ],

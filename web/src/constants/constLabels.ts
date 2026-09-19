@@ -1,14 +1,14 @@
 /** Matches studio/schemaTypes/catalogItem.ts `category` and `subcategory` field options. */
 export const CATEGORY_LABEL_KEYS: Record<string, string> = {
-  projects: 'nav.projects',
-  materials: 'nav.materials.label',
-  'materials-guides': 'nav.materials.guides',
-  'materials-games': 'nav.materials.games',
-  'materials-publications': 'nav.materials.publications',
-  'materials-campaigns': 'nav.materials.campaigns',
-  'materials-audiovisual': 'nav.materials.audiovisual',
-  formations: 'nav.formations',
-  workshops: 'nav.workshops',
+  projects: 'projects.label',
+  materials: 'materials.label',
+  'materials-guides': 'materials.guides.label',
+  'materials-games': 'materials.games.label',
+  'materials-publications': 'materials.publications.label',
+  'materials-campaigns': 'materials.campaigns.label',
+  'materials-audiovisual': 'materials.audiovisual.label',
+  formations: 'formations.label',
+  workshops: 'workshops.label',
 }
 
 /** Route segments that currently have no real page — show the generic "coming soon" placeholder. */
@@ -27,5 +27,5 @@ export const COMING_SOON_SECTIONS = [
 // `bio` isn't a catalogItem category — it's a standalone page — so it's not in CATEGORY_LABEL_KEYS.
 export const SECTION_LABEL_KEYS: Record<string, string> = {
   ...CATEGORY_LABEL_KEYS,
-  bio: 'nav.bio',
+  bio: 'bio.label',
 }

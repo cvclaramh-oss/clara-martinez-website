@@ -122,13 +122,13 @@ const isHome = pageType === 'home'
 const sectionLabel = pageType === 'coming-soon' && section ? t(SECTION_LABEL_KEYS[section]) : undefined
 const seoTitle = {
   home: t('meta.title'),
-  projects: t('projects.title'),
-  tag: tag ? `${t('projects.title')}: ${tag.label}` : t('projects.title'),
-  project: projectTitle ?? t('projects.title'),
-  contact: t('nav.contact'),
-  sitemap: t('sitemap.title'),
+  projects: t('projects.label'),
+  tag: tag ? `${t('projects.label')}: ${tag.label}` : t('projects.label'),
+  project: projectTitle ?? t('projects.label'),
+  contact: t('contact.label'),
+  sitemap: t('sitemap.label'),
   'thank-you': t('thank_you.title'),
-  'accessibility-statement': t('accessibility.title'),
+  'accessibility-statement': t('accessibility.label'),
   'coming-soon': sectionLabel ? `${sectionLabel} · ${t('coming_soon.title')}` : t('coming_soon.title'),
 }[pageType]
 

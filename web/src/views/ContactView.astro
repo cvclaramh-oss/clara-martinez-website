@@ -20,7 +20,7 @@ const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 ---
 
-  <PageHeader title={t('contact.title')} subtitle={t('contact.subtitle')} bgType="gradient" />
+  <PageHeader title={t('contact.label')} subtitle={t('contact.subtitle')} bgType="gradient" />
   <section class="my-16">
     <div class="container">
       <Heading level="h2">{t('contact.lets_talk')}</Heading>
