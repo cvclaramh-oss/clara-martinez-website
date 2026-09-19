@@ -6,6 +6,7 @@ import { ui } from '../i18n/ui'
 const translations = { ca, es }
 
 export type Locale = keyof typeof translations
+export type TranslationKey = keyof (typeof ui)['ca']
 
 /**
  * Build a reverse index that maps every localized segment (plus the English
@@ -43,7 +44,7 @@ function find(locale: Locale, key: string): string | undefined {
 }
 
 export function useTranslations(locale: string) {
-  return function t(key: string): string {
+  return function t(key: TranslationKey): string {
     return find(locale as Locale, key) ?? find(defaultLocale, key) ?? key
   }
 }

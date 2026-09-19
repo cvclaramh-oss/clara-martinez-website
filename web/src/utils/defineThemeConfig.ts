@@ -1,9 +1,10 @@
 import type { ImageMetadata } from 'astro'
+import type { TranslationKey } from '@utils/i18n'
 
 export type NavigationItem =
   | {
       type?: 'link'
-      label: string
+      label: TranslationKey
       href: string
       external?: boolean
       highlight?: boolean
@@ -12,10 +13,10 @@ export type NavigationItem =
     }
   | {
       type: 'dropdown'
-      label: string
+      label: TranslationKey
       icon?: string
       items: {
-        label: string
+        label: TranslationKey
         href: string
         external?: boolean
       }[]
