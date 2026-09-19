@@ -17,40 +17,6 @@
     "commitment": "Compromís amb l'accessibilitat",
     "placeholder": "Treballarem perquè aquest web sigui accessible per a totes les persones, independentment de la seva capacitat o circumstància. La declaració completa s'està redactant i es publicarà aquí properament."
   },
-  "contact": {
-    "subtitle": "Tens alguna pregunta? Posat en contacte amb mi!",
-    "lets_talk": "Parlem",
-    "form": {
-      "first_name": "Nom",
-      "first_name_validation": "Necessito el teu nom per poder dirigir-m'hi correctament",
-      "email": "Correu electrònic",
-      "phone": "Telèfon",
-      "message": "Missatge",
-      "interests_legend": "Quin és el teu interès?",
-      "interests_validation": "Si us plau, selecciona almenys una àrea d'interès",
-      "interest_education": "Educació i formació",
-      "interest_gender": "Perspectiva de gènere",
-      "interest_sexuality": "Educació afectivosexual",
-      "interest_community": "Transformació comunitària",
-      "experience_legend": "El teu nivell d'experiència",
-      "experience_beginner": "Principiant",
-      "experience_intermediate": "Intermedi",
-      "experience_advanced": "Avançat",
-      "preferences_legend": "Les teves preferències",
-      "newsletter": "Subscriure'm al butlletí",
-      "updates": "Rebre actualitzacions",
-      "send": "Enviar missatge"
-    },
-    "info": {
-      "title": "Contacta'm",
-      "description": "Em pots contactar per a qualsevol consulta sobre formació, assessorament o col·laboració en projectes d'educació afectivosexual, perspectiva de gènere o transformació comunitària.",
-      "phone_label": "Telèfon:",
-      "email_label": "Correu electrònic:",
-      "address_label": "Adreça:",
-      "hours_label": "Horari d'atenció:",
-      "hours": "Pendent de confirmar"
-    }
-  },
   "page_404": {
     "message": "Aquesta pàgina no existeix. No et preocupis, t'ajudem a tornar."
   },
