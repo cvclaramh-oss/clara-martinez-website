@@ -25,7 +25,6 @@ Portfolio profesional para Clara Martínez Hernández, educadora social, formado
 | -------------------------------------- | ---------------------------------------------------------------------- |
 | `.agents/skills/git-workflow/`         | Crear ramas, commits, PRs, CI, promoción dev→main                      |
 | `.agents/skills/adr-daily-docs/`       | Decidir si algo necesita ADR, escribir uno, cerrar el diario de sesión |
-| `.agents/skills/design-system-tokens/` | Tocar CSS/color/tipografía/radios/sombras, cualquier duda de estilo    |
 | `.agents/skills/sanity-schema/`        | GROQ, componentes con datos de Sanity, CLI de Sanity, Studio           |
 | `.agents/skills/i18n-astro/`           | Rutas, enlaces internos, textos visibles, diccionarios ca/es           |
 
