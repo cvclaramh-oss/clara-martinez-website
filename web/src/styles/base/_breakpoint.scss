@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use 'sass:meta';
+
 $breakpoints: (
   'default': 0,
   'xs': 320px,
@@ -13,9 +16,9 @@ $breakpoints: (
 /// @param {String|Number} $value - Breakpoint name or numeric value
 /// @return {Number} - Breakpoint value in pixels
 @function get-breakpoint-value($value) {
-  @if map-has-key($breakpoints, $value) {
-    @return map-get($breakpoints, $value);
-  } @else if (type-of($value) == number) {
+  @if map.has-key($breakpoints, $value) {
+    @return map.get($breakpoints, $value);
+  } @else if (meta.type-of($value) == number) {
     @return $value;
   } @else {
     @error "Invalid breakpoint value: #{$value}";
