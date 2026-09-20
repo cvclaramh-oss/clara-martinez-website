@@ -6,10 +6,11 @@ import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 /**
  * Logo Component
  *
- * @description Brand cell (logo). The tagline stacks under the name, inside the
- * same cell, up to 1439px (the name is 13px below the `nav` breakpoint and 20px
- * from it). From 1440px the cell is a single line and the tagline gets its own
- * separate bordered cell (see .tagline below), so the desktop menu keeps room.
+ * @description Brand cell (logo). The tagline is stacked under the name, inside the same cell, on mobile
+ * (name 13px) and from the `nav` breakpoint up to `tagline` (name 20px), where the desktop menu leaves no
+ * room for another cell. On tablet (`m` up to `nav`) and from `tagline` up the cell is a single line and
+ * the tagline gets its own bordered cell (see .tagline below). All three widths come from the map in
+ * styles/base/_breakpoint.scss.
  */
 
 const locale = getLangFromUrl(Astro.url)
@@ -29,7 +30,7 @@ const t = useTranslations(locale)
   </span>
 </Link>
 <span
-  class="tagline hidden min-[1440px]:flex items-center h-full px-4 border-r border-(--border-color) bg-(--color-surface-container-low) font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold uppercase tracking-widest text-(--color-on-surface-variant) whitespace-nowrap"
+  class="tagline items-center h-full px-4 border-r border-(--border-color) bg-(--color-surface-container-low) font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold uppercase tracking-widest text-(--color-on-surface-variant) whitespace-nowrap"
 >
   {t('tagline')}
 </span>
@@ -37,17 +38,25 @@ const t = useTranslations(locale)
 <style lang="scss">
   @use 'base/breakpoint' as *;
 
+  // The tagline is stacked under the name on mobile and while the desktop menu leaves no room for a cell
+  // (from `nav` up to `tagline`); it is its own cell on tablet and from `tagline` up.
   .brand-link {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     gap: 0.125rem;
 
-    @include breakpoint('nav') {
+    @include breakpoint('m') {
       border-inline-end: 1px solid var(--border-color);
     }
 
-    @include breakpoint(1440px) {
+    @include breakpoint('m', 'nav') {
+      flex-direction: row;
+      align-items: center;
+      gap: 0;
+    }
+
+    @include breakpoint('tagline') {
       flex-direction: row;
       align-items: center;
       gap: 0;
@@ -58,7 +67,7 @@ const t = useTranslations(locale)
     font-size: 0.8125rem;
     line-height: 1rem;
 
-    @include breakpoint('nav') {
+    @include breakpoint('m') {
       font-size: 1.25rem;
       line-height: 1.625rem;
     }
@@ -73,8 +82,24 @@ const t = useTranslations(locale)
       line-height: 0.875rem;
     }
 
-    @include breakpoint(1440px) {
+    @include breakpoint('m', 'nav') {
       display: none;
+    }
+
+    @include breakpoint('tagline') {
+      display: none;
+    }
+  }
+
+  .tagline {
+    display: none;
+
+    @include breakpoint('m', 'nav') {
+      display: flex;
+    }
+
+    @include breakpoint('tagline') {
+      display: flex;
     }
   }
 </style>
