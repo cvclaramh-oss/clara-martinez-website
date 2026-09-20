@@ -26,9 +26,9 @@ const { src = '/astronaut-hero-img.webp' }: Props = Astro.props
     <div class="grid grid-cols-1 items-center gap-24 lg:grid-cols-2">
       <div class="flex flex-col items-center gap-8 md:items-start">
         <h1 class="text-center text-6xl md:text-left lg:text-8xl">
-          {t('hero.title')}
+          {t('name')}
         </h1>
-        <p class="text-2xl">{t('hero.description')}</p>
+        <p class="text-2xl">{t('short_bio')}</p>
         <div class="flex flex-col gap-3 min-[500px]:flex-row">
           <Link
             href={getHref('/contact', false, locale)}
@@ -38,7 +38,7 @@ const { src = '/astronaut-hero-img.webp' }: Props = Astro.props
             animationType="boop"
           >
             <Icon aria-hidden="true" name="lucide:mail" size="1.5rem" />
-            {t('hero.cta_primary')}
+            {t('button_contact')}
           </Link>
           <Link
             href={getHref('/projects', false, locale)}
@@ -48,7 +48,7 @@ const { src = '/astronaut-hero-img.webp' }: Props = Astro.props
             animationType="boop"
           >
             <Icon aria-hidden="true" name="lucide:briefcase" size="1.5rem" />
-            {t('hero.cta_secondary')}
+            {t('view_all_projects')}
           </Link>
         </div>
       </div>

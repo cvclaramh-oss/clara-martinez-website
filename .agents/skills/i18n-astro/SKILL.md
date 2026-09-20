@@ -1,22 +1,28 @@
 ---
 name: i18n-astro
-description: Patrones de internacionalización CA/ES en Astro SSG de este proyecto — router unificado, generación de rutas traducidas, helper getHref, y gotchas ya resueltos de getStaticPaths. Úsala siempre que toques rutas, enlaces internos, textos visibles, o el diccionario ca.json/es.json.
+description: Patrones de internacionalización CA/ES en Astro SSG de este proyecto — router unificado, generación de rutas traducidas, helper getHref, y gotchas ya resueltos de getStaticPaths. Úsala siempre que toques rutas, enlaces internos, textos visibles, o los textos de `src/i18n/ui.ts`.
 ---
 
 # i18n — Radical Clarity
+> Este documento describe patrones ya implementados en sesiones anteriores. Antes de asumir que algo sigue siendo así, verifícalo contra el código real — Comprobaciones rápidas:
+> - Router unificado activo → confirma que `src/pages/[...slug].astro` existe y que **no** hay `src/pages/es/` duplicando rutas manualmente.
+> - `getHref()` centralizada → confirma que está en `src/utils/i18n.ts` y que los componentes la importan de ahí (no lógica de URL repetida en el propio componente).
+> - Diccionario → confirma que `src/i18n/ui.ts` existe y tiene la clave esperada (`t()` solo acepta claves de ese archivo) antes de dar por hecho un texto traducido.
+>
+> Si algo no coincide con lo descrito aquí, avisa al usuario antes de seguir — puede ser una skill desactualizada, no un bug tuyo.
 
 ## 1. Configuración
 
 - Rutas: `/` para catalán (default, sin prefijo), `/es/` para español (`prefixDefaultLocale: false` en `astro.config.mjs`).
 - Fallback automático a CAT si falta traducción en ES.
 - **Sin persistencia por cookie.** Selector visible en el navbar (`LanguagePicker.astro`); cada visita empieza en catalán salvo que la URL indique lo contrario. Decisión deliberada: simplifica el desarrollo y evita banner de cookies.
-- Diccionarios: `ca.json` + `es.json`, consumidos vía helper `src/utils/i18n.ts` (`getLangFromUrl` + `useTranslations`).
+- Diccionario: `src/i18n/ui.ts`, un objeto plano `as const` con un bloque `ca` y otro `es` (este tipado desde `ca`, así que ambos comparten exactamente las mismas claves), consumido vía helper `src/utils/i18n.ts` (`getLangFromUrl` + `useTranslations`). `t()` solo acepta `TranslationKey`: una clave mal escrita es un error de `astro check`. Los textos van agrupados por página en secciones (`// Projects`, `// Contact form`...); una clave por concepto, y las de una página llevan su prefijo (`contact.form.send`).
 
 ## 2. Router unificado
 
 `src/pages/[...slug].astro` gestiona **todas** las rutas del sitio (páginas estáticas y proyectos) vía `getStaticPaths` + `routes.ts`. No dupliques páginas manualmente bajo `src/pages/es/` — genera conflicto con el router.
 
-Las rutas de proyectos se generan en ambos idiomas desde el mismo router: `/projectes/project-01` (CA) y `/es/proyectos/project-01` (ES). Los directorios internos se mantienen **en inglés** (`projects/`, `contact/`); las rutas visibles se traducen vía los JSONs de diccionario.
+Las rutas de proyectos se generan en ambos idiomas desde el mismo router: `/projectes/project-01` (CA) y `/es/proyectos/project-01` (ES). Los directorios internos se mantienen **en inglés** (`projects/`, `contact/`); las rutas visibles se traducen vía `src/i18n/routes.ts`.
 
 ## 3. `getHref()` — enlaces internos
 

@@ -1,18 +1,75 @@
 ---
-import { getLangFromUrl, localizeUrl } from '@utils/i18n'
+import { getLangFromUrl, localizeUrl, useTranslations } from '@utils/i18n'
+
+/**
+ * Language Picker Component
+ *
+ * @description Switches between the Catalan and Spanish versions of the current page
+ */
 
 const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
 
-// Same page translated to each language, based on the current path
 const caHref = localizeUrl(Astro.url.pathname, 'ca')
 const esHref = localizeUrl(Astro.url.pathname, 'es')
 ---
 
-<ul class="language-picker">
+<ul class="language-picker nav-action-cell">
   <li>
-    <a href={caHref} class={`lang-link ${locale === 'ca' ? 'is-active' : ''}`}>CA</a>
+    <a
+      href={caHref}
+      aria-current={locale === 'ca' ? 'page' : undefined}
+      aria-label={t('nav.lang_ca')}
+      class:list={['lang-link', { 'is-active': locale === 'ca' }]}
+    >
+      CA
+    </a>
   </li>
   <li>
-    <a href={esHref} class={`lang-link ${locale === 'es' ? 'is-active' : ''}`}>ES</a>
+    <a
+      href={esHref}
+      aria-current={locale === 'es' ? 'page' : undefined}
+      aria-label={t('nav.lang_es')}
+      class:list={['lang-link', { 'is-active': locale === 'es' }]}
+    >
+      ES
+    </a>
   </li>
 </ul>
+
+<style lang="scss">
+  .language-picker {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    font-family: var(--font-family-special);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    li:last-child {
+      margin-inline-start: 0.5rem;
+      padding-inline-start: 0.5rem;
+      border-inline-start: 1px solid var(--border-color-subtle);
+    }
+  }
+
+  .lang-link {
+    display: inline-flex;
+    padding: 0.125rem 0.25rem;
+    color: var(--color-neutral-800);
+    transition: none;
+
+    &:where(:hover, :focus-visible) {
+      color: var(--foreground-color);
+    }
+
+    &.is-active {
+      background-color: var(--color-accent-rose);
+      color: var(--foreground-color);
+      font-weight: 700;
+    }
+  }
+</style>

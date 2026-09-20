@@ -19,7 +19,7 @@ const blockContent = defineArrayMember({
 
 export const siteSettings = defineType({
   name: 'siteSettings',
-  title: 'Configuració del lloc',
+  title: 'Perfil Personal',
   type: 'document',
   icon: CogIcon,
   fields: [

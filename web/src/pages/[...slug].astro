@@ -1,17 +1,19 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
-import HomePage from '@components/pages/home.astro'
-import ContactPage from '@components/pages/contact.astro'
-import SitemapPage from '@components/pages/sitemap.astro'
-import ThankYouPage from '@components/pages/thank-you.astro'
-import AccessibilityStatementPage from '@components/pages/accessibility-statement.astro'
-import ProjectListing from '@components/pages/project-listing.astro'
-import ProjectDetail from '@components/pages/project-detail.astro'
-import { getCollection } from 'astro:content'
+import HomeView from '@views/HomeView.astro'
+import ContactView from '@views/ContactView.astro'
+import SitemapView from '@views/SitemapView.astro'
+import ThankYouView from '@views/ThankYouView.astro'
+import AccessibilityStatementView from '@views/AccessibilityStatementView.astro'
+import ProjectListingView from '@views/ProjectListingView.astro'
+import ProjectDetailView from '@views/ProjectDetailView.astro'
+import ComingSoonView from '@views/ComingSoonView.astro'
+import { getCatalogItemsByCategory } from '@lib/sanity/catalogItemsQuery'
 import { useTranslations } from '@utils/i18n'
 import type { Locale } from '@utils/i18n'
 import { routes } from '../i18n/routes'
-import { PROJECTS_PAGE_SIZE, getTags, filterByTagSlug, type Tag } from '@utils/projects'
+import { CATALOGS_PAGE_SIZE, getTags, filterByTagSlug, type Tag } from '@utils/catalogUtils'
+import { COMING_SOON_SECTIONS, SECTION_LABEL_KEYS } from '@constants/constLabels'
 
 /**
  * Single catch-all router for every page in both locales.
@@ -30,8 +32,6 @@ export async function getStaticPaths() {
   const routeSegment = (locale: Locale, canonical: string): string =>
     (routes[locale] as Record<string, string>)[canonical] ?? canonical
 
-  const projects = (await getCollection('projects')).sort((a, b) => a.id.localeCompare(b.id))
-  const uniqueTags = getTags(projects)
   const paths: {
     params: { slug: string | undefined }
     props: {
@@ -40,11 +40,15 @@ export async function getStaticPaths() {
       pageNum?: number
       tag?: Tag
       projectId?: string
+      projectTitle?: string
+      section?: string
     }
   }[] = []
 
   for (const locale of locales) {
     const prefix = locale === 'es' ? 'es/' : ''
+    const projects = await getCatalogItemsByCategory(locale, 'projects')
+    const uniqueTags = getTags(projects)
 
     for (const page of ['home', 'contact', 'sitemap', 'thank-you', 'accessibility-statement']) {
       paths.push({
@@ -55,7 +59,16 @@ export async function getStaticPaths() {
       })
     }
 
-    const projectsPages = Math.max(1, Math.ceil(projects.length / PROJECTS_PAGE_SIZE))
+    for (const section of COMING_SOON_SECTIONS) {
+      paths.push({
+        params: {
+          slug: `${prefix}${routeSegment(locale, section)}`,
+        },
+        props: { locale, pageType: 'coming-soon', section },
+      })
+    }
+
+    const projectsPages = Math.max(1, Math.ceil(projects.length / CATALOGS_PAGE_SIZE))
     for (let pageNum = 1; pageNum <= projectsPages; pageNum++) {
       paths.push({
         params: {
@@ -68,21 +81,20 @@ export async function getStaticPaths() {
     for (const project of projects) {
       paths.push({
         params: {
-          slug: `${prefix}${routeSegment(locale, 'projects')}/${project.id}`,
+          slug: `${prefix}${routeSegment(locale, 'projects')}/${project.slug}`,
         },
-        props: { locale, pageType: 'project', projectId: project.id },
+        props: { locale, pageType: 'project', projectId: project.slug, projectTitle: project.data.title },
       })
     }
 
     for (const tag of uniqueTags) {
       const tagProjects = filterByTagSlug(projects, tag.slug)
-      const tagPages = Math.max(1, Math.ceil(tagProjects.length / PROJECTS_PAGE_SIZE))
+      const tagPages = Math.max(1, Math.ceil(tagProjects.length / CATALOGS_PAGE_SIZE))
       for (let pageNum = 1; pageNum <= tagPages; pageNum++) {
+        const pageSuffix = pageNum > 1 ? `/${pageNum}` : ''
         paths.push({
           params: {
-            slug: `${prefix}${routeSegment(locale, 'projects')}/${routeSegment(locale, 'tag')}/${tag.slug}${
-              pageNum > 1 ? `/${pageNum}` : ''
-            }`,
+            slug: `${prefix}${routeSegment(locale, 'projects')}/${routeSegment(locale, 'tag')}/${tag.slug}${pageSuffix}`,
           },
           props: { locale, pageType: 'tag', tag, pageNum },
         })
@@ -99,21 +111,25 @@ interface Props {
   pageNum?: number
   tag?: Tag
   projectId?: string
+  projectTitle?: string
+  section?: string
 }
 
-const { locale, pageType, pageNum = 1, tag, projectId } = Astro.props
+const { locale, pageType, pageNum = 1, tag, projectId, projectTitle, section } = Astro.props
 const t = useTranslations(locale)
 
 const isHome = pageType === 'home'
+const sectionLabel = pageType === 'coming-soon' && section ? t(SECTION_LABEL_KEYS[section]) : undefined
 const seoTitle = {
   home: t('meta.title'),
-  projects: t('projects.title'),
-  tag: tag ? `${t('projects.title')}: ${tag.label}` : t('projects.title'),
-  project: projectId ?? t('projects.title'),
-  contact: t('nav.contact'),
-  sitemap: t('sitemap.title'),
+  projects: t('projects.label'),
+  tag: tag ? `${t('projects.label')}: ${tag.label}` : t('projects.label'),
+  project: projectTitle ?? t('projects.label'),
+  contact: t('contact.label'),
+  sitemap: t('sitemap.label'),
   'thank-you': t('thank_you.title'),
-  'accessibility-statement': t('accessibility.title'),
+  'accessibility-statement': t('accessibility.label'),
+  'coming-soon': sectionLabel ? `${sectionLabel} · ${t('coming_soon.title')}` : t('coming_soon.title'),
 }[pageType]
 
 const seoDescription = {
@@ -123,12 +139,13 @@ const seoDescription = {
 ---
 
 <DefaultLayout title={seoTitle} description={seoDescription} useTitleTemplate={!isHome}>
-  {pageType === 'home' && <HomePage />}
-  {pageType === 'projects' && <ProjectListing pageNum={pageNum} />}
-  {pageType === 'tag' && tag && <ProjectListing pageNum={pageNum} currentTag={tag} />}
-  {pageType === 'project' && projectId && <ProjectDetail projectId={projectId} />}
-  {pageType === 'contact' && <ContactPage />}
-  {pageType === 'sitemap' && <SitemapPage />}
-  {pageType === 'thank-you' && <ThankYouPage />}
-  {pageType === 'accessibility-statement' && <AccessibilityStatementPage />}
+  {pageType === 'home' && <HomeView />}
+  {pageType === 'projects' && <ProjectListingView pageNum={pageNum} />}
+  {pageType === 'tag' && tag && <ProjectListingView pageNum={pageNum} currentTag={tag} />}
+  {pageType === 'project' && projectId && <ProjectDetailView projectId={projectId} />}
+  {pageType === 'contact' && <ContactView />}
+  {pageType === 'sitemap' && <SitemapView />}
+  {pageType === 'thank-you' && <ThankYouView />}
+  {pageType === 'accessibility-statement' && <AccessibilityStatementView />}
+  {pageType === 'coming-soon' && section && <ComingSoonView sectionLabel={sectionLabel} />}
 </DefaultLayout>

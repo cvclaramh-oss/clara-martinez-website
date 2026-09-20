@@ -1,9 +1,10 @@
 import type { ImageMetadata } from 'astro'
+import type { TranslationKey } from '@utils/i18n'
 
 export type NavigationItem =
   | {
       type?: 'link'
-      label: string
+      label: TranslationKey
       href: string
       external?: boolean
       highlight?: boolean
@@ -12,10 +13,10 @@ export type NavigationItem =
     }
   | {
       type: 'dropdown'
-      label: string
+      label: TranslationKey
       icon?: string
       items: {
-        label: string
+        label: TranslationKey
         href: string
         external?: boolean
       }[]
@@ -49,21 +50,24 @@ export type ThemeConfig = {
   navigation: {
     darkmode?: boolean
     items: NavigationItem[]
+    language?: boolean
   }
   socials?: SocialItem[]
+  contactEmail?: string
 }
 
 const defaultConfig: Omit<ThemeConfig, 'name' | 'id'> = {
   seo: {
-    title: 'My Astro Site',
-    subtitle: '',
-    description: 'A website built with Accessible Astro Starter',
-    author: '',
+    title: 'Clara Martínez Hernández | Educació, gènere i sexualitats',
+    subtitle: 'Educació, gènere i sexualitats',
+    description: "Disseny i desenvolupament de projectes educatius, materials i processos de formació des d'una perspectiva feminista, interseccional i crítica.",
+    author: 'Clara Martínez Hernández',
     image: null,
   },
   navigation: {
     darkmode: true,
     items: [],
+    language: true,
   },
   socials: [],
 }

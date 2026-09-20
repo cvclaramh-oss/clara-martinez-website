@@ -1,0 +1,122 @@
+---
+import PageHeader from '@components/PageHeader.astro'
+import { Badge, Card, Heading, Link, Pagination } from 'accessible-astro-components'
+import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
+import { getCatalogItemsByCategory } from '@lib/sanity/catalogItemsQuery'
+import { urlFor } from '@lib/sanity/imageUrlBuilder'
+import { CATALOGS_PAGE_SIZE, getTags, filterByTagSlug, type Tag } from '@utils/catalogUtils'
+
+/**
+ * ProjectListing Component
+ *
+ * @description Renders the project collection, optionally filtered by tag,
+ * with pagination. All internal links are localized through getHref.
+ */
+interface Props {
+  /**
+   * The page number of the listing to render
+   * @default 1
+   */
+  pageNum?: number
+  /**
+   * The tag to filter projects by
+   */
+  currentTag?: Tag
+}
+
+const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
+const { pageNum = 1, currentTag } = Astro.props
+
+const projects = await getCatalogItemsByCategory(locale, 'projects')
+const uniqueTags = getTags(projects)
+
+const filteredProjects = currentTag ? filterByTagSlug(projects, currentTag.slug) : projects
+const totalPages = Math.max(1, Math.ceil(filteredProjects.length / CATALOGS_PAGE_SIZE))
+const startIndex = (pageNum - 1) * CATALOGS_PAGE_SIZE
+const pageProjects = filteredProjects.slice(startIndex, startIndex + CATALOGS_PAGE_SIZE)
+
+const plural = (count: number) => (count === 1 ? t('projects.one') : t('projects.many'))
+
+function pageHref(page: number, tag?: Tag): string {
+  const root = tag ? `/projects/tag/${tag.slug}` : '/projects'
+  return getHref(page === 1 ? root : `${root}/${page}`, false, locale)
+}
+
+const headerTitle = currentTag ? `${t('projects.label')}: ${currentTag.label}` : t('projects.label')
+const headerSubtitle = currentTag
+  ? `${t('tag.subtitle_prefix')} «${currentTag.label}». ${filteredProjects.length} ${plural(filteredProjects.length)}`
+  : t('projects.subtitle')
+---
+
+<PageHeader
+  title={headerTitle}
+  subtitle={headerSubtitle}
+  bgType="bordered"
+  customBreadcrumbLabels={currentTag ? { [currentTag.slug]: currentTag.label } : undefined}
+  joinLastBreadcrumb={!!currentTag}
+/>
+
+<section class="my-12">
+  <div class="container">
+    <Heading level="h2" size="h5" class="mb-2">{t('projects.tags')}</Heading>
+    <div class="flex flex-wrap gap-4">
+      <Link href={getHref('/projects', false, locale)}>{t('projects.all')}</Link>
+      {
+        uniqueTags.map((tag) => {
+          const isCurrentTag = tag.slug === currentTag?.slug
+          return (
+            <Link href={pageHref(1, tag)} ariaCurrent={isCurrentTag ? 'page' : undefined}>
+              {tag.label}
+            </Link>
+          )
+        })
+      }
+    </div>
+    <p class="mt-8 text-sm">
+      <em>
+        {t('projects.range_prefix')} {startIndex + 1}–{startIndex + pageProjects.length} {t('projects.range_suffix')}{' '}
+        {filteredProjects.length} {plural(filteredProjects.length)}
+      </em>
+    </p>
+    <ul class="mt-3 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        pageProjects.map((project) => (
+          <li>
+            <Card
+              img={urlFor(project.data.image, 640, 360)}
+              imageAlt={project.data.imageAlt}
+              url={getHref(`/projects/${project.slug}`, false, locale)}
+              title={project.data.title}
+              headingLevel="h2"
+              footer={project.data.author ? t('featured_projects.author_prefix') + project.data.author : undefined}
+              fullHeight={true}
+            >
+              <span slot="meta">
+                {project.data.tags.map((tag) => (
+                  <Badge>{tag}</Badge>
+                ))}
+              </span>
+              {project.data.subtitle}
+            </Card>
+          </li>
+        ))
+      }
+    </ul>
+    {
+      totalPages > 1 && (
+        <div class="mt-12 grid place-content-center">
+          <Pagination
+            firstPage={pageNum > 1 ? pageHref(1, currentTag) : null}
+            previousPage={pageNum > 1 ? pageHref(pageNum - 1, currentTag) : null}
+            nextPage={pageNum < totalPages ? pageHref(pageNum + 1, currentTag) : null}
+            lastPage={pageNum < totalPages ? pageHref(totalPages, currentTag) : null}
+            currentPage={`${pageNum}`}
+            totalPages={`${totalPages}`}
+            ariaLabel={t('projects.pagination_aria')}
+          />
+        </div>
+      )
+    }
+  </div>
+</section>

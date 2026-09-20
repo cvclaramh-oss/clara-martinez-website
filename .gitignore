@@ -20,3 +20,7 @@ docs/private/*
 
 # cursor
 .cursor
+
+# Misc
+*.tar.gz
+*.ndjson

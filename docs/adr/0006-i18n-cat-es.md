@@ -1,7 +1,7 @@
 # 0006 — i18n CAT/ES — Implementación
 
 - **Fecha:** 2026-09-09
-- **Estado:** Implementado (parcialmente)
+- **Estado:** Sustituido en parte por [0013](0013-textos-diccionario-ui-tipado.md) — solo la decisión «Textos en JSONs»; el resto (idioma por defecto, prefijo `/es/`, sin cookie, helpers, `LanguagePicker`) sigue vigente
 
 ## Contexto
 
@@ -12,7 +12,7 @@ El sitio necesita soporte para catalán (principal) y español. Los textos estab
 - **idioma por defecto:** catalán, sin prefijo de URL (`/`)
 - **idioma secundario:** español, con prefijo `/es/`
 - **Sin cookie de persistencia:** cada visita empieza en catalán salvo que la URL indique lo contrario
-- **Textos en JSONs:** `src/i18n/ca.json` y `src/i18n/es.json` con todas las claves traducidas
+- **Textos en JSONs:** `src/i18n/ca.json` y `src/i18n/es.json` con todas las claves traducidas *(sustituido por el ADR [0013](0013-textos-diccionario-ui-tipado.md): los textos viven ahora en `src/i18n/ui.ts`)*
 - **Helper:** `getLangFromUrl()` detecta idioma desde URL, `useTranslations()` devuelve función `t()`
 - **LanguagePicker:** componente que detecta idioma actual y genera el enlace al otro idioma añadiendo/quita el prefijo `/es/`
 

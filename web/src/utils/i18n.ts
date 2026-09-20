@@ -1,10 +1,8 @@
-import ca from '../i18n/ca.json'
-import es from '../i18n/es.json'
 import { routes } from '../i18n/routes'
+import { ui } from '../i18n/ui'
 
-const translations = { ca, es }
-
-export type Locale = keyof typeof translations
+export type Locale = keyof typeof ui
+export type TranslationKey = keyof (typeof ui)['ca']
 
 /**
  * Build a reverse index that maps every localized segment (plus the English
@@ -23,20 +21,16 @@ function buildSegmentIndex(): Map<string, string> {
 
 const segmentToCanonical = buildSegmentIndex()
 
-export function getLangFromUrl(url: URL): string {
+export function getLangFromUrl(url: URL): Locale {
   return url.pathname.startsWith('/es') ? 'es' : 'ca'
 }
 
+const defaultLocale: Locale = 'ca'
+
 export function useTranslations(locale: string) {
-  return function t(key: string): string {
-    const keys = key.split('.')
-    let value: any = translations[locale as keyof typeof translations]
-
-    for (const k of keys) {
-      value = value?.[k]
-    }
-
-    return value || key
+  return function t(key: TranslationKey): string {
+    const dictionary = ui[locale as Locale] as Record<TranslationKey, string> | undefined
+    return dictionary?.[key] ?? ui[defaultLocale][key] ?? key
   }
 }
 

@@ -1,7 +1,7 @@
 # 0009 — Gobernanza de tokens de color (fuente única)
 
 - **Fecha:** 2026-09-15
-- **Estado:** Vigente
+- **Estado:** Descartado (2026-09-20) — ver «Nota de descarte» al final
 
 ## Contexto
 
@@ -51,3 +51,7 @@ El resto de tokens (tipografía, espaciado, radios) se añadirán también a `@t
 - `src/assets/scss/base/_root.scss` — derivaciones oklch apuntando a `@theme`.
 - `theme.config.ts` / `src/utils/defineThemeConfig.ts` — `colors` eliminado/opcional.
 - `src/layouts/DefaultLayout.astro` — `define:vars` eliminado.
+
+## Nota de descarte (2026-09-20)
+
+Mantener los tokens de color en `@theme` y, a la vez, derivar rampas en `_root.scss` obligaba a mantener dos sistemas de color al mismo tiempo, y esa mezcla bloqueaba el avance del diseño. Se vuelve a la base de estilos original y se limpia de forma incremental. El bloque `@theme static` de `tailwind.css` que describe este ADR ya no existe en el código. La paleta objetivo (ver ADR-0002) no cambia; lo descartado es esta forma de implementarla.

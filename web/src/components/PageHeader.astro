@@ -77,10 +77,6 @@ const formatSegment = (segment: string): string => {
   if (customBreadcrumbLabels?.[segment]) {
     return customBreadcrumbLabels[segment]
   }
-  const translated = t(`breadcrumb.${segment}`)
-  if (translated !== `breadcrumb.${segment}`) {
-    return translated
-  }
   return segment
     .split('-')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -113,7 +109,7 @@ const sanitizedSubtitle: string = subtitle
 
           return (
             <Breadcrumbs>
-              <BreadcrumbsItem href={getHref('/', false, locale)} label={t('footer.home')} />
+              <BreadcrumbsItem href={getHref('/', false, locale)} label={t('home.label')} />
               {segments.map((segment, index) => {
                 if (joinLastBreadcrumb && index === segments.length - 1) {
                   return null

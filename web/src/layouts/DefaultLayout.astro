@@ -1,6 +1,6 @@
 ---
 import '../styles/tailwind.css'
-import '../assets/scss/index.scss'
+import '../styles/index.scss'
 import themeConfig from '@theme-config'
 import { SEO } from 'astro-seo'
 import Header from '@components/Header.astro'
@@ -112,12 +112,12 @@ const imageUrl = new URL(imagePath, Astro.site).href
   </head>
   <body>
     <Header />
-    <main id="main-content" transition:animate="fade">
+    <main id="main-content" class="pt-16" transition:animate="fade">
       <slot />
     </main>
     <Footer />
     <style lang="scss" is:global>
-      @use 'scss/base/mixins' as *;
+      @use 'base/mixins' as *;
 
       // sticky footer on low content pages
       html,

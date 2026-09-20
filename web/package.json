@@ -1,47 +1,34 @@
 {
-  "name": "accessible-astro-starter",
-  "description": "An Accessible Starter Theme for Astro including several accessibility features and tools to help you build faster.",
-  "version": "6.0.0",
-  "author": "Incluud",
+  "name": "clara-martinez-hernandez-website",
+  "description": "Disseny i desenvolupament de projectes educatius, materials i processos de formació des d'una perspectiva feminista, interseccional i crítica.",
+  "version": "0.1.0",
+  "author": "Laura-bf <laura.dev.bcn@gmail.com>",
   "license": "MIT",
   "type": "module",
-  "homepage": "https://accessible-astro-starter.incluud.dev/",
-  "workspaces": [
-    "packages/*"
-  ],
+  "homepage": "https://claramartinezhernandez.net",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "build:cli": "npm --workspace create-accessible-astro-starter run build",
-    "create:local": "node packages/create-accessible-astro-starter/scripts/run-local.mjs",
-    "test:cli": "npm --workspace create-accessible-astro-starter run test",
-    "test:cli:e2e": "npm --workspace create-accessible-astro-starter run test:e2e"
+    "check": "astro check"
   },
   "keywords": [
     "astro",
-    "astro-component",
-    "astro-components",
     "accessible",
     "accessibility",
     "a11y",
     "wcag",
     "responsive",
-    "ui-library",
-    "ui-components",
-    "blog",
     "portfolio"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/incluud/accessible-astro-starter.git"
-  },
-  "bugs": {
-    "url": "https://github.com/incluud/accessible-astro-starter/issues"
+    "url": "git+https://github.com/cvclaramh-oss/clara-martinez-website.git",
+    "directory": "web"
   },
   "devDependencies": {
-    "@astrojs/mdx": "^7.0.5",
+    "@astrojs/check": "^0.9.10",
     "@astrojs/partytown": "^2.1.7",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^9.39.2",
@@ -63,10 +50,13 @@
     "sanitize-html": "^2.17.3",
     "sass": "^1.99.0",
     "svgo": "^4.0.1",
-    "tailwindcss": "^4.2.4"
+    "tailwindcss": "^4.2.4",
+    "typescript": "^6.0.3"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
+    "@sanity/client": "^8.6.2",
+    "@sanity/image-url": "^2.1.1",
     "@tailwindcss/vite": "^4.2.4",
     "accessible-astro-components": "^5.7.1",
     "astro-seo": "^1.1.0",
