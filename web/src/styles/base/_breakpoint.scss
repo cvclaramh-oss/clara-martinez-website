@@ -9,7 +9,10 @@ $breakpoints: (
   'l': 1024px,
   'xl': 1280px,
   '2xl': 1536px,
-  'nav': 1050px,
+  // width where the desktop menu replaces the mobile one
+  'nav': 1024px,
+  // width from which the tagline has its own cell next to the desktop menu
+  'tagline': 1440px,
 ) !default;
 
 /// Get breakpoint value from map or return the value if it's a number

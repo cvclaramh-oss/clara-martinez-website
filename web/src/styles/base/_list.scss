@@ -36,7 +36,7 @@ ol.incremented li {
   margin-block-end: var(--space-xs);
 }
 
-@media screen and (max-width: 48rem) {
+@include breakpoint('m', 'max') {
   ol.incremented li {
     margin-block-end: var(--space-xs);
   }
