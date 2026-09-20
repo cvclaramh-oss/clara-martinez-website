@@ -2,6 +2,7 @@
 
 - **Fecha:** 2026-09-15
 - **Estado:** Descartado (2026-09-20) — ver «Nota de descarte» al final
+- **Sustituido por:** [0014](0014-paleta-desde-colores-base-del-starter.md) (el mecanismo; la paleta objetivo sigue en el 0002)
 
 ## Contexto
 
