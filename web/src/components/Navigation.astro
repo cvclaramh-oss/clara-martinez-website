@@ -8,7 +8,10 @@ import { getLangFromUrl, useTranslations } from '@utils/i18n'
 /**
  * Navigation Component
  *
- * @description A component that displays the navigation menu for the website
+ * @description A component that displays the navigation menu for the website: a fixed 64px bar
+ * with the brand cell, the desktop menu, the language and dark mode actions and, below the `nav`
+ * breakpoint (1050px), the mobile toggle and menu. The item padding is fluid between 1050px and
+ * 1150px so the whole bar fits at the breakpoint. Dropdowns follow ADR 0010 (keyboard) and 0011.
  */
 
 const locale = getLangFromUrl(Astro.url)
@@ -283,6 +286,11 @@ const t = useTranslations(locale)
         flex: 1 1 auto;
         justify-content: center;
         border-inline-end: 1px solid var(--border-color);
+
+        // 0.7rem at 1050px growing to 1rem at 1150px: keeps all items and controls in view at the nav breakpoint.
+        .menu-link {
+          padding-inline: clamp(0.7rem, 4.8vw - 2.45rem, 1rem);
+        }
       }
 
       .nav-actions {
@@ -338,7 +346,6 @@ const t = useTranslations(locale)
       justify-content: center;
       gap: 0.25rem;
       block-size: 100%;
-      min-inline-size: 7.5rem;
       padding-inline: 1rem;
       font-family: var(--font-family-special);
       font-size: 0.75rem;
@@ -346,17 +353,17 @@ const t = useTranslations(locale)
       font-weight: 600;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: var(--color-neutral-800);
+      color: var(--color-on-surface-variant);
       transition: none;
 
       &:where(:hover, :focus-visible) {
         background-color: var(--color-accent-rose);
-        color: var(--foreground-color);
+        color: var(--color-on-accent);
       }
 
       &.is-active {
         background-color: var(--color-accent-rose);
-        color: var(--foreground-color);
+        color: var(--color-on-accent);
         font-weight: 700;
       }
     }
@@ -373,12 +380,12 @@ const t = useTranslations(locale)
       font-weight: 700;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: var(--color-neutral-800);
+      color: var(--color-on-surface-variant);
       transition: none;
 
       &:where(:hover, :focus-visible) {
         background-color: var(--color-accent-rose);
-        color: var(--foreground-color);
+        color: var(--color-on-accent);
       }
     }
 
@@ -507,7 +514,7 @@ const t = useTranslations(locale)
       }
 
       &:where(:hover, :focus-visible) {
-        background-color: var(--color-neutral-200);
+        background-color: var(--color-surface-container-low);
       }
     }
 

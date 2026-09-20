@@ -25,7 +25,7 @@ const currentYear = new Date().getFullYear()
       <p class="text-sm font-bold tracking-tight text-(--foreground-color) uppercase lg:text-lg">
         {themeConfig.name}
       </p>
-      <p class="text-xs tracking-widest text-(--color-neutral-800) uppercase">{t('tagline')}</p>
+      <p class="text-xs tracking-widest text-(--color-on-surface-variant) uppercase">{t('tagline')}</p>
     </div>
 
     <div class="cell">
@@ -68,7 +68,7 @@ const currentYear = new Date().getFullYear()
       {/* TODO: point href at Clara's real cvFile once Bio/Sanity is wired up. */}
       <Link
         href="#"
-        class="footer-link mt-2 inline-flex w-fit items-center gap-1 border border-(--border-color) px-2 py-1 text-xs font-bold tracking-wide uppercase hover:bg-neutral-100"
+        class="footer-link mt-2 inline-flex w-fit items-center gap-1 border border-(--border-color) px-2 py-1 text-xs font-bold tracking-wide uppercase bg-(--color-surface-container-low) hover:bg-(--color-accent-rose) hover:text-(--color-on-accent)"
       >
         <Icon aria-hidden="true" name="lucide:download" size={14} />
         {t('button_cv_download')}
@@ -80,7 +80,7 @@ const currentYear = new Date().getFullYear()
         <span class="block text-xs font-bold tracking-widest text-(--color-accent-rose-dark) uppercase">
           {t('footer.accessibility_heading')}
         </span>
-        <p class="text-sm text-neutral-800">{t('footer.accessibility_description')}</p>
+        <p class="text-sm text-(--color-on-surface-variant)">{t('footer.accessibility_description')}</p>
         <p class="pt-2 text-xs font-bold tracking-wide uppercase">
           <Link href={getHref('/accessibility-statement', false, locale)} class="footer-link">
             {t('accessibility.label')}
@@ -88,7 +88,7 @@ const currentYear = new Date().getFullYear()
         </p>
       </div>
       <span
-        class="inline-block self-start border border-(--border-color) bg-neutral-100 px-2 py-1 text-xs font-bold tracking-wide text-(--foreground-color) uppercase"
+        class="inline-block self-start border border-(--border-color) bg-(--color-surface-container-high) px-2 py-1 text-xs font-bold tracking-wide text-(--foreground-color) uppercase"
       >
         {t('footer.wcag_badge')}
       </span>
@@ -96,7 +96,7 @@ const currentYear = new Date().getFullYear()
   </section>
 
   <section
-    class="flex flex-col items-center justify-center gap-2 border-t border-(--border-color) px-4 py-4 text-center text-xs tracking-wide text-neutral-800 uppercase sm:flex-row sm:justify-between lg:px-8"
+    class="flex flex-col items-center justify-center gap-2 border-t border-(--border-color) bg-(--color-surface-container-low) px-4 py-4 text-center text-xs tracking-wide text-(--color-on-surface-variant) uppercase sm:flex-row sm:justify-between lg:px-8"
   >
     <p>&copy; {currentYear} {themeConfig.name}. {t('footer.rights')}</p>
     <Link href={getHref('/sitemap', false, locale)} class="footer-link">{t('sitemap.label')}</Link>
@@ -138,7 +138,7 @@ const currentYear = new Date().getFullYear()
   }
 
   .footer-link {
-    color: var(--color-neutral-800);
+    color: var(--color-on-surface-variant);
     text-decoration: none;
     transition: none;
   }

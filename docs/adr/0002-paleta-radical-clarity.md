@@ -15,3 +15,7 @@ Usar paleta de DESIGN.md (Radical Clarity). Tokens problemáticos (`outline-vari
 
 - **Paleta del starter (OKLCH):** El sistema de colores del starter genera paleta desde 4 colores base. Más automático, pero no se ajusta al diseño Radical Clarity. **Descartado en implementación (ADR-0009).**
 - **Paleta completa de DESIGN.md con todos los tokens:** Aplicar todos los tokens de DESIGN.md desde el inicio. Más preciso, pero mayor superficie de error en la implementación.
+
+## Nota (2026-09-20)
+
+El mecanismo que cita la sección «Decisión» (paleta literal en `@theme static`, ADR-0009) se descartó. La paleta objetivo no cambia; hoy se implementa con los colores base del starter y roles con modo oscuro, ver [0014](0014-paleta-desde-colores-base-del-starter.md).

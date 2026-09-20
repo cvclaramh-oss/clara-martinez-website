@@ -56,10 +56,11 @@ const esHref = localizeUrl(Astro.url.pathname, 'es')
     }
   }
 
-  .lang-link {
+  // Hangs from #main-navigation: the global `#main-navigation a { color }` rule would beat a plain class.
+  :global(#main-navigation) .lang-link {
     display: inline-flex;
     padding: 0.125rem 0.25rem;
-    color: var(--color-neutral-800);
+    color: var(--color-on-surface-variant);
     transition: none;
 
     &:where(:hover, :focus-visible) {
@@ -68,7 +69,7 @@ const esHref = localizeUrl(Astro.url.pathname, 'es')
 
     &.is-active {
       background-color: var(--color-accent-rose);
-      color: var(--foreground-color);
+      color: var(--color-on-accent);
       font-weight: 700;
     }
   }

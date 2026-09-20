@@ -27,6 +27,7 @@ Portfolio profesional para Clara Martínez Hernández, educadora social, formado
 | `.agents/skills/adr-daily-docs/`       | Decidir si algo necesita ADR, escribir uno, cerrar el diario de sesión |
 | `.agents/skills/sanity-schema/`        | GROQ, componentes con datos de Sanity, CLI de Sanity, Studio           |
 | `.agents/skills/i18n-astro/`           | Rutas, enlaces internos, textos visibles, diccionarios ca/es           |
+| `.agents/skills/stitch-to-starter/`    | Traducir un diseño de Stitch: colores, tipografía, espaciado, contraste, modo oscuro |
 
 Si una tarea toca dos dominios (p. ej. un componente nuevo con datos de Sanity y enlaces traducidos), consulta ambas skills, no son excluyentes.
 

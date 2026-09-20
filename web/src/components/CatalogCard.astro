@@ -1,0 +1,100 @@
+---
+import { Icon } from 'astro-icon/components'
+import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
+import { urlFor } from '@lib/sanity/imageUrlBuilder'
+import { CATEGORY_LABEL_KEYS } from '@constants/constLabels'
+import type { CatalogItem } from '@lib/sanity/catalogItemsQuery'
+
+/**
+ * CatalogCard Component
+ *
+ * @description Card for one catalog item (project, material, formation or workshop): a band with the
+ * category (the subcategory for materials) that links to its catalog page, a 16/10 image, the "my work"
+ * text (first sentence on one line, the rest on a second one), the title, the short description and a
+ * "view details" footer. The cards of a row share their rows through subgrid, so titles and footers line
+ * up whatever the length of each text.
+ *
+ * Links: the footer link is stretched over the whole card, its accessible name is "View details: <title>"
+ * (it contains the visible label, WCAG 2.5.3, and stays unique among the cards, 2.4.4), and the band label
+ * is a second, separate link. A card therefore has two keyboard stops.
+ */
+interface Props {
+  /**
+   * The catalog item to display
+   */
+  item: CatalogItem
+  /**
+   * Heading level of the title; it must sit one level below the heading of the section
+   * @default "h3"
+   */
+  headingLevel?: 'h2' | 'h3' | 'h4'
+}
+
+const { item, headingLevel = 'h3' } = Astro.props
+const HeadingTag = headingLevel
+const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
+const { slug, data } = item
+// `myWork` is free text: the card shows its first sentence on one line and the rest on a second line,
+// each truncated to one line. The cards of a row share their rows (subgrid: band, image, `myWork`, text and
+// footer), so the titles line up while `myWork` sits right above each title.
+const myWorkSentences = (data.myWork ?? '').replace(/\s+/g, ' ').trim().match(/^(.*?\.)(?:\s+(.*))?$/)
+const myWorkFirst = myWorkSentences ? myWorkSentences[1] : (data.myWork ?? '').trim()
+const myWorkRest = myWorkSentences?.[2] ?? ''
+// Catalog page the band label links to: the subcategory page for materials, the category page otherwise.
+const catalogPage = data.category === 'materials' && data.subcategory ? `materials-${data.subcategory}` : data.category
+---
+
+<article
+  class="group relative row-span-5 grid grid-rows-subgrid border-r border-b border-(--border-color) bg-(--background-color)"
+>
+  <div class="flex items-center border-b border-(--border-color) bg-(--color-surface-container-low) px-4 py-1">
+    <a
+      href={getHref(`/${catalogPage}`, false, locale)}
+      class="relative z-10 border border-(--border-color) bg-(--color-accent-rose) px-1 py-0.5 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-wider text-(--color-on-accent)! uppercase no-underline! hover:bg-(--color-on-accent) hover:text-white!"
+    >
+      {t(CATEGORY_LABEL_KEYS[catalogPage])}
+    </a>
+  </div>
+
+  <div class="aspect-[16/10] overflow-hidden border-b border-(--border-color) bg-(--color-surface-container-low)">
+    <img
+      class="h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-200 motion-safe:group-hover:scale-[1.02]"
+      src={urlFor(data.image, 640, 400)}
+      alt={data.imageAlt ?? ''}
+      width="640"
+      height="400"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+
+  <p
+    class="self-end px-4 pt-4 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--color-on-surface-variant) uppercase lg:px-6 lg:pt-6"
+  >
+    <span class="block truncate">{myWorkFirst}</span>
+    {myWorkRest && <span class="block truncate">{myWorkRest}</span>}
+  </p>
+
+  <div class="px-4 pt-1 pb-4 lg:px-6 lg:pb-6">
+    <HeadingTag
+      class="mb-2 font-(family-name:--font-family-special) text-xl leading-tight font-bold tracking-tight text-(--foreground-color) uppercase motion-safe:transition-colors group-focus-within:text-(--color-accent-rose-dark) group-hover:text-(--color-accent-rose-dark)"
+    >
+      {data.title}
+    </HeadingTag>
+    <p class="line-clamp-3 text-sm leading-relaxed tracking-[0.01em] text-(--color-on-surface-variant)">
+      {data.subtitle}
+    </p>
+  </div>
+
+  <div class="flex items-center justify-end border-t border-(--border-color) bg-(--color-surface-container-low) p-4">
+    <a
+      href={getHref(`/${data.category}/${slug}`, false, locale)}
+      class="flex items-center gap-1 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--foreground-color)! uppercase no-underline! group-hover:underline! focus-visible:underline! after:absolute after:inset-0 after:content-['']"
+    >
+      <span>{t('view_details')}</span>
+      <span class="sr-only">: {data.title}</span>
+      <Icon aria-hidden="true" name="lucide:arrow-right" size="1rem" />
+    </a>
+  </div>
+</article>
