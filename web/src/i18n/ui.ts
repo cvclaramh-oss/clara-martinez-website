@@ -24,6 +24,7 @@ const ca = {
   button_contact: 'Contactar',
   button_cv_download: 'Descarregar CV (PDF)',
   view_all_projects: 'Veure tots els projectes',
+  view_details: 'Veure detalls',
   view_featured: 'Veure contingut destacat',
 
   // Navigation accessibility
@@ -52,7 +53,8 @@ const ca = {
 
   // Item detail
   'featured_projects.author_prefix': 'Autor/a: ',
-  'featured_projects.title': 'Projectes destacats',
+  'featured_projects.eyebrow': 'Catàleg seleccionat',
+  'featured_projects.title': 'Continguts destacats',
   'project_share.back': 'Tornar als projectes',
   'project_share.description': "T'agrada aquest projecte? Comparteix-lo amb la teva xarxa!",
   'project_share.title': 'Comparteix aquest projecte',
@@ -196,6 +198,7 @@ const es: Record<keyof typeof ca, string> = {
   button_contact: 'Contactar',
   button_cv_download: 'Descargar CV (PDF)',
   view_all_projects: 'Ver todos los proyectos',
+  view_details: 'Ver detalles',
   view_featured: 'Ver contenido destacado',
 
   // Navigation accessibility
@@ -224,7 +227,8 @@ const es: Record<keyof typeof ca, string> = {
 
   // Item detail
   'featured_projects.author_prefix': 'Autor/a: ',
-  'featured_projects.title': 'Proyectos destacados',
+  'featured_projects.eyebrow': 'Catálogo seleccionado',
+  'featured_projects.title': 'Contenidos destacados',
   'project_share.back': 'Volver a los proyectos',
   'project_share.description': '¿Te gusta este proyecto? ¡Compártelo con tu red!',
   'project_share.title': 'Comparte este proyecto',

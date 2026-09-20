@@ -8,7 +8,10 @@ import { getLangFromUrl, useTranslations } from '@utils/i18n'
 /**
  * Navigation Component
  *
- * @description A component that displays the navigation menu for the website
+ * @description A component that displays the navigation menu for the website: a fixed 64px bar
+ * with the brand cell, the desktop menu, the language and dark mode actions and, below the `nav`
+ * breakpoint (1050px), the mobile toggle and menu. The item padding is fluid between 1050px and
+ * 1150px so the whole bar fits at the breakpoint. Dropdowns follow ADR 0010 (keyboard) and 0011.
  */
 
 const locale = getLangFromUrl(Astro.url)

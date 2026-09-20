@@ -24,22 +24,22 @@
 
   // Radical Clarity accent rose — dusty/muted, not Tailwind's saturated pink scale.
   // Placeholder value until the final brand tokens are defined (see conversation with Laura).
-  // Trial: now an alias of the brand-primary ramp (--brand-primary is the rose).
+  // An alias of the brand-primary ramp (--brand-primary is the rose).
   --color-accent-rose: var(--color-primary-200);
   // Darker rose for text on light backgrounds (the light accent above fails WCAG as text,
   // ~1.8:1). Value taken from Stitch's own `secondary` (#75565d) — 6.47:1 on white.
   --color-accent-rose-dark: light-dark(var(--color-primary-500), var(--color-primary-200));
 
-  // Stitch `surface-container-low` (#f3f3f3): light gray for hover and secondary bands.
-  // Not derived from the neutral ramp, whose 100 is pure white (it feeds --background-color).
+  // Stitch `surface-container-low` (#f3f3f3), taken from the neutral ramp: light gray for hover and for
+  // secondary bands and cells. Not neutral-100, which is pure white (it feeds --background-color).
   --color-surface-container-low: light-dark(var(--color-neutral-200), var(--color-neutral-800));
-  // Stitch `surface-container-high` (#e8e8e8): one step stronger than the low gray, for badges and tags.
+  // Stitch `surface-container-high` (#e8e8e8), from the neutral ramp: one step stronger than the low gray,
+  // for badges and tags.
   --color-surface-container-high: light-dark(var(--color-neutral-300), var(--color-neutral-700));
 
   // Roles that stay readable in dark mode. The accent rose is the same in both modes, so text on it stays dark.
   --color-on-surface-variant: light-dark(var(--color-neutral-700), var(--color-neutral-400));
   --color-on-accent: var(--color-neutral-900);
-  --color-surface: light-dark(oklch(98.5% 0 0), var(--color-neutral-800));
 
   // pallet neutral
   --color-neutral-100: oklch(from var(--brand-neutral) 100% 0 0);
