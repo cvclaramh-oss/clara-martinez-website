@@ -72,8 +72,9 @@ Si el elemento lleva un `tracking-*` propio, gana al del token (es lo que hace S
 ## 4. Espaciado y breakpoints
 
 - Espaciado: `space-xs/sm/md/lg/xl` y `margin` de Stitch son `1/2/4/6/10/8` de la escala de Tailwind (`px-space-md lg:px-margin` → `px-4 lg:px-8`).
-- **Márgenes por ancho (`DESIGN.md`):** móvil 1 rem (`px-4`), tablet 768–1023 px 1,5 rem (`md:px-6`), escritorio 2 rem (`lg:px-8`). Los contenedores deben llevar `px-4 md:px-6 lg:px-8`; al construir cada uno, comprobar contra el `.container` del starter.
-- Breakpoints de Tailwind = los del SCSS: `md` 768, `lg` 1024, `xl` 1280. **El navbar** cambia a menú de escritorio a `nav` = 1050 px (mapa de `_breakpoint.scss`); el tagline pasa de apilado bajo el nombre a celda propia a 1440 px (`min-[1440px]`).
+- **Márgenes por ancho (`DESIGN.md`):** móvil 1 rem (`px-4`), tablet 768–1023 px 1,5 rem (`md:px-6`), escritorio 2 rem (`lg:px-8`). Hero, destacados, CTA y footer (celdas y barra) comparten `px-4 md:px-6 lg:px-8`; la CTA centra su contenido en `max-w-6xl`, como el prototipo. El navbar queda fuera: el nombre empieza a 16 px porque un margen de 32 px no cabe a 1024. Los contenedores nuevos llevan las mismas clases (no el `.container` del starter).
+- **Escala única (ADR 0015):** móvil <768, tablet 768–1023 (`md`), escritorio ≥1024 (`lg`). Los prefijos de Tailwind (`md:`, `lg:`) y el mapa SCSS (`m`, `l`) valen lo mismo; `sm` (640) no se usa. No escribir `48rem`/`64rem` a mano: en SCSS, `@include breakpoint('m')` o `('l')`.
+- **Saltos propios del navbar, en un solo sitio (`styles/base/_breakpoint.scss`):** `nav` (1024, menú de escritorio) y `tagline` (1440, celda propia junto al menú). El tagline es celda en tablet (`m` hasta `nav`) y desde `tagline`, y va apilado bajo el nombre en móvil y entre `nav` y `tagline`. El padding fluido de los ítems parte de `nav` (`Navigation.astro`).
 
 ## 5. Sintaxis y trampas de clases (Tailwind 4)
 
