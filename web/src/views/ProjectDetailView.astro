@@ -4,14 +4,15 @@ import SocialShares from '@components/SocialShares.astro'
 import { Heading, Link } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
-import { getCatalogItemsByCategory } from '@lib/sanity/catalogItemsQuery'
+import { getCatalogItemDetailsByCategory } from '@lib/sanity/catalogItemDetailQuery'
 import { urlFor } from '@lib/sanity/imageUrlBuilder'
 import { portableTextToHtml } from '@lib/sanity/renders/portableTextRender'
 
 /**
  * ProjectDetail Component
  *
- * @description Renders a single project with its content and share actions.
+ * @description Renders a single project with its content and share actions. It reads the full
+ * document (getCatalogItemDetailsByCategory), not the card shape.
  * All internal links are localized through getHref.
  */
 interface Props {
@@ -25,7 +26,7 @@ const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 const { projectId } = Astro.props
 
-const projects = await getCatalogItemsByCategory(locale, 'projects')
+const projects = await getCatalogItemDetailsByCategory(locale, 'projects')
 const project = projects.find((entry) => entry.slug === projectId)
 const bodyHtml = project ? portableTextToHtml(project.data.descriptionLong) : ''
 
