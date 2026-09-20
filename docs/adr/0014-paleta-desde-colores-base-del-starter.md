@@ -25,7 +25,7 @@ Había que acercar el diseño de Stitch a esa base sin perder lo que aporta el s
    - `--color-on-accent` (texto sobre el rosa): `neutral-900`, en los dos modos porque el rosa no cambia.
    - `--color-accent-rose`: alias de `primary-200`. `--color-accent-rose-dark`: `primary-500` / `primary-200`.
    - `--color-surface-container-low` y `-high`: `neutral-200` / `neutral-800` y `neutral-300` / `neutral-700`.
-   - `--color-surface`: `oklch(98.5% 0 0)` / `neutral-800`. Es el único literal fuera de la rampa (Stitch usa `#fafafa`).
+   - Las celdas y bandas secundarias (tagline, banda y pie de las tarjetas) usan `--color-surface-container-low`. Un `--color-surface` a `#fafafa` (como Stitch) se probó y se quitó: apenas se distinguía del blanco.
 5. **Roles del starter reasignados:** `--foreground-color` a `neutral-900` en claro; `--link-color` a `primary-500` / `primary-200`; `--link-hover-color` a `neutral-900` / `primary-100`.
 6. **Los componentes usan roles, no escalones fijos,** siempre que el color deba cambiar en modo oscuro.
 
@@ -33,6 +33,7 @@ Había que acercar el diseño de Stitch a esa base sin perder lo que aporta el s
 
 - **Tokens exactos de Stitch como literales** (hex u `oklch`): se probaron cuatro (`accent-rose`, `accent-rose-dark`, `surface-container-low/high`) y se revirtieron a alias de la rampa. Son exactos, pero un segundo sistema de color y sin modo oscuro propio.
 - **`@theme static` con la paleta completa (0009):** descartado por duplicar la definición del color.
+- **Evitar `oklch(from …)` y calcular las rampas una vez como valores fijos:** bajaría el suelo de navegadores solo a Chrome 123, Firefox 128 y Safari 17,5, a cambio de perder la derivación automática desde los colores base. No compensa.
 - **Quitar los roles y repetir `text-neutral-700 dark:text-neutral-400` en cada uso:** el resultado visual es el mismo, pero obliga a repetir el par claro/oscuro unas 16 veces y a acordarse del `dark:` cada vez. Un rol expresa la intención («texto sobre el acento») y permite cambiar el color en un solo sitio.
 
 ## Consecuencias
@@ -41,6 +42,7 @@ Había que acercar el diseño de Stitch a esa base sin perder lo que aporta el s
 - **La rampa no garantiza AA.** No valen como texto en claro `neutral-500` (≈1,9:1), `neutral-600` (≈3,95:1) ni `primary-400` (≈4,07:1); en oscuro, `neutral-700` (≈2,15:1). Cada combinación nueva se calcula.
 - **El modo oscuro de estos componentes se validó por cálculo** de contraste, no renderizado (el script del toggle no se activa en Chrome sin ventana).
 - **Otros componentes siguen con colores fijos** y se migran al reconstruir cada página: `Feature.astro`, `SitemapView.astro` y a revisar `PageHeader.astro`.
+- **Suelo de navegadores: Chrome 125+, Firefox 128+ y Safari 18+.** Lo fija `oklch(from …)` (colores relativos, Baseline «recientemente disponible» desde 2024-09-16; datos del paquete `web-features` 3.39.0, consultados el 2026-09-20). Tailwind 4 exige menos (Safari 16.4, Chrome 111, Firefox 128). `light-dark()` (Chrome 123, Firefox 120, Safari 17,5) y `subgrid` quedan por debajo. `text-wrap: balance`, `interpolate-size` y `@view-transition` son mejoras opcionales del starter: si no se soportan, se ignoran. Por debajo del suelo las variables de color no se resuelven y la web cae a los colores por defecto del navegador (degradación sin probar).
 - **Trampa de especificidad:** `#main-navigation a { color: var(--foreground-color) }` gana a cualquier clase de componente. Las reglas de color de un elemento dentro del navbar deben colgar de `#main-navigation` (en Astro, `:global(#main-navigation) .clase`).
 - **El rosa está decidido:** se mantiene el actual, más apagado que `#F5CCD4`/`#ffd5dd` de Stitch, por decisión propia.
 - **Quedan por decidir:** `--brand-outline` y los radios a 0 (ADR 0005).

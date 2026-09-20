@@ -13,6 +13,7 @@ Referencias locales (fuera de git, `docs/private/design/`): `DESIGN.md` (sistema
 - **Roles, no escalones fijos,** para lo que deba cambiar en modo oscuro. `text-neutral-800` no se invierte; `--color-on-surface-variant` sí.
 - **Todo par de colores nuevo se calcula** (AA: 4,5:1 texto normal, 3:1 texto grande y elementos gráficos) en claro y en oscuro.
 - **Un componente a la vez.** Antes de tocar un componente, renderizar y comprobar; nunca dar por bueno un cambio de color sin mirar el modo oscuro.
+- **Suelo de navegadores: Chrome 125+, Firefox 128+, Safari 18+** (ADR 0014). Antes de usar una función CSS nueva, comprobar su estado Baseline (paquete `web-features` o caniuse): si exige más que el suelo, usarla solo como mejora opcional que, si no se soporta, se ignora.
 - **No perder del starter:** modo oscuro y alto contraste, foco visible (anillo `outline` del mixin), `prefers-reduced-motion`, skip link. Ver §6.
 
 ## 2. Colores: traducción Stitch → proyecto
@@ -25,7 +26,7 @@ Colores base (`_root.scss`): `--brand-neutral: #808080` (gris puro), `--brand-pr
 | `text-on-surface-variant` (`#444748`) | `text-(--color-on-surface-variant)` (`neutral-700`, `#484848`) | 4/255 |
 | `bg-surface-container-low` (`#f3f3f3`) | `bg-(--color-surface-container-low)` (`neutral-200`, `#eeeeee`) | 5/255 |
 | `bg-surface-container-high` (`#e8e8e8`) | `bg-(--color-surface-container-high)` (`neutral-300`, `#dedede`) | 10/255 |
-| `bg-surface` (`#f9f9f9`) | `bg-(--color-surface)` (`#fafafa`) | 1/255 |
+| `bg-surface` (`#f9f9f9`) | `bg-(--color-surface-container-low)` (`neutral-200`): con `#fafafa` apenas se distingue del blanco | 15/255 |
 | `bg-surface-container-lowest` (`#fff`) | `bg-(--background-color)` | 0 |
 | `bg-secondary-container` (`#ffd5dd`) | `bg-(--color-accent-rose)` (`primary-200`, `#e0aebb`) | Decisión: rosa más apagado que el de Stitch |
 | `text-secondary` (`#75565d`) | `text-(--color-accent-rose-dark)` (`primary-500`, `#815461` en claro) | 12/255 |
@@ -33,7 +34,7 @@ Colores base (`_root.scss`): `--brand-neutral: #808080` (gris puro), `--brand-pr
 | `bg-primary` (botones, cuadrados) | `bg-(--color-on-accent)` si va sobre el rosa; si no, `bg-(--foreground-color)` | según contexto |
 | `text-outline` (`#666666`) | No hay escalón equivalente. Como texto, `--color-on-surface-variant`; como raya, `--border-color-subtle` | — |
 
-Roles con modo oscuro ya definidos: `--foreground-color`, `--background-color`, `--border-color`, `--border-color-subtle`, `--icon-color`, `--link-color`, `--link-hover-color`, `--color-on-surface-variant`, `--color-on-accent`, `--color-surface`, `--color-surface-container-low/high`, `--color-accent-rose`, `--color-accent-rose-dark`.
+Roles con modo oscuro ya definidos: `--foreground-color`, `--background-color`, `--border-color`, `--border-color-subtle`, `--icon-color`, `--link-color`, `--link-hover-color`, `--color-on-surface-variant`, `--color-on-accent`, `--color-surface-container-low/high`, `--color-accent-rose`, `--color-accent-rose-dark`.
 
 **Texto sobre el rosa: siempre `--color-on-accent`** (oscuro, 10,3:1). El texto blanco sobre el rosa da 1,9:1 y no pasa.
 
@@ -99,6 +100,8 @@ Sobrescribir (`DESIGN.md`: sin radios, sin sombras, sin degradados, bordes de 1 
 - Todas las clases de un HTML de referencia generan CSS: compilar con `compile()` de `tailwindcss` (4.x) contra `tailwindcss/utilities.css` y `theme.css`. Las que no generan nada (`light`, `material-symbols-outlined`, `text-on-surface`, `bg-primary`) son de Stitch, no del proyecto.
 - Capturas con Chrome sin ventana (`google-chrome --headless=new --screenshot=… --window-size=ANCHOxALTO`) sobre `dist/` servido con `python3 -m http.server`. **El modo oscuro no se activa así** (el script del toggle quita la clase): validar por cálculo de contraste y en el navegador.
 - Probar los anchos 1050, 1280, 1440 y 1920 en catalán **y** español (las etiquetas en español son más largas).
+- **Repaso en varios navegadores** (Chrome, Firefox y Safari/WebKit, en claro y oscuro y con teclado) cuando haya más páginas; en Linux no hay Safari real.
+- **Accesibilidad automática con `axe-core`, a medida que se construyan páginas:** instalar `puppeteer-core` y `axe-core` en una carpeta temporal (no en el proyecto), servir `dist/` con `python3 -m http.server` y ejecutar `axe.run` con las etiquetas `wcag2a`, `wcag2aa`, `wcag21aa`, `wcag22aa` y `best-practice` sobre todas las páginas en claro y oscuro (forzar oscuro con `localStorage.setItem('darkMode','enabled')` antes de cargar) y a 1440 y 390 px. Un aviso de contraste de Firefox sobre el `h1` puede ser falso positivo (líneas solapadas); `axe` calcula con los colores CSS. Probar el sitio construido (`npm run preview`), no `npm run dev`: la barra de desarrollo de Astro añade nodos y avisos.
 
 ## 8. Pendientes conocidos
 

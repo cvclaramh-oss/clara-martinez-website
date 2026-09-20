@@ -38,3 +38,8 @@ El tipo de documento cubre las 4 categorías del sitio (`projects`/`materials`/`
 - Cualquier dato nuevo expuesto al front desde Sanity debe pasar por una proyección GROQ explícita (forma `{slug, data}` o equivalente), nunca el documento crudo.
 - El `_type` `catalogItem` es ahora la única fuente de contenido de catálogo del sitio — Materials/Formacions/Tallers, cuando se construyan sus vistas, reutilizan `getCatalogItemsByCategory` y `CatalogItem`, no crean su propio tipo ni su propia función de consulta.
 - Documentos ya existentes en `production` bajo `_type: "project"` fueron migrados (2026-09-18); cualquier backup o dataset anterior a esa fecha sigue teniendo el tipo antiguo.
+
+## Nota (2026-09-20): dos proyecciones, tarjeta y detalle
+
+`CatalogItem` (`catalogItemsQuery.ts`) es ahora solo la forma de **tarjeta**: `title`, `subtitle`, `image`, `imageAlt`, `category`, `subcategory`, `tags`, `myWork` y `author`. El documento completo es `CatalogItemDetail` (`catalogItemDetailQuery.ts`), que se construye a partir de los mismos campos de tarjeta (`catalogItemCardFields`) y añade descripción larga, autoría institucional, año, enlace externo, vídeos, galería, documentos, botón, `createdBy`, `designedBy` y secciones (los campos de archivo llegan resueltos a su URL). Las listas y las páginas de tarjeta usan `getCatalogItemsByCategory` / `getFeaturedCatalogItems`; la ficha usa `getCatalogItemDetailsByCategory`, una consulta por categoría e idioma. Sigue vigente la forma `{slug, data}`.
+
