@@ -81,6 +81,7 @@ Si el elemento lleva un `tracking-*` propio, gana al del token (es lo que hace S
 - `bg-neutral-100` es **blanco** (alimenta `--background-color`); no es el gris de Stitch. El gris es `--color-surface-container-low`.
 - Un `border` sin color usa `currentColor`: siempre con `border-(--border-color)`.
 - Tailwind escanea también comentarios: evitar en ellos palabras que sean utilidades (`visible`, `block`, `flex`, `hidden`…).
+- **Sobrescribir un componente del starter (p. ej. `Link isButton`) exige `!`** en la utilidad (`rounded-none!`, `bg-(--x)!`): sus estilos van sin capa y ganan a la capa `utilities` de Tailwind aunque usen `:where()`. Es lo que ya hace `CallToAction.astro`.
 - **Especificidad en el navbar:** `#main-navigation a { color: var(--foreground-color) }` gana a cualquier clase de componente. Reglas de color dentro del navbar: `:global(#main-navigation) .clase { … }`.
 
 ## 6. Starter: qué conservar y qué sobrescribir
