@@ -24,6 +24,7 @@ const ca = {
   button_contact: 'Contactar',
   button_cv_download: 'Descarregar CV (PDF)',
   view_all_projects: 'Veure tots els projectes',
+  view_featured: 'Veure contingut destacat',
 
   // Navigation accessibility
   'nav.a11y': 'Menú de navegació principal',
@@ -195,6 +196,7 @@ const es: Record<keyof typeof ca, string> = {
   button_contact: 'Contactar',
   button_cv_download: 'Descargar CV (PDF)',
   view_all_projects: 'Ver todos los proyectos',
+  view_featured: 'Ver contenido destacado',
 
   // Navigation accessibility
   'nav.a11y': 'Menú de navegación principal',

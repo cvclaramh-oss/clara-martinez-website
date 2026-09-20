@@ -35,7 +35,7 @@ const { class: className, limit = 3, title = t('featured_projects.title') } = As
 const featuredCatalogItems = (await getFeaturedCatalogItems(locale)).slice(0, limit)
 ---
 
-<section class:list={[className, 'my-64']}>
+<section id="featured" class:list={[className, 'my-64 scroll-mt-16']}>
   <div class="container">
     <Heading level="h2" class="mb-6">{title}</Heading>
     <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
