@@ -96,24 +96,35 @@ const currentYear = new Date().getFullYear()
   </section>
 
   <section
-    class="flex flex-col items-center justify-center gap-2 border-t border-(--border-color) bg-(--color-surface-container-low) px-4 py-4 text-center text-xs tracking-wide text-(--color-on-surface-variant) uppercase sm:flex-row sm:justify-between lg:px-8"
+    class="flex flex-col items-center justify-center gap-2 border-t border-(--border-color) bg-(--color-surface-container-low) px-4 py-4 text-center text-xs tracking-wide text-(--color-on-surface-variant) uppercase md:flex-row md:justify-between md:px-6 lg:px-8"
   >
     <p>&copy; {currentYear} {themeConfig.name}. {t('footer.rights')}</p>
     <Link href={getHref('/sitemap', false, locale)} class="footer-link">{t('sitemap.label')}</Link>
   </section>
 </footer>
 
-<style>
+<style lang="scss">
+  @use 'base/breakpoint' as *;
+
   footer {
     border-block-start: 1px solid var(--border-color);
   }
 
+  // Side padding follows the page margin (1rem, 1.5rem from `m`, 2rem from `l`).
   .cell {
-    padding: 1.5rem;
+    padding: 1.5rem 1rem;
     border-block-end: 1px solid var(--border-color);
+
+    @include breakpoint('m') {
+      padding-inline: 1.5rem;
+    }
+
+    @include breakpoint('l') {
+      padding-inline: 2rem;
+    }
   }
 
-  @media (min-width: 48rem) {
+  @include breakpoint('m') {
     .cell {
       border-inline-end: 1px solid var(--border-color);
     }
@@ -123,7 +134,7 @@ const currentYear = new Date().getFullYear()
     }
   }
 
-  @media (min-width: 64rem) {
+  @include breakpoint('l') {
     .cell {
       border-block-end: none;
     }
