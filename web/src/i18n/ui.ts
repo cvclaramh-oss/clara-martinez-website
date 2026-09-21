@@ -34,6 +34,7 @@ const ca = {
   'nav.lang_ca': 'Canviar a la versió en català',
   'nav.lang_es': 'Canviar a la versió en espanyol',
   'nav.open_menu': 'Obrir el menú de navegació',
+  'nav.skip_link': 'Saltar al contingut principal',
 
   // Footer
   'footer.accessibility_description':
@@ -234,6 +235,7 @@ const es: Record<keyof typeof ca, string> = {
   'nav.lang_ca': 'Cambiar a la versión en catalán',
   'nav.lang_es': 'Cambiar a la versión en español',
   'nav.open_menu': 'Abrir el menú de navegación',
+  'nav.skip_link': 'Saltar al contenido principal',
 
   // Footer
   'footer.accessibility_description':
