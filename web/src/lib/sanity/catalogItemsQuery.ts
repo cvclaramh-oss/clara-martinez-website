@@ -1,4 +1,5 @@
 import { sanityClient } from './client'
+import { fetchAllInBatches } from './fetchAllInBatchesQuery'
 import type { SanityImage } from './imageUrlBuilder'
 import type { Locale } from '@utils/i18n'
 
@@ -64,8 +65,9 @@ const catalogItemProjection = `{
  * the category filter changing.
  */
 export async function getCatalogItemsByCategory(locale: Locale, category: CatalogItemCategory): Promise<CatalogItem[]> {
-  return sanityClient.fetch<CatalogItem[]>(
-    `*[_type == "catalogItem" && category == $category && language == $locale] | order(slug.current asc) ${catalogItemProjection}`,
+  return fetchAllInBatches<CatalogItem>(
+    '*[_type == "catalogItem" && category == $category && language == $locale] | order(slug.current asc, _id asc) ',
+    catalogItemProjection,
     { locale, category },
   )
 }

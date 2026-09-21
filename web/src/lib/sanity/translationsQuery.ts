@@ -1,4 +1,4 @@
-import { sanityClient } from './client'
+import { fetchAllInBatches } from './fetchAllInBatchesQuery'
 import type { CatalogItemCategory, CatalogItemSubcategory } from './catalogItemsQuery'
 import { getSegmentCanonical, localizeUrl } from '@utils/i18n'
 import type { Locale } from '@utils/i18n'
@@ -21,7 +21,8 @@ interface RawItem {
 
 // Translations are linked through a `translation.metadata` document that references every language version.
 // Its `_key`s are not language codes, so the language comes from the referenced document.
-const itemsQuery = `*[_type == "catalogItem"]{
+const itemsSelection = '*[_type == "catalogItem"] | order(_id asc) '
+const itemsProjection = `{
   category,
   subcategory,
   language,
@@ -36,7 +37,7 @@ const itemsQuery = `*[_type == "catalogItem"]{
 let itemIndex: Promise<Map<string, ItemTranslations>> | undefined
 
 function getItemIndex(): Promise<Map<string, ItemTranslations>> {
-  itemIndex ??= sanityClient.fetch<RawItem[]>(itemsQuery).then((items) => {
+  itemIndex ??= fetchAllInBatches<RawItem>(itemsSelection, itemsProjection).then((items) => {
     const index = new Map<string, ItemTranslations>()
     for (const item of items) {
       const slugs: Partial<Record<Locale, string>> = { [item.language]: item.slug }
