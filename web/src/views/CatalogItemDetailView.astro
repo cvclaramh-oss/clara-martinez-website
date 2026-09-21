@@ -269,7 +269,7 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
           <h2 class="sr-only">{t('detail.gallery')}</h2>
           <div class="-mr-px -mb-px grid grid-cols-1 md:grid-cols-3">
             {gallery.map((image, position) => (
-              <div class="group relative aspect-[4/3] overflow-hidden border-r border-b border-(--border-color) bg-(--color-surface-container-low)">
+              <div class="group relative aspect-4/3 overflow-hidden border-r border-b border-(--border-color) bg-(--color-surface-container-low)">
                 <img
                   class="h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-200 motion-safe:group-hover:scale-[1.01]"
                   src={urlFor(image, 800, 600)}

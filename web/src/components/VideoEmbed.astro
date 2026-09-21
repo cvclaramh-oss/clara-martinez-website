@@ -61,7 +61,7 @@ const badgeClass =
   'absolute border border-(--border-color) px-1.5 py-0.5 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
 ---
 
-<div class="relative aspect-[4/3] overflow-hidden border-r border-b border-(--border-color) bg-(--color-surface-container-low)">
+<div class="relative aspect-4/3 overflow-hidden border-r border-b border-(--border-color) bg-(--color-surface-container-low)">
   {
     fileUrl ? (
       <video class="h-full w-full object-cover" src={fileUrl} controls preload="none" playsinline aria-label={label} />
