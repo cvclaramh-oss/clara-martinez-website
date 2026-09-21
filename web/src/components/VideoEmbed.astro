@@ -1,0 +1,123 @@
+---
+import { Icon } from 'astro-icon/components'
+import { getLangFromUrl, useTranslations } from '@utils/i18n'
+
+/**
+ * VideoEmbed Component
+ *
+ * @description One 4:3 video unit. A YouTube or Vimeo link shows a plain placeholder with a play button
+ * and only loads the provider (youtube-nocookie or Vimeo with do-not-track) when the person presses it, so
+ * no third party is contacted before that. An uploaded mp4 uses the native player with controls. Any other
+ * link is shown as a plain link that opens in a new tab.
+ */
+interface Props {
+  /**
+   * External video link (YouTube or Vimeo). Either this or `fileUrl`, never both
+   */
+  url?: string | null
+  /**
+   * Url of an uploaded mp4 file
+   */
+  fileUrl?: string | null
+  /**
+   * Optional title, shown on the unit and used as the accessible name
+   */
+  title?: string | null
+  /**
+   * Position among the videos of the page, starting at 1
+   */
+  index: number
+}
+
+const { url, fileUrl, title, index } = Astro.props
+const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
+
+const idPattern = /^[\w-]{6,}$/
+
+// Player url for a YouTube or Vimeo link; undefined for any other link.
+function getEmbedUrl(link?: string | null): string | undefined {
+  if (!link) return undefined
+  try {
+    const { hostname, pathname, searchParams } = new URL(link)
+    const host = hostname.replace(/^www\./, '')
+    if (host === 'youtu.be' || host.endsWith('youtube.com')) {
+      const id = host === 'youtu.be' ? pathname.split('/')[1] : (searchParams.get('v') ?? pathname.split('/')[2])
+      if (id && idPattern.test(id)) return `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`
+    }
+    if (host.endsWith('vimeo.com')) {
+      const id = pathname.split('/').filter(Boolean).pop()
+      if (id && /^\d+$/.test(id)) return `https://player.vimeo.com/video/${id}?autoplay=1&dnt=1`
+    }
+  } catch {
+    return undefined
+  }
+  return undefined
+}
+
+const embedUrl = fileUrl ? undefined : getEmbedUrl(url)
+const label = title?.trim() || `${t('detail.video')} ${String(index).padStart(2, '0')}`
+const badgeClass =
+  'absolute border border-(--border-color) px-1.5 py-0.5 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
+---
+
+<div class="relative aspect-4/3 overflow-hidden border-r border-b border-(--border-color) bg-(--color-surface-container-low)">
+  {
+    fileUrl ? (
+      <video class="h-full w-full object-cover" src={fileUrl} controls preload="none" playsinline aria-label={label} />
+    ) : embedUrl ? (
+      <button
+        type="button"
+        class="absolute inset-0 flex items-center justify-center"
+        data-embed-src={embedUrl}
+        data-embed-title={label}
+        aria-label={`${t('detail.play_video')}: ${label}`}
+      >
+        <span class="flex h-16 w-16 items-center justify-center border border-(--border-color) bg-(--foreground-color) text-(--background-color)">
+          <Icon aria-hidden="true" name="lucide:play" size="2rem" />
+        </span>
+      </button>
+    ) : url ? (
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="absolute inset-0 flex items-center justify-center gap-2 font-(family-name:--font-family-special) text-sm font-semibold tracking-widest text-(--foreground-color)! uppercase no-underline! hover:underline!"
+      >
+        {t('detail.watch_video')}
+        <Icon aria-hidden="true" name="lucide:external-link" size="1.25rem" />
+        <span class="sr-only">{t('detail.new_tab')}</span>
+      </a>
+    ) : null
+  }
+  <span class:list={[badgeClass, 'top-2 left-2 bg-(--background-color) text-(--foreground-color)']} aria-hidden="true">
+    {t('detail.video')} {String(index).padStart(2, '0')}
+  </span>
+  {
+    title && (
+      <span
+        class:list={[badgeClass, 'right-2 bottom-2 bg-(--foreground-color) text-(--background-color)']}
+        aria-hidden="true"
+      >
+        {title}
+      </span>
+    )
+  }
+</div>
+
+<script>
+  document.addEventListener('click', (event) => {
+    const button = (event.target as Element).closest<HTMLButtonElement>('button[data-embed-src]')
+    if (!button) return
+
+    const iframe = document.createElement('iframe')
+    iframe.src = button.dataset.embedSrc ?? ''
+    iframe.title = button.dataset.embedTitle ?? ''
+    iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'
+    iframe.allowFullscreen = true
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin'
+    iframe.className = 'absolute inset-0 h-full w-full border-0'
+    button.replaceWith(iframe)
+    iframe.focus()
+  })
+</script>

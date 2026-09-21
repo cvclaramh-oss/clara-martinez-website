@@ -1,16 +1,20 @@
 ---
 import Navigation from '@components/Navigation.astro'
 import { HighContrast, ReducedMotion, SkipLink } from 'accessible-astro-components'
+import { getLangFromUrl, useTranslations } from '@utils/i18n'
 
 /**
  * Header Component
  *
  * @description A component that displays the header of the website
  */
+
+const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
 ---
 
 <header>
-  <SkipLink />
+  <SkipLink text={t('nav.skip_link')} />
   <!-- Initialize preference components -->
   <div hidden>
     <HighContrast />

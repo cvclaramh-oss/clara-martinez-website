@@ -6,9 +6,9 @@ import SitemapView from '@views/SitemapView.astro'
 import ThankYouView from '@views/ThankYouView.astro'
 import AccessibilityStatementView from '@views/AccessibilityStatementView.astro'
 import ProjectListingView from '@views/ProjectListingView.astro'
-import ProjectDetailView from '@views/ProjectDetailView.astro'
+import CatalogItemDetailView from '@views/CatalogItemDetailView.astro'
 import ComingSoonView from '@views/ComingSoonView.astro'
-import { getCatalogItemsByCategory } from '@lib/sanity/catalogItemsQuery'
+import { getCatalogItemsByCategory, type CatalogItemCategory } from '@lib/sanity/catalogItemsQuery'
 import { useTranslations } from '@utils/i18n'
 import type { Locale } from '@utils/i18n'
 import { routes } from '../i18n/routes'
@@ -39,11 +39,14 @@ export async function getStaticPaths() {
       pageType: string
       pageNum?: number
       tag?: Tag
-      projectId?: string
-      projectTitle?: string
+      category?: CatalogItemCategory
+      itemSlug?: string
+      itemTitle?: string
       section?: string
     }
   }[] = []
+
+  const catalogCategories: CatalogItemCategory[] = ['projects', 'materials', 'formations', 'workshops']
 
   for (const locale of locales) {
     const prefix = locale === 'es' ? 'es/' : ''
@@ -78,13 +81,16 @@ export async function getStaticPaths() {
       })
     }
 
-    for (const project of projects) {
-      paths.push({
-        params: {
-          slug: `${prefix}${routeSegment(locale, 'projects')}/${project.slug}`,
-        },
-        props: { locale, pageType: 'project', projectId: project.slug, projectTitle: project.data.title },
-      })
+    for (const category of catalogCategories) {
+      const items = category === 'projects' ? projects : await getCatalogItemsByCategory(locale, category)
+      for (const item of items) {
+        paths.push({
+          params: {
+            slug: `${prefix}${routeSegment(locale, category)}/${item.slug}`,
+          },
+          props: { locale, pageType: 'catalog-item', category, itemSlug: item.slug, itemTitle: item.data.title },
+        })
+      }
     }
 
     for (const tag of uniqueTags) {
@@ -110,12 +116,13 @@ interface Props {
   pageType: string
   pageNum?: number
   tag?: Tag
-  projectId?: string
-  projectTitle?: string
+  category?: CatalogItemCategory
+  itemSlug?: string
+  itemTitle?: string
   section?: string
 }
 
-const { locale, pageType, pageNum = 1, tag, projectId, projectTitle, section } = Astro.props
+const { locale, pageType, pageNum = 1, tag, category, itemSlug, itemTitle, section } = Astro.props
 const t = useTranslations(locale)
 
 const isHome = pageType === 'home'
@@ -124,7 +131,7 @@ const seoTitle = {
   home: t('meta.title'),
   projects: t('projects.label'),
   tag: tag ? `${t('projects.label')}: ${tag.label}` : t('projects.label'),
-  project: projectTitle ?? t('projects.label'),
+  'catalog-item': itemTitle ?? t('meta.title'),
   contact: t('contact.label'),
   sitemap: t('sitemap.label'),
   'thank-you': t('thank_you.title'),
@@ -142,7 +149,7 @@ const seoDescription = {
   {pageType === 'home' && <HomeView />}
   {pageType === 'projects' && <ProjectListingView pageNum={pageNum} />}
   {pageType === 'tag' && tag && <ProjectListingView pageNum={pageNum} currentTag={tag} />}
-  {pageType === 'project' && projectId && <ProjectDetailView projectId={projectId} />}
+  {pageType === 'catalog-item' && category && itemSlug && <CatalogItemDetailView category={category} slug={itemSlug} />}
   {pageType === 'contact' && <ContactView />}
   {pageType === 'sitemap' && <SitemapView />}
   {pageType === 'thank-you' && <ThankYouView />}

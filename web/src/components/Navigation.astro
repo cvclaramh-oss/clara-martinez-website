@@ -334,6 +334,12 @@ const t = useTranslations(locale)
         }
       }
 
+      // The pink current item has no side lines: its own start border and the next item's are painted pink (same width, no shift).
+      &.desktop-menu > ul > li:has(> .is-active),
+      &.desktop-menu > ul > li:has(> .is-active) + li {
+        border-inline-start-color: var(--color-accent-rose);
+      }
+
       > ul a:focus-visible,
       > ul .is-active,
       > ul button[aria-expanded='true'] {
@@ -358,8 +364,8 @@ const t = useTranslations(locale)
       transition: none;
 
       &:where(:hover, :focus-visible) {
-        background-color: var(--color-accent-rose);
-        color: var(--color-on-accent);
+        background-color: var(--color-surface-container-low);
+        color: var(--foreground-color);
       }
 
       &.is-active {
@@ -516,6 +522,11 @@ const t = useTranslations(locale)
 
       &:where(:hover, :focus-visible) {
         background-color: var(--color-surface-container-low);
+        box-shadow: none;
+      }
+
+      &:focus-visible {
+        @include outline;
       }
     }
 
