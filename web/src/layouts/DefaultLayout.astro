@@ -69,10 +69,6 @@ const imageUrl = new URL(imagePath, Astro.site).href
     <!-- favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Self-hosted fonts (see styles/base/_font.scss): Space Grotesk + Hanken Grotesk -->
-    <link rel="preload" href="/fonts/HankenGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/SpaceGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
-
     <SEO
       title={title}
       titleTemplate={useTitleTemplate ? `%s - ${t('meta.title')}` : undefined}
