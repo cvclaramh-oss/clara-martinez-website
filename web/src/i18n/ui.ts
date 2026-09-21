@@ -51,6 +51,32 @@ const ca = {
 
   // PAGES
 
+  // Catalog item detail
+  'detail.back': 'Tornar a',
+  'detail.breadcrumb': 'Ruta',
+  'detail.category': 'Categoria',
+  'detail.created_by': 'Elaborat per',
+  'detail.description': 'Descripció',
+  'detail.designed_by': 'Dissenyat i maquetat per',
+  'detail.documents': 'Documents',
+  'detail.download': 'Descarregar',
+  'detail.external_link': 'Enllaç extern',
+  'detail.fact_sheet': 'Fitxa tècnica',
+  'detail.figure': 'Fig.',
+  'detail.gallery': 'Galeria',
+  'detail.institutional_authorship': 'Autoria institucional',
+  'detail.my_work': 'La meva feina',
+  'detail.new_tab': "(s'obre en una pestanya nova)",
+  'detail.next': 'Següent',
+  'detail.open_link': 'Obrir enllaç',
+  'detail.play_video': 'Reproduir el vídeo',
+  'detail.previous': 'Anterior',
+  'detail.previous_next': 'Anterior i següent',
+  'detail.tags': 'Etiquetes',
+  'detail.video': 'Vídeo',
+  'detail.watch_video': 'Veure el vídeo',
+  'detail.year': 'Any',
+
   // Item detail
   'featured_projects.author_prefix': 'Autor/a: ',
   'featured_projects.eyebrow': 'Catàleg seleccionat',
@@ -224,6 +250,32 @@ const es: Record<keyof typeof ca, string> = {
   'footer.wcag_badge': 'WCAG 2.2 AA',
 
   // PAGES
+
+  // Catalog item detail
+  'detail.back': 'Volver a',
+  'detail.breadcrumb': 'Ruta',
+  'detail.category': 'Categoría',
+  'detail.created_by': 'Elaborado por',
+  'detail.description': 'Descripción',
+  'detail.designed_by': 'Diseñado y maquetado por',
+  'detail.documents': 'Documentos',
+  'detail.download': 'Descargar',
+  'detail.external_link': 'Enlace externo',
+  'detail.fact_sheet': 'Ficha técnica',
+  'detail.figure': 'Fig.',
+  'detail.gallery': 'Galería',
+  'detail.institutional_authorship': 'Autoría institucional',
+  'detail.my_work': 'Mi trabajo',
+  'detail.new_tab': '(se abre en una pestaña nueva)',
+  'detail.next': 'Siguiente',
+  'detail.open_link': 'Abrir enlace',
+  'detail.play_video': 'Reproducir el vídeo',
+  'detail.previous': 'Anterior',
+  'detail.previous_next': 'Anterior y siguiente',
+  'detail.tags': 'Etiquetas',
+  'detail.video': 'Vídeo',
+  'detail.watch_video': 'Ver el vídeo',
+  'detail.year': 'Año',
 
   // Item detail
   'featured_projects.author_prefix': 'Autor/a: ',
