@@ -90,12 +90,18 @@ const ca = {
     'Col·lecció de projectes educatius, materials didàctics i investigacions en educació afectivosexual, perspectiva de gènere i transformació comunitària.',
 
   // Catalog
+  'catalog.empty_text': 'Estem preparant aquesta secció. Torna aviat o consulta la resta del catàleg.',
+  'catalog.empty_title': 'Encara no hi ha continguts',
   'catalog.eyebrow': 'Arxiu & recursos oberts',
   'catalog.item_many': 'continguts',
   'catalog.item_one': 'contingut',
+  'catalog.next_page': 'Pàgina següent',
+  'catalog.no_next_page': 'No hi ha pàgina següent',
+  'catalog.no_previous_page': 'No hi ha pàgina anterior',
   'catalog.of': 'de',
   'catalog.page': 'Pàgina',
   'catalog.pagination_aria': 'Paginació',
+  'catalog.previous_page': 'Pàgina anterior',
   'catalog.showing': 'Mostrant',
 
   // Materials
@@ -306,12 +312,18 @@ const es: Record<keyof typeof ca, string> = {
     'Colección de proyectos educativos, materiales didácticos e investigaciones en educación afectivosexual, perspectiva de género y transformación comunitaria.',
 
   // Catalog
+  'catalog.empty_text': 'Estamos preparando esta sección. Vuelve pronto o consulta el resto del catálogo.',
+  'catalog.empty_title': 'Todavía no hay contenidos',
   'catalog.eyebrow': 'Archivo & recursos abiertos',
   'catalog.item_many': 'contenidos',
   'catalog.item_one': 'contenido',
+  'catalog.next_page': 'Página siguiente',
+  'catalog.no_next_page': 'No hay página siguiente',
+  'catalog.no_previous_page': 'No hay página anterior',
   'catalog.of': 'de',
   'catalog.page': 'Página',
   'catalog.pagination_aria': 'Paginación',
+  'catalog.previous_page': 'Página anterior',
   'catalog.showing': 'Mostrando',
 
   // Materials
