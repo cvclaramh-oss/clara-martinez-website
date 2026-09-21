@@ -1,16 +1,15 @@
 ---
-import PageHeader from '@components/PageHeader.astro'
-import { Badge, Card, Heading, Link, Pagination } from 'accessible-astro-components'
+import CatalogCard from '@components/CatalogCard.astro'
+import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 import { getCatalogItemsByCategory } from '@lib/sanity/catalogItemsQuery'
-import { urlFor } from '@lib/sanity/imageUrlBuilder'
-import { CATALOGS_PAGE_SIZE, getTags, filterByTagSlug, type Tag } from '@utils/catalogUtils'
+import { CATALOGS_PAGE_SIZE } from '@utils/catalogUtils'
 
 /**
  * ProjectsCatalogView Component
  *
- * @description Renders the project collection, optionally filtered by tag,
- * with pagination. All internal links are localized through getHref.
+ * @description Renders the project collection with a bar that shows the position in the list and the pages
+ * (previous, numbers, next). All internal links are localized through getHref.
  */
 interface Props {
   /**
@@ -18,105 +17,145 @@ interface Props {
    * @default 1
    */
   pageNum?: number
-  /**
-   * The tag to filter projects by
-   */
-  currentTag?: Tag
 }
 
 const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
-const { pageNum = 1, currentTag } = Astro.props
+const { pageNum = 1 } = Astro.props
 
 const projects = await getCatalogItemsByCategory(locale, 'projects')
-const uniqueTags = getTags(projects)
 
-const filteredProjects = currentTag ? filterByTagSlug(projects, currentTag.slug) : projects
-const totalPages = Math.max(1, Math.ceil(filteredProjects.length / CATALOGS_PAGE_SIZE))
+const totalPages = Math.max(1, Math.ceil(projects.length / CATALOGS_PAGE_SIZE))
 const startIndex = (pageNum - 1) * CATALOGS_PAGE_SIZE
-const pageProjects = filteredProjects.slice(startIndex, startIndex + CATALOGS_PAGE_SIZE)
+const pageProjects = projects.slice(startIndex, startIndex + CATALOGS_PAGE_SIZE)
 
-const plural = (count: number) => (count === 1 ? t('projects.one') : t('projects.many'))
-
-function pageHref(page: number, tag?: Tag): string {
-  const root = tag ? `/projects/tag/${tag.slug}` : '/projects'
-  return getHref(page === 1 ? root : `${root}/${page}`, false, locale)
+function pageHref(page: number): string {
+  return getHref(page === 1 ? '/projects' : `/projects/${page}`, false, locale)
 }
 
-const headerTitle = currentTag ? `${t('projects.label')}: ${currentTag.label}` : t('projects.label')
-const headerSubtitle = currentTag
-  ? `${t('tag.subtitle_prefix')} «${currentTag.label}». ${filteredProjects.length} ${plural(filteredProjects.length)}`
-  : t('projects.subtitle')
+const twoDigits = (value: number) => String(value).padStart(2, '0')
+const itemsLabel = projects.length === 1 ? t('catalog.item_one') : t('catalog.item_many')
+
+// Page numbers to show: the first, the last and the current one with its neighbours, with an ellipsis for each
+// gap, so the control keeps its size however many pages there are.
+const pageNumbers = (() => {
+  const pages = [...new Set([1, pageNum - 1, pageNum, pageNum + 1, totalPages])]
+    .filter((page) => page >= 1 && page <= totalPages)
+    .sort((a, b) => a - b)
+  return pages.flatMap((page, index) => (index > 0 && page - pages[index - 1] > 1 ? ['…', page] : [page]))
+})()
+
+const labelClass =
+  'font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
+const linkReset = 'text-(--foreground-color)! no-underline!'
+const cellClass = `flex items-center justify-center gap-1 border-r border-(--border-color) px-2 py-1 last:border-r-0 md:px-3 ${labelClass}`
 ---
 
-<PageHeader
-  title={headerTitle}
-  subtitle={headerSubtitle}
-  bgType="bordered"
-  customBreadcrumbLabels={currentTag ? { [currentTag.slug]: currentTag.label } : undefined}
-  joinLastBreadcrumb={!!currentTag}
-/>
+<nav aria-label={t('detail.breadcrumb')} class="border-b border-(--border-color) px-4 py-2 md:px-6 lg:px-8">
+  <ol class={`flex flex-wrap items-center gap-1 text-(--color-on-surface-variant) ${labelClass}`}>
+    <li>
+      <a href={getHref('/', false, locale)} class="text-(--color-on-surface-variant)! no-underline! hover:underline!">
+        {t('home.label')}
+      </a>
+    </li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page" class="text-(--foreground-color)">{t('projects.label')}</li>
+  </ol>
+</nav>
 
-<section class="my-12">
-  <div class="container">
-    <Heading level="h2" size="h5" class="mb-2">{t('projects.tags')}</Heading>
-    <div class="flex flex-wrap gap-4">
-      <Link href={getHref('/projects', false, locale)}>{t('projects.all')}</Link>
-      {
-        uniqueTags.map((tag) => {
-          const isCurrentTag = tag.slug === currentTag?.slug
-          return (
-            <Link href={pageHref(1, tag)} ariaCurrent={isCurrentTag ? 'page' : undefined}>
-              {tag.label}
-            </Link>
-          )
-        })
-      }
+<section class="border-b border-(--border-color) px-4 py-8 md:px-6 lg:px-8 lg:py-10">
+  <div class="max-w-4xl">
+    <div class="mb-1 flex items-center gap-1">
+      <span class="inline-block h-2.5 w-2.5 bg-(--foreground-color)"></span>
+      <span
+        class="font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--color-accent-rose-dark) uppercase"
+      >
+        {t('catalog.eyebrow')}
+      </span>
     </div>
-    <p class="mt-8 text-sm">
-      <em>
-        {t('projects.range_prefix')} {startIndex + 1}–{startIndex + pageProjects.length} {t('projects.range_suffix')}{' '}
-        {filteredProjects.length} {plural(filteredProjects.length)}
-      </em>
-    </p>
-    <ul class="mt-3 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {
-        pageProjects.map((project) => (
-          <li>
-            <Card
-              img={urlFor(project.data.image, 640, 360)}
-              imageAlt={project.data.imageAlt}
-              url={getHref(`/projects/${project.slug}`, false, locale)}
-              title={project.data.title}
-              headingLevel="h2"
-              footer={project.data.author ? t('featured_projects.author_prefix') + project.data.author : undefined}
-              fullHeight={true}
-            >
-              <span slot="meta">
-                {project.data.tags.map((tag) => (
-                  <Badge>{tag}</Badge>
-                ))}
-              </span>
-              {project.data.subtitle}
-            </Card>
-          </li>
-        ))
-      }
-    </ul>
-    {
-      totalPages > 1 && (
-        <div class="mt-12 grid place-content-center">
-          <Pagination
-            firstPage={pageNum > 1 ? pageHref(1, currentTag) : null}
-            previousPage={pageNum > 1 ? pageHref(pageNum - 1, currentTag) : null}
-            nextPage={pageNum < totalPages ? pageHref(pageNum + 1, currentTag) : null}
-            lastPage={pageNum < totalPages ? pageHref(totalPages, currentTag) : null}
-            currentPage={`${pageNum}`}
-            totalPages={`${totalPages}`}
-            ariaLabel={t('projects.pagination_aria')}
-          />
-        </div>
-      )
-    }
+    <h1
+      class="mb-4 font-(family-name:--font-family-special) text-[2.75rem] leading-12 font-bold tracking-tight text-(--foreground-color) uppercase lg:text-7xl lg:leading-19"
+    >
+      {t('projects.label')}
+    </h1>
+    <p class="max-w-2xl text-lg leading-relaxed text-(--color-on-surface-variant)">{t('projects.subtitle')}</p>
   </div>
 </section>
+
+<div class="overflow-hidden">
+  <div class="-mr-px grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    {pageProjects.map((project) => <CatalogCard item={project} headingLevel="h2" showCategory={false} />)}
+  </div>
+</div>
+
+<div
+  class="flex flex-col items-center gap-3 border-b border-(--border-color) px-4 py-3 text-center md:flex-row md:justify-between md:px-6 md:text-left lg:px-8"
+>
+  <p class={`flex flex-col items-center gap-1 text-(--color-on-surface-variant) md:flex-row md:gap-4 ${labelClass}`}>
+    <span class="text-(--foreground-color)"
+      >{t('catalog.page')} {twoDigits(pageNum)} {t('catalog.of')} {twoDigits(totalPages)}</span
+    >
+    <span class="border-(--border-color) md:border-l md:pl-4">
+      {t('catalog.showing')}
+      {pageProjects.length}
+      {t('catalog.of')}
+      {projects.length}
+      {itemsLabel}
+    </span>
+  </p>
+  {
+    totalPages > 1 && (
+      <nav aria-label={t('catalog.pagination_aria')} class="flex border border-(--border-color)">
+        {pageNum > 1 ? (
+          <a
+            rel="prev"
+            href={pageHref(pageNum - 1)}
+            class={`${cellClass} ${linkReset} hover:bg-(--color-surface-container-low)`}
+          >
+            <Icon aria-hidden="true" name="lucide:arrow-left" size="1rem" />
+            <span>{t('detail.previous')}</span>
+          </a>
+        ) : (
+          <span aria-hidden="true" class={`${cellClass} text-(--color-on-surface-variant)`}>
+            <Icon name="lucide:arrow-left" size="1rem" />
+            <span>{t('detail.previous')}</span>
+          </span>
+        )}
+        {pageNumbers.map((page) =>
+          page === '…' ? (
+            <span aria-hidden="true" class={`${cellClass} text-(--color-on-surface-variant) max-md:hidden`}>
+              …
+            </span>
+          ) : page === pageNum ? (
+            <span aria-current="page" class={`${cellClass} bg-(--foreground-color) text-(--background-color)`}>
+              {page}
+            </span>
+          ) : (
+            <a
+              href={pageHref(Number(page))}
+              aria-label={`${t('catalog.page')} ${page}`}
+              class={`${cellClass} ${linkReset} hover:bg-(--color-surface-container-low) max-md:hidden`}
+            >
+              {page}
+            </a>
+          ),
+        )}
+        {pageNum < totalPages ? (
+          <a
+            rel="next"
+            href={pageHref(pageNum + 1)}
+            class={`${cellClass} ${linkReset} hover:bg-(--color-surface-container-low)`}
+          >
+            <span>{t('detail.next')}</span>
+            <Icon aria-hidden="true" name="lucide:arrow-right" size="1rem" />
+          </a>
+        ) : (
+          <span aria-hidden="true" class={`${cellClass} text-(--color-on-surface-variant)`}>
+            <span>{t('detail.next')}</span>
+            <Icon name="lucide:arrow-right" size="1rem" />
+          </span>
+        )}
+      </nav>
+    )
+  }
+</div>

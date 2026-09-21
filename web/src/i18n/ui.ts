@@ -17,7 +17,6 @@ const ca = {
 
   // Shared names
   'home.label': 'Inici',
-  'tag.label': 'Etiqueta',
 
   // Common actions
   back_home: "Tornar a l'inici",
@@ -79,40 +78,56 @@ const ca = {
   'detail.year': 'Any',
 
   // Item detail
-  'featured_projects.author_prefix': 'Autor/a: ',
   'featured_projects.eyebrow': 'Catàleg seleccionat',
   'featured_projects.title': 'Continguts destacats',
   'project_share.back': 'Tornar als projectes',
   'project_share.description': "T'agrada aquest projecte? Comparteix-lo amb la teva xarxa!",
   'project_share.title': 'Comparteix aquest projecte',
-  'tag.subtitle_prefix': "Projectes amb l'etiqueta",
 
   // Projects
-  'projects.all': 'Tots els projectes',
   'projects.label': 'Projectes',
-  'projects.many': 'projectes',
-  'projects.one': 'projecte',
-  'projects.pagination_aria': 'Paginació de projectes',
-  'projects.range_prefix': 'Mostrant els projectes',
-  'projects.range_suffix': "d'un total de",
   'projects.subtitle':
     'Col·lecció de projectes educatius, materials didàctics i investigacions en educació afectivosexual, perspectiva de gènere i transformació comunitària.',
-  'projects.tags': 'Etiquetes',
+
+  // Catalog
+  'catalog.eyebrow': 'Arxiu & recursos oberts',
+  'catalog.item_many': 'continguts',
+  'catalog.item_one': 'contingut',
+  'catalog.of': 'de',
+  'catalog.page': 'Pàgina',
+  'catalog.pagination_aria': 'Paginació',
+  'catalog.showing': 'Mostrant',
 
   // Materials
   'materials.all.label': 'Veure-ho tot',
   'materials.audiovisual.label': 'Audiovisuals',
+  'materials.audiovisual.subtitle':
+    '[PENDENT] Subtítol de materials.audiovisual',
   'materials.campaigns.label': 'Campanyes',
+  'materials.campaigns.subtitle':
+    '[PENDENT] Subtítol de materials.campaigns',
   'materials.games.label': 'Jocs',
+  'materials.games.subtitle':
+    '[PENDENT] Subtítol de materials.games',
   'materials.guides.label': 'Guies i recursos didàctics',
+  'materials.guides.subtitle':
+    '[PENDENT] Subtítol de materials.guides',
   'materials.label': 'Materials',
   'materials.publications.label': 'Publicacions',
+  'materials.publications.subtitle':
+    '[PENDENT] Subtítol de materials.publications',
+  'materials.subtitle':
+    '[PENDENT] Subtítol de materials',
 
   // Formations
   'formations.label': 'Formacions',
+  'formations.subtitle':
+    '[PENDENT] Subtítol de formations',
 
   // Workshops
   'workshops.label': 'Tallers',
+  'workshops.subtitle':
+    '[PENDENT] Subtítol de workshops',
 
   // Bio
   'bio.label': 'Bio',
@@ -218,7 +233,6 @@ const es: Record<keyof typeof ca, string> = {
 
   // Shared names
   'home.label': 'Inicio',
-  'tag.label': 'Etiqueta',
 
   // Common actions
   back_home: 'Volver al inicio',
@@ -280,40 +294,56 @@ const es: Record<keyof typeof ca, string> = {
   'detail.year': 'Año',
 
   // Item detail
-  'featured_projects.author_prefix': 'Autor/a: ',
   'featured_projects.eyebrow': 'Catálogo seleccionado',
   'featured_projects.title': 'Contenidos destacados',
   'project_share.back': 'Volver a los proyectos',
   'project_share.description': '¿Te gusta este proyecto? ¡Compártelo con tu red!',
   'project_share.title': 'Comparte este proyecto',
-  'tag.subtitle_prefix': 'Proyectos con la etiqueta',
 
   // Projects
-  'projects.all': 'Todos los proyectos',
   'projects.label': 'Proyectos',
-  'projects.many': 'proyectos',
-  'projects.one': 'proyecto',
-  'projects.pagination_aria': 'Paginación de proyectos',
-  'projects.range_prefix': 'Mostrando los proyectos',
-  'projects.range_suffix': 'de un total de',
   'projects.subtitle':
     'Colección de proyectos educativos, materiales didácticos e investigaciones en educación afectivosexual, perspectiva de género y transformación comunitaria.',
-  'projects.tags': 'Etiquetas',
+
+  // Catalog
+  'catalog.eyebrow': 'Archivo & recursos abiertos',
+  'catalog.item_many': 'contenidos',
+  'catalog.item_one': 'contenido',
+  'catalog.of': 'de',
+  'catalog.page': 'Página',
+  'catalog.pagination_aria': 'Paginación',
+  'catalog.showing': 'Mostrando',
 
   // Materials
   'materials.all.label': 'Ver todo',
   'materials.audiovisual.label': 'Audiovisuales',
+  'materials.audiovisual.subtitle':
+    '[PENDENT] Subtítol de materials.audiovisual',
   'materials.campaigns.label': 'Campañas',
+  'materials.campaigns.subtitle':
+    '[PENDENT] Subtítol de materials.campaigns',
   'materials.games.label': 'Juegos educativos',
+  'materials.games.subtitle':
+    '[PENDENT] Subtítol de materials.games',
   'materials.guides.label': 'Guías y recursos didácticos',
+  'materials.guides.subtitle':
+    '[PENDENT] Subtítol de materials.guides',
   'materials.label': 'Materiales',
   'materials.publications.label': 'Publicaciones',
+  'materials.publications.subtitle':
+    '[PENDENT] Subtítol de materials.publications',
+  'materials.subtitle':
+    '[PENDENT] Subtítol de materials',
 
   // Formations
   'formations.label': 'Formaciones',
+  'formations.subtitle':
+    '[PENDENT] Subtítol de formations',
 
   // Workshops
   'workshops.label': 'Talleres',
+  'workshops.subtitle':
+    '[PENDENT] Subtítol de workshops',
 
   // Bio
   'bio.label': 'Bio',

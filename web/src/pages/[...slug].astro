@@ -12,7 +12,7 @@ import { getCatalogItemsByCategory, type CatalogItemCategory } from '@lib/sanity
 import { useTranslations } from '@utils/i18n'
 import type { Locale } from '@utils/i18n'
 import { routes } from '../i18n/routes'
-import { CATALOGS_PAGE_SIZE, getTags, filterByTagSlug, type Tag } from '@utils/catalogUtils'
+import { CATALOGS_PAGE_SIZE } from '@utils/catalogUtils'
 import { COMING_SOON_SECTIONS, SECTION_LABEL_KEYS } from '@constants/constLabels'
 
 /**
@@ -38,7 +38,6 @@ export async function getStaticPaths() {
       locale: Locale
       pageType: string
       pageNum?: number
-      tag?: Tag
       category?: CatalogItemCategory
       itemSlug?: string
       itemTitle?: string
@@ -51,7 +50,6 @@ export async function getStaticPaths() {
   for (const locale of locales) {
     const prefix = locale === 'es' ? 'es/' : ''
     const projects = await getCatalogItemsByCategory(locale, 'projects')
-    const uniqueTags = getTags(projects)
 
     for (const page of ['home', 'contact', 'sitemap', 'thank-you', 'accessibility-statement']) {
       paths.push({
@@ -92,20 +90,6 @@ export async function getStaticPaths() {
         })
       }
     }
-
-    for (const tag of uniqueTags) {
-      const tagProjects = filterByTagSlug(projects, tag.slug)
-      const tagPages = Math.max(1, Math.ceil(tagProjects.length / CATALOGS_PAGE_SIZE))
-      for (let pageNum = 1; pageNum <= tagPages; pageNum++) {
-        const pageSuffix = pageNum > 1 ? `/${pageNum}` : ''
-        paths.push({
-          params: {
-            slug: `${prefix}${routeSegment(locale, 'projects')}/${routeSegment(locale, 'tag')}/${tag.slug}${pageSuffix}`,
-          },
-          props: { locale, pageType: 'tag', tag, pageNum },
-        })
-      }
-    }
   }
 
   return paths
@@ -115,22 +99,20 @@ interface Props {
   locale: Locale
   pageType: string
   pageNum?: number
-  tag?: Tag
   category?: CatalogItemCategory
   itemSlug?: string
   itemTitle?: string
   section?: string
 }
 
-const { locale, pageType, pageNum = 1, tag, category, itemSlug, itemTitle, section } = Astro.props
+const { locale, pageType, pageNum = 1, category, itemSlug, itemTitle, section } = Astro.props
 const t = useTranslations(locale)
 
 const isHome = pageType === 'home'
 const sectionLabel = pageType === 'coming-soon' && section ? t(SECTION_LABEL_KEYS[section]) : undefined
 const seoTitle = {
   home: t('meta.title'),
-  projects: t('projects.label'),
-  tag: tag ? `${t('projects.label')}: ${tag.label}` : t('projects.label'),
+  projects: pageNum > 1 ? `${t('projects.label')} · ${t('catalog.page')} ${pageNum}` : t('projects.label'),
   'catalog-item': itemTitle ?? t('meta.title'),
   contact: t('contact.label'),
   sitemap: t('sitemap.label'),
@@ -140,6 +122,7 @@ const seoTitle = {
 }[pageType]
 
 const seoDescription = {
+  projects: t('projects.subtitle'),
   sitemap: t('sitemap.subtitle'),
   'accessibility-statement': t('accessibility.subtitle'),
 }[pageType]
@@ -148,7 +131,6 @@ const seoDescription = {
 <DefaultLayout title={seoTitle} description={seoDescription} useTitleTemplate={!isHome}>
   {pageType === 'home' && <HomeView />}
   {pageType === 'projects' && <ProjectsCatalogView pageNum={pageNum} />}
-  {pageType === 'tag' && tag && <ProjectsCatalogView pageNum={pageNum} currentTag={tag} />}
   {pageType === 'catalog-item' && category && itemSlug && <CatalogItemDetailView category={category} slug={itemSlug} />}
   {pageType === 'contact' && <ContactView />}
   {pageType === 'sitemap' && <SitemapView />}
