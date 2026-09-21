@@ -106,7 +106,10 @@ const currentYear = new Date().getFullYear()
 <style lang="scss">
   @use 'base/breakpoint' as *;
 
+  // The -1px margin makes the top border overlap the bottom border of the last block of the page, so pages
+  // that end with their own border do not show a double line above the CTA.
   footer {
+    margin-block-start: -1px;
     border-block-start: 1px solid var(--border-color);
   }
 
