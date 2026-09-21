@@ -135,7 +135,12 @@ const seoDescription = {
 }[pageType]
 ---
 
-<DefaultLayout title={seoTitle} description={seoDescription} useTitleTemplate={!isHome}>
+<DefaultLayout
+  title={seoTitle}
+  description={seoDescription}
+  useTitleTemplate={!isHome}
+  showCallToAction={pageType !== 'contact'}
+>
   {pageType === 'home' && <HomeView />}
   {pageType === 'catalog' && catalogPage && <CatalogsView catalogPage={catalogPage} pageNum={pageNum} />}
   {pageType === 'catalog-item' && category && itemSlug && <CatalogItemDetailView category={category} slug={itemSlug} />}

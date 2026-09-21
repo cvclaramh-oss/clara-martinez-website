@@ -42,6 +42,10 @@ interface Props {
    * Set to false to use the title as-is without appending site name
    */
   useTitleTemplate?: boolean
+  /**
+   * Whether to show the call-to-action band above the footer (default: true)
+   */
+  showCallToAction?: boolean
 }
 
 const {
@@ -52,6 +56,7 @@ const {
   author = themeConfig.seo.author ?? '',
   type = 'website',
   useTitleTemplate = true,
+  showCallToAction = true,
 } = Astro.props
 
 // For social sharing, we need the full absolute URL
@@ -110,7 +115,7 @@ const imageUrl = new URL(imagePath, Astro.site).href
     <main id="main-content" class="pt-16" transition:animate="fade">
       <slot />
     </main>
-    <Footer />
+    <Footer showCallToAction={showCallToAction} />
     <style lang="scss" is:global>
       @use 'base/mixins' as *;
 

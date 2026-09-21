@@ -12,13 +12,22 @@ import themeConfig from '@theme-config'
  * index, contact, accessibility) and a bottom copyright bar.
  */
 
+interface Props {
+  /**
+   * Whether to show the call-to-action band above the footer grid
+   * @default true
+   */
+  showCallToAction?: boolean
+}
+
+const { showCallToAction = true } = Astro.props
 const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 const currentYear = new Date().getFullYear()
 ---
 
 <footer>
-  <CallToAction />
+  {showCallToAction && <CallToAction />}
 
   <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[max-content_1fr_1fr_1fr]">
     <div class="cell flex flex-col gap-1">
