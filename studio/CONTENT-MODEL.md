@@ -8,7 +8,7 @@ Contexto: sitio de Clara Martínez. Repo del cliente `cvclaramh-oss/clara-martin
 
 ### `project` — tipo único de contenido
 
-Un solo tipo de documento para Proyectos, Materiales (4 subcategorías), Formaciones y Talleres. Todos se agrupan por `category`/`subcategory` pero comparten estructura → una sola plantilla de tarjeta y una de detalle en el frontend.
+Un solo tipo de documento para Proyectos, Materiales (5 subcategorías), Formaciones y Talleres. Todos se agrupan por `category`/`subcategory` pero comparten estructura → una sola plantilla de tarjeta y una de detalle en el frontend.
 
 | Campo | Tipo | Obligatorio | Bloque | Notas |
 |---|---|---|---|---|
@@ -20,7 +20,7 @@ Un solo tipo de documento para Proyectos, Materiales (4 subcategorías), Formaci
 | `featured` | boolean (`false`) | — | Portada | Sale en la home |
 | `featuredOrder` | number (≥0, `0`) | — | Portada | Menor = primero; empate → año descendente |
 | `category` | string | ✔ | Taxonomia | Radio fijo: `projects` \| `materials` \| `formations` \| `workshops` (claves neutrales; los títulos en el editor son catalanes) |
-| `subcategory` | string | solo si `category=materials` | Taxonomia | Claves: `guides` \| `games` \| `publications` \| `campaigns`. Oculto si no es materials |
+| `subcategory` | string | solo si `category=materials` | Taxonomia | Claves: `guides` \| `games` \| `publications` \| `campaigns` \| `audiovisual`. Oculto si no es materials |
 | `tags` | array de string, únicos | — | Taxonomia | Etiquetas libres |
 | `descriptionLong` | portable text (mínimo) | — | Detall | Negrita, cursiva, enlace, lista, h2 |
 | `myWork` | text (plano) | — | Detall | |
@@ -59,7 +59,7 @@ Eliminados vs. diseño anterior: `language` (sobra: el idioma ya está en el ID 
 | 2 | **NavBar fija**: Projectes · Materials▾ · Formacions · Tallers · Bio · Contacte | Lo definió Clara | Bio/Contacto = estáticos desde siteSettings; 5ª categoría de página = cambio de código (página + menú) |
 | 3 | **Miniatura siempre imagen+título+subtítulo** (obligatorios) | Grid mixto de la home mezcla tipos; todas las fichas iguales en la miniatura | |
 | 4 | **Portada** = `featured` (bool) + `featuredOrder` (número) | Elegido sobre el listado manual en settings: menos mantenimiento editorial | Si Clara exige orden curado a mano, se añade sin cambiar el modelo |
-| 5 | **Categorías y subcategorías fijas en código** (4+4) en fase 1 | Menos complejidad, barra estática, cero errores de tipeo | Fase 2: subcategorías dinámicas (GROQ `distinct` + barra generada) cuando se necesite añadir |
+| 5 | **Categorías y subcategorías fijas en código** (4+5) en fase 1 | Menos complejidad, barra estática, cero errores de tipeo | Fase 2: subcategorías dinámicas (GROQ `distinct` + barra generada) cuando se necesite añadir |
 | 6 | **Etiquetas libres** con validación de no repetidas | Flexibilidad con control | |
 | 7 | **`visibility` eliminado** | Se usa borrador/publicado de Sanity; el flag solo servía para ocultar sin publicar | Se reinstala en 10 min si hace falta |
 | 8 | **Vídeo**: enlace externo XOR `.mp4` en Sanity | Ambos se renderizan en un mismo componente (diseño uniforme). YouTube en "no listado" se incrusta; privado total no | Cloudflare Stream si el proyecto crece (de pago) |
