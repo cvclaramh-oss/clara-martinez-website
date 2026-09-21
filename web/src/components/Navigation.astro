@@ -75,6 +75,10 @@ const t = useTranslations(locale)
             menuItem.setAttribute('aria-current', 'page')
           }
         })
+
+        menu.querySelectorAll('.has-dropdown').forEach((item) => {
+          item.querySelector(':scope > button')?.classList.toggle('is-active', !!item.querySelector('a.is-active'))
+        })
       })
     }
 
@@ -507,6 +511,10 @@ const t = useTranslations(locale)
       block-size: 100%;
       padding-inline: 1rem;
       border-inline-end: 1px solid var(--border-color);
+
+      &:not(:has(~ .nav-action-cell)) {
+        border-inline-end: none;
+      }
     }
 
     .nav-actions :where(.darkmode-toggle) {
