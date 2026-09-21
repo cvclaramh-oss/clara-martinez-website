@@ -1,17 +1,26 @@
 ---
 import { getLangFromUrl, localizeUrl, useTranslations } from '@utils/i18n'
+import type { Locale } from '@utils/i18n'
+import { getAlternateItemHref } from '@lib/sanity/translationsQuery'
 
 /**
  * Language Picker Component
  *
- * @description Switches between the Catalan and Spanish versions of the current page
+ * @description Switches between the Catalan and Spanish versions of the current page. On the detail page of a
+ * catalog item the slug differs between languages, so the link comes from the item's linked translation (or the
+ * catalog page if it has none) instead of from translating the path.
  */
 
 const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 
-const caHref = localizeUrl(Astro.url.pathname, 'ca')
-const esHref = localizeUrl(Astro.url.pathname, 'es')
+const getHref = async (target: Locale) =>
+  target === locale
+    ? localizeUrl(Astro.url.pathname, target)
+    : ((await getAlternateItemHref(Astro.url.pathname, target)) ?? localizeUrl(Astro.url.pathname, target))
+
+const caHref = await getHref('ca')
+const esHref = await getHref('es')
 ---
 
 <ul class="language-picker nav-action-cell">
