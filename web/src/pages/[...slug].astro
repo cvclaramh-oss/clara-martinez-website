@@ -5,7 +5,7 @@ import ContactView from '@views/ContactView.astro'
 import SitemapView from '@views/SitemapView.astro'
 import ThankYouView from '@views/ThankYouView.astro'
 import AccessibilityStatementView from '@views/AccessibilityStatementView.astro'
-import ProjectsCatalogView from '@views/ProjectsCatalogView.astro'
+import CatalogsView from '@views/CatalogsView.astro'
 import CatalogItemDetailView from '@views/CatalogItemDetailView.astro'
 import ComingSoonView from '@views/ComingSoonView.astro'
 import { getCatalogItemsByCategory, type CatalogItemCategory } from '@lib/sanity/catalogItemsQuery'
@@ -130,7 +130,7 @@ const seoDescription = {
 
 <DefaultLayout title={seoTitle} description={seoDescription} useTitleTemplate={!isHome}>
   {pageType === 'home' && <HomeView />}
-  {pageType === 'projects' && <ProjectsCatalogView pageNum={pageNum} />}
+  {pageType === 'projects' && <CatalogsView pageNum={pageNum} />}
   {pageType === 'catalog-item' && category && itemSlug && <CatalogItemDetailView category={category} slug={itemSlug} />}
   {pageType === 'contact' && <ContactView />}
   {pageType === 'sitemap' && <SitemapView />}

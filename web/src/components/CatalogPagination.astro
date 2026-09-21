@@ -1,0 +1,140 @@
+---
+import { Icon } from 'astro-icon/components'
+import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
+
+/**
+ * CatalogPagination Component
+ *
+ * @description Bar under a catalog listing: position in the list ("Page 01 of 02 · Showing 6 of 9") and a
+ * navigation with previous, page numbers and next. It renders nothing when there is a single page. The links
+ * are localized through getHref; the disabled previous/next cells are announced to screen readers as text.
+ */
+interface Props {
+  /**
+   * Current page, starting at 1
+   */
+  pageNum: number
+  /**
+   * Total number of pages
+   */
+  totalPages: number
+  /**
+   * Total number of items in the catalog
+   */
+  totalItems: number
+  /**
+   * Number of items shown on the current page
+   */
+  shownItems: number
+  /**
+   * Route of the first page (e.g. "/projects"); the others are `${basePath}/${page}`
+   */
+  basePath: string
+}
+
+const { pageNum, totalPages, totalItems, shownItems, basePath } = Astro.props
+const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
+
+function pageHref(page: number): string {
+  return getHref(page === 1 ? basePath : `${basePath}/${page}`, false, locale)
+}
+
+const twoDigits = (value: number) => String(value).padStart(2, '0')
+const itemsLabel = totalItems === 1 ? t('catalog.item_one') : t('catalog.item_many')
+
+// Page numbers to show: the first, the last and the current one with its neighbours, with an ellipsis for each
+// gap, so the control keeps its size however many pages there are.
+const pageNumbers = (() => {
+  const pages = [...new Set([1, pageNum - 1, pageNum, pageNum + 1, totalPages])]
+    .filter((page) => page >= 1 && page <= totalPages)
+    .sort((a, b) => a - b)
+  return pages.flatMap((page, index) => (index > 0 && page - pages[index - 1] > 1 ? ['…', page] : [page]))
+})()
+
+const labelClass =
+  'font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
+const linkReset = 'text-(--foreground-color)! no-underline!'
+const cellClass = `flex items-center justify-center gap-1 border-r border-(--border-color) px-2 py-1 last:border-r-0 md:px-3 ${labelClass}`
+---
+
+{
+  totalPages > 1 && (
+    <div class="flex flex-col items-center gap-3 border-b border-(--border-color) px-4 py-3 text-center md:flex-row md:justify-between md:px-6 md:text-left lg:px-8">
+      <p
+        class={`flex flex-col items-center gap-1 text-(--color-on-surface-variant) md:flex-row md:gap-4 ${labelClass}`}
+      >
+        <span class="text-(--foreground-color)">
+          {t('catalog.page')} {twoDigits(pageNum)} {t('catalog.of')} {twoDigits(totalPages)}
+        </span>
+        <span class="border-(--border-color) md:border-l md:pl-4">
+          {t('catalog.showing')}
+          {shownItems}
+          {t('catalog.of')}
+          {totalItems}
+          {itemsLabel}
+        </span>
+      </p>
+      <nav aria-label={t('catalog.pagination_aria')} class="flex border border-(--border-color)">
+        {pageNum > 1 ? (
+          <a
+            rel="prev"
+            href={pageHref(pageNum - 1)}
+            aria-label={t('catalog.previous_page')}
+            class={`${cellClass} ${linkReset} hover:bg-(--color-surface-container-low)`}
+          >
+            <Icon aria-hidden="true" name="lucide:arrow-left" size="1rem" />
+            <span>{t('detail.previous')}</span>
+          </a>
+        ) : (
+          <span class={`${cellClass} text-(--color-on-surface-variant)`}>
+            <Icon aria-hidden="true" name="lucide:arrow-left" size="1rem" />
+            <span aria-hidden="true">{t('detail.previous')}</span>
+            <span class="sr-only">{t('catalog.no_previous_page')}</span>
+          </span>
+        )}
+        {pageNumbers.map((page) =>
+          page === '…' ? (
+            <span aria-hidden="true" class={`${cellClass} text-(--color-on-surface-variant) max-md:hidden`}>
+              …
+            </span>
+          ) : page === pageNum ? (
+            <a
+              href={pageHref(pageNum)}
+              aria-current="page"
+              aria-label={`${t('catalog.page')} ${page}`}
+              class={`${cellClass} bg-(--foreground-color) text-(--background-color)! no-underline!`}
+            >
+              {page}
+            </a>
+          ) : (
+            <a
+              href={pageHref(Number(page))}
+              aria-label={`${t('catalog.page')} ${page}`}
+              class={`${cellClass} ${linkReset} hover:bg-(--color-surface-container-low) max-md:hidden`}
+            >
+              {page}
+            </a>
+          ),
+        )}
+        {pageNum < totalPages ? (
+          <a
+            rel="next"
+            href={pageHref(pageNum + 1)}
+            aria-label={t('catalog.next_page')}
+            class={`${cellClass} ${linkReset} hover:bg-(--color-surface-container-low)`}
+          >
+            <span>{t('detail.next')}</span>
+            <Icon aria-hidden="true" name="lucide:arrow-right" size="1rem" />
+          </a>
+        ) : (
+          <span class={`${cellClass} text-(--color-on-surface-variant)`}>
+            <span aria-hidden="true">{t('detail.next')}</span>
+            <Icon aria-hidden="true" name="lucide:arrow-right" size="1rem" />
+            <span class="sr-only">{t('catalog.no_next_page')}</span>
+          </span>
+        )}
+      </nav>
+    </div>
+  )
+}
