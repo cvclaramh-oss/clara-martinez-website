@@ -4,6 +4,19 @@
 > Skills en `skills/`: conocimiento de dominio y procedimientos repetibles. Consúltalas, no las dupliques aquí.
 > Estado real de infraestructura: siempre en la última entrada de `docs/private/daily.md`, nunca asumido desde este archivo.
 
+## Protocolo de trabajo (léelo antes de tocar nada)
+
+1. Antes de cambiar nada, para e informa: qué vas a hacer, por qué, en qué archivos y qué alternativas hay. Ve siempre paso a paso, un cambio cada vez, explicando el plan antes de cada paso.
+2. Si un cambio toca varios archivos, para y pide confirmación antes de empezar; si toca más de los informados, para y avisa.
+3. Si hay más de una opción razonable o algo no está claro, pregunta. No rellenes el hueco con lo más plausible.
+4. No inventes contenido: nada de lorem ni de textos que parezcan reales. Si falta, márcalo `[PENDENT]` y anótalo en el diario.
+5. No cambies configuración sin preguntar: `astro.config.mjs`, `sanity.cli.ts`, `package.json`, `.github/`, `.env*`, datasets, dependencias ni estructura de archivos.
+6. No hagas commit ni push sin que Laura lo pida en ese mensaje. Commits de una línea en inglés, sin trailer; el `Co-authored-by` va en la descripción del PR.
+7. Al terminar, enseña qué ha cambiado (archivos y resumen), la salida real de `npm run check` y `npm run build`, y qué NO se ha comprobado.
+8. Laura revisa en Firefox: no generes capturas para ella salvo que las pida.
+9. Una sesión conserva la fecha de inicio en `docs/private/daily.md`, aunque pase medianoche.
+10. En un chat sin contexto, lee primero la última entrada de `docs/private/daily.md` y `git status`.
+
 ## Contexto
 
 Portfolio profesional para Clara Martínez Hernández, educadora social, formadora e investigadora en educación afectivosexual, perspectiva de género y transformación comunitaria.
