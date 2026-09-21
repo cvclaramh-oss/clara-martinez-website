@@ -17,3 +17,4 @@
 | [0013](0013-textos-diccionario-ui-tipado.md) | Textos del sitio en un diccionario `ui.ts` tipado | Vigente |
 | [0014](0014-paleta-desde-colores-base-del-starter.md) | Paleta desde los colores base del starter, con roles que se adaptan al modo oscuro | Vigente |
 | [0015](0015-escala-de-breakpoints.md) | Escala de breakpoints | Vigente |
+| [0016](0016-tipografias-autoalojadas.md) | Tipografías autoalojadas | Vigente |
