@@ -2,16 +2,22 @@
 import CatalogCard from '@components/CatalogCard.astro'
 import CatalogPagination from '@components/CatalogPagination.astro'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
-import { getCatalogItemsByCategory } from '@lib/sanity/catalogItemsQuery'
-import { CATALOGS_PAGE_SIZE } from '@constants/constCatalog'
+import { getCatalogPageItems } from '@lib/sanity/catalogItemsQuery'
+import { CATALOG_PAGES, CATALOGS_PAGE_SIZE, type CatalogPage } from '@constants/constCatalog'
+import { CATEGORY_LABEL_KEYS } from '@constants/constLabels'
 
 /**
  * CatalogsView Component
  *
- * @description Renders the project collection: breadcrumb, title band, card grid (or an empty state) and
- * the pagination. All internal links are localized through getHref.
+ * @description Renders one catalog listing (projects, materials or one of its subcategories, formations or
+ * workshops): breadcrumb, title band, card grid (or an empty state) and the pagination. All internal links are
+ * localized through getHref.
  */
 interface Props {
+  /**
+   * The catalog to list; it decides the items, the title, the subtitle and the route of the pages
+   */
+  catalogPage: CatalogPage
   /**
    * The page number of the listing to render
    * @default 1
@@ -21,13 +27,15 @@ interface Props {
 
 const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
-const { pageNum = 1 } = Astro.props
+const { catalogPage, pageNum = 1 } = Astro.props
 
-const projects = await getCatalogItemsByCategory(locale, 'projects')
+const items = await getCatalogPageItems(locale, catalogPage)
+const title = t(CATEGORY_LABEL_KEYS[catalogPage])
+const isMaterialsSubcategory = CATALOG_PAGES[catalogPage].category === 'materials' && catalogPage !== 'materials'
 
-const totalPages = Math.max(1, Math.ceil(projects.length / CATALOGS_PAGE_SIZE))
+const totalPages = Math.max(1, Math.ceil(items.length / CATALOGS_PAGE_SIZE))
 const startIndex = (pageNum - 1) * CATALOGS_PAGE_SIZE
-const pageProjects = projects.slice(startIndex, startIndex + CATALOGS_PAGE_SIZE)
+const pageItems = items.slice(startIndex, startIndex + CATALOGS_PAGE_SIZE)
 
 const labelClass =
   'font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
@@ -41,7 +49,22 @@ const labelClass =
       </a>
     </li>
     <li aria-hidden="true">/</li>
-    <li aria-current="page" class="text-(--foreground-color)">{t('projects.label')}</li>
+    {
+      isMaterialsSubcategory && (
+        <>
+          <li>
+            <a
+              href={getHref('/materials', false, locale)}
+              class="text-(--color-on-surface-variant)! no-underline! hover:underline!"
+            >
+              {t('materials.label')}
+            </a>
+          </li>
+          <li aria-hidden="true">/</li>
+        </>
+      )
+    }
+    <li aria-current="page" class="text-(--foreground-color)">{title}</li>
   </ol>
 </nav>
 
@@ -58,14 +81,16 @@ const labelClass =
     <h1
       class="mb-4 font-(family-name:--font-family-special) text-[2.75rem] leading-12 font-bold tracking-tight text-(--foreground-color) uppercase lg:text-7xl lg:leading-19"
     >
-      {t('projects.label')}
+      {title}
     </h1>
-    <p class="max-w-2xl text-lg leading-relaxed text-(--color-on-surface-variant)">{t('projects.subtitle')}</p>
+    <p class="max-w-2xl text-lg leading-relaxed text-(--color-on-surface-variant)">
+      {t(CATALOG_PAGES[catalogPage].subtitleKey)}
+    </p>
   </div>
 </section>
 
 {
-  projects.length === 0 ? (
+  items.length === 0 ? (
     <section class="border-b border-(--border-color) px-4 py-12 md:px-6 lg:px-8 lg:py-16">
       <h2 class="mb-2 font-(family-name:--font-family-special) text-2xl leading-8 font-bold text-(--foreground-color) uppercase">
         {t('catalog.empty_title')}
@@ -81,8 +106,8 @@ const labelClass =
   ) : (
     <div class="overflow-hidden">
       <div class="-mr-px grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {pageProjects.map((project) => (
-          <CatalogCard item={project} headingLevel="h2" showCategory={false} />
+        {pageItems.map((item) => (
+          <CatalogCard item={item} headingLevel="h2" showCategory={catalogPage === 'materials'} />
         ))}
       </div>
     </div>
@@ -92,9 +117,9 @@ const labelClass =
 <CatalogPagination
   pageNum={pageNum}
   totalPages={totalPages}
-  totalItems={projects.length}
-  shownItems={pageProjects.length}
-  basePath="/projects"
+  totalItems={items.length}
+  shownItems={pageItems.length}
+  basePath={`/${catalogPage}`}
 />
 
 <div class="h-20 border-b border-(--border-color)"></div>

@@ -8,12 +8,12 @@ import AccessibilityStatementView from '@views/AccessibilityStatementView.astro'
 import CatalogsView from '@views/CatalogsView.astro'
 import CatalogItemDetailView from '@views/CatalogItemDetailView.astro'
 import ComingSoonView from '@views/ComingSoonView.astro'
-import { getCatalogItemsByCategory, type CatalogItemCategory } from '@lib/sanity/catalogItemsQuery'
+import { getCatalogItemsByCategory, getCatalogPageItems, type CatalogItemCategory } from '@lib/sanity/catalogItemsQuery'
 import { useTranslations } from '@utils/i18n'
 import type { Locale } from '@utils/i18n'
 import { routes } from '../i18n/routes'
-import { CATALOGS_PAGE_SIZE } from '@constants/constCatalog'
-import { COMING_SOON_SECTIONS, SECTION_LABEL_KEYS } from '@constants/constLabels'
+import { CATALOG_PAGES, CATALOGS_PAGE_SIZE, type CatalogPage } from '@constants/constCatalog'
+import { CATEGORY_LABEL_KEYS, COMING_SOON_SECTIONS, SECTION_LABEL_KEYS } from '@constants/constLabels'
 
 /**
  * Single catch-all router for every page in both locales.
@@ -38,6 +38,7 @@ export async function getStaticPaths() {
       locale: Locale
       pageType: string
       pageNum?: number
+      catalogPage?: CatalogPage
       category?: CatalogItemCategory
       itemSlug?: string
       itemTitle?: string
@@ -49,8 +50,6 @@ export async function getStaticPaths() {
 
   for (const locale of locales) {
     const prefix = locale === 'es' ? 'es/' : ''
-    const projects = await getCatalogItemsByCategory(locale, 'projects')
-
     for (const page of ['home', 'contact', 'sitemap', 'thank-you', 'accessibility-statement']) {
       paths.push({
         params: {
@@ -69,18 +68,21 @@ export async function getStaticPaths() {
       })
     }
 
-    const projectsPages = Math.max(1, Math.ceil(projects.length / CATALOGS_PAGE_SIZE))
-    for (let pageNum = 1; pageNum <= projectsPages; pageNum++) {
-      paths.push({
-        params: {
-          slug: `${prefix}${routeSegment(locale, 'projects')}${pageNum > 1 ? `/${pageNum}` : ''}`,
-        },
-        props: { locale, pageType: 'projects', pageNum },
-      })
+    for (const catalogPage of Object.keys(CATALOG_PAGES) as CatalogPage[]) {
+      const items = await getCatalogPageItems(locale, catalogPage)
+      const pages = Math.max(1, Math.ceil(items.length / CATALOGS_PAGE_SIZE))
+      for (let pageNum = 1; pageNum <= pages; pageNum++) {
+        paths.push({
+          params: {
+            slug: `${prefix}${routeSegment(locale, catalogPage)}${pageNum > 1 ? `/${pageNum}` : ''}`,
+          },
+          props: { locale, pageType: 'catalog', catalogPage, pageNum },
+        })
+      }
     }
 
     for (const category of catalogCategories) {
-      const items = category === 'projects' ? projects : await getCatalogItemsByCategory(locale, category)
+      const items = await getCatalogItemsByCategory(locale, category)
       for (const item of items) {
         paths.push({
           params: {
@@ -99,20 +101,25 @@ interface Props {
   locale: Locale
   pageType: string
   pageNum?: number
+  catalogPage?: CatalogPage
   category?: CatalogItemCategory
   itemSlug?: string
   itemTitle?: string
   section?: string
 }
 
-const { locale, pageType, pageNum = 1, category, itemSlug, itemTitle, section } = Astro.props
+const { locale, pageType, pageNum = 1, catalogPage, category, itemSlug, itemTitle, section } = Astro.props
 const t = useTranslations(locale)
 
 const isHome = pageType === 'home'
 const sectionLabel = pageType === 'coming-soon' && section ? t(SECTION_LABEL_KEYS[section]) : undefined
 const seoTitle = {
   home: t('meta.title'),
-  projects: pageNum > 1 ? `${t('projects.label')} · ${t('catalog.page')} ${pageNum}` : t('projects.label'),
+  catalog: catalogPage
+    ? pageNum > 1
+      ? `${t(CATEGORY_LABEL_KEYS[catalogPage])} · ${t('catalog.page')} ${pageNum}`
+      : t(CATEGORY_LABEL_KEYS[catalogPage])
+    : undefined,
   'catalog-item': itemTitle ?? t('meta.title'),
   contact: t('contact.label'),
   sitemap: t('sitemap.label'),
@@ -122,7 +129,7 @@ const seoTitle = {
 }[pageType]
 
 const seoDescription = {
-  projects: t('projects.subtitle'),
+  catalog: catalogPage ? t(CATALOG_PAGES[catalogPage].subtitleKey) : undefined,
   sitemap: t('sitemap.subtitle'),
   'accessibility-statement': t('accessibility.subtitle'),
 }[pageType]
@@ -130,7 +137,7 @@ const seoDescription = {
 
 <DefaultLayout title={seoTitle} description={seoDescription} useTitleTemplate={!isHome}>
   {pageType === 'home' && <HomeView />}
-  {pageType === 'projects' && <CatalogsView pageNum={pageNum} />}
+  {pageType === 'catalog' && catalogPage && <CatalogsView catalogPage={catalogPage} pageNum={pageNum} />}
   {pageType === 'catalog-item' && category && itemSlug && <CatalogItemDetailView category={category} slug={itemSlug} />}
   {pageType === 'contact' && <ContactView />}
   {pageType === 'sitemap' && <SitemapView />}

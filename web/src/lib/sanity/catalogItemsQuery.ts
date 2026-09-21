@@ -2,6 +2,7 @@ import { sanityClient } from './client'
 import { fetchAllInBatches } from './fetchAllInBatchesQuery'
 import type { SanityImage } from './imageUrlBuilder'
 import type { Locale } from '@utils/i18n'
+import { CATALOG_PAGES, type CatalogPage } from '@constants/constCatalog'
 
 /** Matches studio/schemaTypes/catalogItem.ts `category` field options. */
 export type CatalogItemCategory = 'projects' | 'materials' | 'formations' | 'workshops'
@@ -78,4 +79,11 @@ export async function getFeaturedCatalogItems(locale: Locale): Promise<CatalogIt
     `*[_type == "catalogItem" && language == $locale && featured == true] | order(featuredOrder asc) ${catalogItemProjection}`,
     { locale },
   )
+}
+
+/** Items of a listing page: the whole category, or only one subcategory of `materials`. */
+export async function getCatalogPageItems(locale: Locale, page: CatalogPage): Promise<CatalogItem[]> {
+  const { category, subcategory } = CATALOG_PAGES[page]
+  const items = await getCatalogItemsByCategory(locale, category)
+  return subcategory ? items.filter((item) => item.data.subcategory === subcategory) : items
 }
