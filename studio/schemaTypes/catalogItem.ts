@@ -171,10 +171,20 @@ export const catalogItem = defineType({
       options: {source: (doc) => `${doc.title}-${doc.language}`, maxLength: 96},
       fieldset: 'card',
       validation: (rule) =>
-        rule.required().custom((slug) => {
+        rule.required().custom(async (slug, context) => {
           if (!slug?.current) return 'Required'
           if (!/^[a-z0-9-]+$/.test(slug.current)) {
             return 'Slug must be lowercase with hyphens only'
+          }
+          const {getClient, document} = context
+          if (!document?._id) return true
+          const publishedId = document._id.replace(/^drafts\./, '')
+          const publishedSlug = await getClient({apiVersion: '2024-01-01'}).fetch<string | null>(
+            `*[_id == $id][0].slug.current`,
+            {id: publishedId},
+          )
+          if (publishedSlug && publishedSlug !== slug.current) {
+            return `Aquest document ja està publicat amb l'adreça «${publishedSlug}». No es pot canviar l'slug d'un document publicat.`
           }
           return true
         }),
