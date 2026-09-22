@@ -248,8 +248,9 @@ export const catalogItem = defineType({
       name: 'tags',
       title: 'Etiquetes',
       type: 'array',
-      of: [defineArrayMember({type: 'string'})],
-      options: {layout: 'tags'},
+      of: [defineArrayMember({type: 'reference', to: [{type: 'tag'}]})],
+      description:
+        "Aquestes etiquetes no se sincronitzen soles amb la traducció. Si les canvies, actualitza-les també al document de l'altre idioma.",
       fieldset: 'taxonomy',
       validation: (rule) => rule.unique(),
     }),

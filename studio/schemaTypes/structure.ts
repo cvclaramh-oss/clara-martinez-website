@@ -1,4 +1,5 @@
 import {CogIcon} from '@sanity/icons/Cog'
+import {TagIcon} from '@sanity/icons/Tag'
 import type {ComponentType} from 'react'
 import type {StructureBuilder, StructureResolver} from 'sanity/structure'
 
@@ -92,6 +93,8 @@ export const structure: StructureResolver = (S) =>
         ),
       categoryList(S, 'Formacions', 'formations'),
       categoryList(S, 'Tallers', 'workshops'),
+      S.divider(),
+      S.documentTypeListItem('tag').title('Etiquetes').icon(TagIcon),
       S.divider(),
       createLocalizedSingleton(S, 'siteSettings', 'Perfil Personal', CogIcon),
     ])
