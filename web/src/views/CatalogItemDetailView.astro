@@ -119,7 +119,7 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
             <span class="text-(--color-accent-rose-dark)">{t('detail.tags')}:</span>
             <ul class="flex flex-wrap gap-1">
               {data.tags.map((tag) => (
-                <li class="border border-(--border-color) px-1.5 py-0.5 text-(--color-on-surface-variant)">#{tag}</li>
+                <li class="border border-(--border-color) px-1.5 py-0.5 text-(--color-on-surface-variant)">#{tag.text}</li>
               ))}
             </ul>
           </div>
