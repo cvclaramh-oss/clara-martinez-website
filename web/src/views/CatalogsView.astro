@@ -1,8 +1,11 @@
 ---
 import CatalogCard from '@components/CatalogCard.astro'
 import CatalogPagination from '@components/CatalogPagination.astro'
+import TagFilterBar from '@components/TagFilterBar.astro'
+import MaterialsSubcategoryBar from '@components/MaterialsSubcategoryBar.astro'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 import { getCatalogPageItems } from '@lib/sanity/catalogItemsQuery'
+import { getCatalogTags, filterByTagSlug, type CatalogTag } from '@utils/catalogTags'
 import { CATALOG_PAGES, CATALOGS_PAGE_SIZE, type CatalogPage } from '@constants/constCatalog'
 import { CATEGORY_LABEL_KEYS } from '@constants/constLabels'
 
@@ -23,19 +26,26 @@ interface Props {
    * @default 1
    */
   pageNum?: number
+  /**
+   * When set, renders only the items carrying this tag (all of them, no pagination) instead of the
+   * paginated full listing.
+   */
+  activeTag?: CatalogTag
 }
 
 const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
-const { catalogPage, pageNum = 1 } = Astro.props
+const { catalogPage, pageNum = 1, activeTag } = Astro.props
 
 const items = await getCatalogPageItems(locale, catalogPage)
 const title = t(CATEGORY_LABEL_KEYS[catalogPage])
 const isMaterialsSubcategory = CATALOG_PAGES[catalogPage].category === 'materials' && catalogPage !== 'materials'
+const catalogTags = getCatalogTags(items)
 
-const totalPages = Math.max(1, Math.ceil(items.length / CATALOGS_PAGE_SIZE))
-const startIndex = (pageNum - 1) * CATALOGS_PAGE_SIZE
-const pageItems = items.slice(startIndex, startIndex + CATALOGS_PAGE_SIZE)
+const filteredItems = activeTag ? filterByTagSlug(items, activeTag.slug) : items
+const totalPages = activeTag ? 1 : Math.max(1, Math.ceil(items.length / CATALOGS_PAGE_SIZE))
+const startIndex = activeTag ? 0 : (pageNum - 1) * CATALOGS_PAGE_SIZE
+const pageItems = activeTag ? filteredItems : items.slice(startIndex, startIndex + CATALOGS_PAGE_SIZE)
 
 const labelClass =
   'font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
@@ -64,7 +74,26 @@ const labelClass =
         </>
       )
     }
-    <li aria-current="page" class="text-(--foreground-color)">{title}</li>
+    {
+      activeTag ? (
+        <>
+          <li>
+            <a
+              href={getHref(`/${catalogPage}`, false, locale)}
+              class="text-(--color-on-surface-variant)! no-underline! hover:underline!"
+            >
+              {title}
+            </a>
+          </li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page" class="text-(--foreground-color)">#{activeTag.text}</li>
+        </>
+      ) : (
+        <li aria-current="page" class="text-(--foreground-color)">
+          {title}
+        </li>
+      )
+    }
   </ol>
 </nav>
 
@@ -89,8 +118,14 @@ const labelClass =
   </div>
 </section>
 
+{CATALOG_PAGES[catalogPage].category === 'materials' && <MaterialsSubcategoryBar activeCatalogPage={catalogPage} />}
+
+{catalogTags.length > 0 && <TagFilterBar tags={catalogTags} activeSlug={activeTag?.slug} catalogPage={catalogPage} />}
+
+<div class="h-8 border-b border-(--border-color)" />
+
 {
-  items.length === 0 ? (
+  pageItems.length === 0 ? (
     <section class="border-b border-(--border-color) px-4 py-12 md:px-6 lg:px-8 lg:py-16">
       <h2 class="mb-2 font-(family-name:--font-family-special) text-2xl leading-8 font-bold text-(--foreground-color) uppercase">
         {t('catalog.empty_title')}
@@ -114,12 +149,16 @@ const labelClass =
   )
 }
 
-<CatalogPagination
-  pageNum={pageNum}
-  totalPages={totalPages}
-  totalItems={items.length}
-  shownItems={pageItems.length}
-  basePath={`/${catalogPage}`}
-/>
+{
+  !activeTag && (
+    <CatalogPagination
+      pageNum={pageNum}
+      totalPages={totalPages}
+      totalItems={items.length}
+      shownItems={pageItems.length}
+      basePath={`/${catalogPage}`}
+    />
+  )
+}
 
 <div class="h-20 border-b border-(--border-color)"></div>

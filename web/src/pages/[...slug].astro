@@ -14,6 +14,7 @@ import type { Locale } from '@utils/i18n'
 import { routes } from '../i18n/routes'
 import { CATALOG_PAGES, CATALOGS_PAGE_SIZE, type CatalogPage } from '@constants/constCatalog'
 import { CATEGORY_LABEL_KEYS, COMING_SOON_SECTIONS, SECTION_LABEL_KEYS } from '@constants/constLabels'
+import { getCatalogTags, type CatalogTag } from '@utils/catalogTags'
 
 /**
  * Single catch-all router for every page in both locales.
@@ -43,6 +44,7 @@ export async function getStaticPaths() {
       itemSlug?: string
       itemTitle?: string
       section?: string
+      tag?: CatalogTag
     }
   }[] = []
 
@@ -79,6 +81,16 @@ export async function getStaticPaths() {
           props: { locale, pageType: 'catalog', catalogPage, pageNum },
         })
       }
+
+      // One page per tag present in this catalog, all its matches, no pagination (see ADR 0019).
+      for (const tag of getCatalogTags(items)) {
+        paths.push({
+          params: {
+            slug: `${prefix}${routeSegment(locale, catalogPage)}/${routeSegment(locale, 'tag')}/${tag.slug}`,
+          },
+          props: { locale, pageType: 'catalog-tag', catalogPage, tag },
+        })
+      }
     }
 
     for (const category of catalogCategories) {
@@ -106,9 +118,10 @@ interface Props {
   itemSlug?: string
   itemTitle?: string
   section?: string
+  tag?: CatalogTag
 }
 
-const { locale, pageType, pageNum = 1, catalogPage, category, itemSlug, itemTitle, section } = Astro.props
+const { locale, pageType, pageNum = 1, catalogPage, category, itemSlug, itemTitle, section, tag } = Astro.props
 const t = useTranslations(locale)
 
 const isHome = pageType === 'home'
@@ -120,6 +133,7 @@ const seoTitle = {
       ? `${t(CATEGORY_LABEL_KEYS[catalogPage])} · ${t('catalog.page')} ${pageNum}`
       : t(CATEGORY_LABEL_KEYS[catalogPage])
     : undefined,
+  'catalog-tag': catalogPage && tag ? `${t(CATEGORY_LABEL_KEYS[catalogPage])} · #${tag.text}` : undefined,
   'catalog-item': itemTitle ?? t('meta.title'),
   contact: t('contact.label'),
   sitemap: t('sitemap.label'),
@@ -143,6 +157,7 @@ const seoDescription = {
 >
   {pageType === 'home' && <HomeView />}
   {pageType === 'catalog' && catalogPage && <CatalogsView catalogPage={catalogPage} pageNum={pageNum} />}
+  {pageType === 'catalog-tag' && catalogPage && tag && <CatalogsView catalogPage={catalogPage} activeTag={tag} />}
   {pageType === 'catalog-item' && category && itemSlug && <CatalogItemDetailView category={category} slug={itemSlug} />}
   {pageType === 'contact' && <ContactView />}
   {pageType === 'sitemap' && <SitemapView />}

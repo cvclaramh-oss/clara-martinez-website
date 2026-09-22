@@ -103,9 +103,12 @@ const ca = {
   'catalog.pagination_aria': 'Paginació',
   'catalog.previous_page': 'Pàgina anterior',
   'catalog.showing': 'Mostrant',
+  'catalog.tag_all': 'Tots',
+  'catalog.tag_filter_aria': 'Filtre per etiquetes',
 
   // Materials
   'materials.all.label': 'Veure-ho tot',
+  'materials.all_tab.label': 'Tots els materials',
   'materials.audiovisual.label': 'Audiovisuals',
   'materials.audiovisual.subtitle':
     '[PENDENT] Subtítol de materials.audiovisual',
@@ -122,6 +125,7 @@ const ca = {
   'materials.publications.label': 'Publicacions',
   'materials.publications.subtitle':
     '[PENDENT] Subtítol de materials.publications',
+  'materials.subcategories_aria': 'Subcategories de Materials',
   'materials.subtitle':
     '[PENDENT] Subtítol de materials',
 
@@ -345,9 +349,12 @@ const es: Record<keyof typeof ca, string> = {
   'catalog.pagination_aria': 'Paginación',
   'catalog.previous_page': 'Página anterior',
   'catalog.showing': 'Mostrando',
+  'catalog.tag_all': 'Todos',
+  'catalog.tag_filter_aria': 'Filtro por etiquetas',
 
   // Materials
   'materials.all.label': 'Ver todo',
+  'materials.all_tab.label': 'Todos los materiales',
   'materials.audiovisual.label': 'Audiovisuales',
   'materials.audiovisual.subtitle':
     '[PENDENT] Subtítol de materials.audiovisual',
@@ -364,6 +371,7 @@ const es: Record<keyof typeof ca, string> = {
   'materials.publications.label': 'Publicaciones',
   'materials.publications.subtitle':
     '[PENDENT] Subtítol de materials.publications',
+  'materials.subcategories_aria': 'Subcategorías de Materiales',
   'materials.subtitle':
     '[PENDENT] Subtítol de materials',
 

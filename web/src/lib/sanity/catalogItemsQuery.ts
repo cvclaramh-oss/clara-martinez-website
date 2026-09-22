@@ -25,8 +25,8 @@ export interface CatalogItem {
     category: CatalogItemCategory
     /** Only set when the category is `materials`. */
     subcategory: CatalogItemSubcategory | null
-    /** Free-text labels; not validated, see ADR 0008. */
-    tags: string[]
+    /** Labels from the shared `tag` catalog; see ADR 0019. */
+    tags: { text: string; slug: string }[]
     /**
      * What Clara did in the project. Free text of up to 3 rows; the card shows only its first line
      * above the title.
@@ -46,7 +46,10 @@ export const catalogItemCardFields = `
     "imageAlt": image.alt,
     category,
     subcategory,
-    "tags": coalesce(tags, []),
+    "tags": coalesce(tags[]->{
+      "text": select($locale == "ca" => ca, es),
+      "slug": select($locale == "ca" => slugCa.current, slugEs.current)
+    }, []),
     myWork,
     "author": coalesce(createdBy, "")`
 
