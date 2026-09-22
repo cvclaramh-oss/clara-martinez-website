@@ -12,13 +12,22 @@ import themeConfig from '@theme-config'
  * index, contact, accessibility) and a bottom copyright bar.
  */
 
+interface Props {
+  /**
+   * Whether to show the call-to-action band above the footer grid
+   * @default true
+   */
+  showCallToAction?: boolean
+}
+
+const { showCallToAction = true } = Astro.props
 const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 const currentYear = new Date().getFullYear()
 ---
 
 <footer>
-  <CallToAction />
+  {showCallToAction && <CallToAction />}
 
   <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[max-content_1fr_1fr_1fr]">
     <div class="cell flex flex-col gap-1">
@@ -106,7 +115,10 @@ const currentYear = new Date().getFullYear()
 <style lang="scss">
   @use 'base/breakpoint' as *;
 
+  // The -1px margin makes the top border overlap the bottom border of the last block of the page, so pages
+  // that end with their own border do not show a double line above the CTA.
   footer {
+    margin-block-start: -1px;
     border-block-start: 1px solid var(--border-color);
   }
 

@@ -17,7 +17,6 @@ const ca = {
 
   // Shared names
   'home.label': 'Inici',
-  'tag.label': 'Etiqueta',
 
   // Common actions
   back_home: "Tornar a l'inici",
@@ -79,82 +78,124 @@ const ca = {
   'detail.year': 'Any',
 
   // Item detail
-  'featured_projects.author_prefix': 'Autor/a: ',
   'featured_projects.eyebrow': 'Catàleg seleccionat',
   'featured_projects.title': 'Continguts destacats',
   'project_share.back': 'Tornar als projectes',
   'project_share.description': "T'agrada aquest projecte? Comparteix-lo amb la teva xarxa!",
   'project_share.title': 'Comparteix aquest projecte',
-  'tag.subtitle_prefix': "Projectes amb l'etiqueta",
 
   // Projects
-  'projects.all': 'Tots els projectes',
   'projects.label': 'Projectes',
-  'projects.many': 'projectes',
-  'projects.one': 'projecte',
-  'projects.pagination_aria': 'Paginació de projectes',
-  'projects.range_prefix': 'Mostrant els projectes',
-  'projects.range_suffix': "d'un total de",
   'projects.subtitle':
     'Col·lecció de projectes educatius, materials didàctics i investigacions en educació afectivosexual, perspectiva de gènere i transformació comunitària.',
-  'projects.tags': 'Etiquetes',
+
+  // Catalog
+  'catalog.empty_text': 'Estem preparant aquesta secció. Torna aviat o consulta la resta del catàleg.',
+  'catalog.empty_title': 'Encara no hi ha continguts',
+  'catalog.eyebrow': 'Arxiu & recursos oberts',
+  'catalog.item_many': 'continguts',
+  'catalog.item_one': 'contingut',
+  'catalog.next_page': 'Pàgina següent',
+  'catalog.no_next_page': 'No hi ha pàgina següent',
+  'catalog.no_previous_page': 'No hi ha pàgina anterior',
+  'catalog.of': 'de',
+  'catalog.page': 'Pàgina',
+  'catalog.pagination_aria': 'Paginació',
+  'catalog.previous_page': 'Pàgina anterior',
+  'catalog.showing': 'Mostrant',
 
   // Materials
   'materials.all.label': 'Veure-ho tot',
   'materials.audiovisual.label': 'Audiovisuals',
+  'materials.audiovisual.subtitle':
+    '[PENDENT] Subtítol de materials.audiovisual',
   'materials.campaigns.label': 'Campanyes',
+  'materials.campaigns.subtitle':
+    '[PENDENT] Subtítol de materials.campaigns',
   'materials.games.label': 'Jocs',
+  'materials.games.subtitle':
+    '[PENDENT] Subtítol de materials.games',
   'materials.guides.label': 'Guies i recursos didàctics',
+  'materials.guides.subtitle':
+    '[PENDENT] Subtítol de materials.guides',
   'materials.label': 'Materials',
   'materials.publications.label': 'Publicacions',
+  'materials.publications.subtitle':
+    '[PENDENT] Subtítol de materials.publications',
+  'materials.subtitle':
+    '[PENDENT] Subtítol de materials',
 
   // Formations
   'formations.label': 'Formacions',
+  'formations.subtitle':
+    '[PENDENT] Subtítol de formations',
 
   // Workshops
   'workshops.label': 'Tallers',
+  'workshops.subtitle':
+    '[PENDENT] Subtítol de workshops',
 
   // Bio
   'bio.label': 'Bio',
 
   // Contact
+  'contact.channel.cv.badge': 'Documentació',
+  'contact.channel.cv.button': 'Descarregar CV (PDF)',
+  'contact.channel.cv.text': 'Descarrega el dossier professional amb detall de formacions i projectes:',
+  'contact.channel.cv.title': '03 / Currículum & expertesa',
+  'contact.channel.email.badge': 'Principal',
+  'contact.channel.email.text': 'Atenció directa per a consultes, premsa i col·laboracions:',
+  'contact.channel.email.title': '01 / Correu directe',
+  'contact.channel.linkedin.badge': 'Perfil',
+  'contact.channel.linkedin.text': 'Connexió professional, actualitzacions i projectes recents:',
+  'contact.channel.linkedin.title': '02 / Xarxa professional',
+  'contact.channels.description':
+    'Pots posar-te en contacte mitjançant el formulari o directament a través dels canals següents.',
+  'contact.channels.eyebrow': 'Canals directes',
+  'contact.channels.title': 'Dades de contacte & documentació',
+  'contact.eyebrow': 'Contacte directe',
   'contact.label': 'Contacte',
-  'contact.lets_talk': 'Parlem',
-  'contact.subtitle': 'Tens alguna pregunta? Posat en contacte amb mi!',
+  'contact.new_tab': "(s'obre en una pestanya nova)",
+  'contact.subtitle':
+    'Per a col·laboracions, encàrrecs institucionals, projectes educatius o consultories pedagògiques.',
 
   // Contact form
   'contact.form.email': 'Correu electrònic',
-  'contact.form.experience_advanced': 'Avançat',
-  'contact.form.experience_beginner': 'Principiant',
-  'contact.form.experience_intermediate': 'Intermedi',
-  'contact.form.experience_legend': "El teu nivell d'experiència",
-  'contact.form.first_name': 'Nom',
-  'contact.form.first_name_validation': "Necessito el teu nom per poder dirigir-m'hi correctament",
-  'contact.form.interest_community': 'Transformació comunitària',
-  'contact.form.interest_education': 'Educació i formació',
-  'contact.form.interest_gender': 'Perspectiva de gènere',
-  'contact.form.interest_sexuality': 'Educació afectivosexual',
-  'contact.form.interests_legend': 'Quin és el teu interès?',
-  'contact.form.interests_validation': "Si us plau, selecciona almenys una àrea d'interès",
-  'contact.form.message': 'Missatge',
-  'contact.form.newsletter': "Subscriure'm al butlletí",
-  'contact.form.phone': 'Telèfon',
-  'contact.form.preferences_legend': 'Les teves preferències',
-  'contact.form.send': 'Enviar missatge',
-  'contact.form.updates': 'Rebre actualitzacions',
-
-  // Contact info
-  'contact.info.address_label': 'Adreça:',
-  'contact.info.description':
-    "Em pots contactar per a qualsevol consulta sobre formació, assessorament o col·laboració en projectes d'educació afectivosexual, perspectiva de gènere o transformació comunitària.",
-  'contact.info.email_label': 'Correu electrònic:',
-  'contact.info.hours': 'Pendent de confirmar',
-  'contact.info.hours_label': "Horari d'atenció:",
-  'contact.info.phone_label': 'Telèfon:',
-  'contact.info.social_facebook': "Vés a la meva pàgina de Facebook, s'obre en una pestanya nova",
-  'contact.info.social_linkedin': "Vés al meu perfil de LinkedIn, s'obre en una pestanya nova",
-  'contact.info.social_twitter': "Vés a la meva pàgina de Twitter, s'obre en una pestanya nova",
-  'contact.info.title': "Contacta'm",
+  'contact.form.email_placeholder': 'nom@exemple.cat',
+  'contact.form.email_validation': 'Escriu un correu electrònic vàlid, per exemple nom@exemple.cat',
+  'contact.form.entity': 'Entitat / organització',
+  'contact.form.entity_placeholder': 'Escola, Ajuntament, Associació…',
+  'contact.form.error_config':
+    'El formulari encara no està configurat per enviar missatges. Escriu-me directament al correu.',
+  'contact.form.error_generic':
+    "No s'ha pogut enviar la consulta. Torna-ho a provar en uns minuts o escriu-me directament al correu.",
+  'contact.form.error_rate': "S'han fet massa enviaments seguits. Espera uns minuts i torna-ho a provar.",
+  'contact.form.error_summary': "Hi ha un problema amb l'enviament. Cal revisar aquests camps:",
+  'contact.form.eyebrow': "Formulari d'inici de projecte",
+  'contact.form.message': 'Missatge / descripció del projecte',
+  'contact.form.message_placeholder':
+    "Explica breument el context, els objectius, les dates previstes o el nombre d'assistents aproximat…",
+  'contact.form.message_validation': 'Escriu el teu missatge',
+  'contact.form.name': 'Nom i cognoms',
+  'contact.form.name_placeholder': 'Ex. Maria Puig i Soler',
+  'contact.form.name_validation': 'Escriu el teu nom i cognoms',
+  'contact.form.privacy': 'He llegit i accepto la política de privacitat',
+  'contact.form.privacy_note':
+    "El tractament de dades és d'acord amb el RGPD. Les teves dades només s'utilitzaran per respondre a aquesta sol·licitud.",
+  'contact.form.privacy_validation': 'Cal acceptar la política de privacitat per enviar la consulta',
+  'contact.form.required_note': '* Camps obligatoris',
+  'contact.form.required_validation': 'Aquest camp és obligatori',
+  'contact.form.send': 'Enviar consulta',
+  'contact.form.sending': 'Enviant…',
+  'contact.form.subject': 'Nova consulta des del web',
+  'contact.form.type': 'Tipus de consulta',
+  'contact.form.type_collaboration': 'Col·laboració',
+  'contact.form.type_consulting': 'Consultoria',
+  'contact.form.type_institutional': 'Encàrrec institucional',
+  'contact.form.type_other': 'Altres',
+  'contact.form.type_placeholder': 'Selecciona una opció',
+  'contact.form.type_training': 'Formació',
+  'contact.form.type_validation': 'Selecciona un tipus de consulta',
 
   // Sitemap
   'sitemap.auto_updated': 'Actualitzat automàticament en cada construcció',
@@ -191,7 +232,7 @@ const ca = {
 
   // Thank you
   'thank_you.label': 'Gràcies',
-  'thank_you.notice': "Això és una prova del sistema de validació de formularis, no s'ha enviat cap correu electrònic.",
+  'thank_you.notice': 'Hem rebut el teu missatge i et respondrem tan aviat com sigui possible.',
   'thank_you.send_another': 'Enviar un altre missatge',
   'thank_you.subtitle': "El formulari s'ha enviat correctament.",
   'thank_you.title': 'Gràcies!',
@@ -218,7 +259,6 @@ const es: Record<keyof typeof ca, string> = {
 
   // Shared names
   'home.label': 'Inicio',
-  'tag.label': 'Etiqueta',
 
   // Common actions
   back_home: 'Volver al inicio',
@@ -280,82 +320,124 @@ const es: Record<keyof typeof ca, string> = {
   'detail.year': 'Año',
 
   // Item detail
-  'featured_projects.author_prefix': 'Autor/a: ',
   'featured_projects.eyebrow': 'Catálogo seleccionado',
   'featured_projects.title': 'Contenidos destacados',
   'project_share.back': 'Volver a los proyectos',
   'project_share.description': '¿Te gusta este proyecto? ¡Compártelo con tu red!',
   'project_share.title': 'Comparte este proyecto',
-  'tag.subtitle_prefix': 'Proyectos con la etiqueta',
 
   // Projects
-  'projects.all': 'Todos los proyectos',
   'projects.label': 'Proyectos',
-  'projects.many': 'proyectos',
-  'projects.one': 'proyecto',
-  'projects.pagination_aria': 'Paginación de proyectos',
-  'projects.range_prefix': 'Mostrando los proyectos',
-  'projects.range_suffix': 'de un total de',
   'projects.subtitle':
     'Colección de proyectos educativos, materiales didácticos e investigaciones en educación afectivosexual, perspectiva de género y transformación comunitaria.',
-  'projects.tags': 'Etiquetas',
+
+  // Catalog
+  'catalog.empty_text': 'Estamos preparando esta sección. Vuelve pronto o consulta el resto del catálogo.',
+  'catalog.empty_title': 'Todavía no hay contenidos',
+  'catalog.eyebrow': 'Archivo & recursos abiertos',
+  'catalog.item_many': 'contenidos',
+  'catalog.item_one': 'contenido',
+  'catalog.next_page': 'Página siguiente',
+  'catalog.no_next_page': 'No hay página siguiente',
+  'catalog.no_previous_page': 'No hay página anterior',
+  'catalog.of': 'de',
+  'catalog.page': 'Página',
+  'catalog.pagination_aria': 'Paginación',
+  'catalog.previous_page': 'Página anterior',
+  'catalog.showing': 'Mostrando',
 
   // Materials
   'materials.all.label': 'Ver todo',
   'materials.audiovisual.label': 'Audiovisuales',
+  'materials.audiovisual.subtitle':
+    '[PENDENT] Subtítol de materials.audiovisual',
   'materials.campaigns.label': 'Campañas',
+  'materials.campaigns.subtitle':
+    '[PENDENT] Subtítol de materials.campaigns',
   'materials.games.label': 'Juegos educativos',
+  'materials.games.subtitle':
+    '[PENDENT] Subtítol de materials.games',
   'materials.guides.label': 'Guías y recursos didácticos',
+  'materials.guides.subtitle':
+    '[PENDENT] Subtítol de materials.guides',
   'materials.label': 'Materiales',
   'materials.publications.label': 'Publicaciones',
+  'materials.publications.subtitle':
+    '[PENDENT] Subtítol de materials.publications',
+  'materials.subtitle':
+    '[PENDENT] Subtítol de materials',
 
   // Formations
   'formations.label': 'Formaciones',
+  'formations.subtitle':
+    '[PENDENT] Subtítol de formations',
 
   // Workshops
   'workshops.label': 'Talleres',
+  'workshops.subtitle':
+    '[PENDENT] Subtítol de workshops',
 
   // Bio
   'bio.label': 'Bio',
 
   // Contact
+  'contact.channel.cv.badge': 'Documentación',
+  'contact.channel.cv.button': 'Descargar CV (PDF)',
+  'contact.channel.cv.text': 'Descarga el dosier profesional con el detalle de formaciones y proyectos:',
+  'contact.channel.cv.title': '03 / Currículum y experiencia',
+  'contact.channel.email.badge': 'Principal',
+  'contact.channel.email.text': 'Atención directa para consultas, prensa y colaboraciones:',
+  'contact.channel.email.title': '01 / Correo directo',
+  'contact.channel.linkedin.badge': 'Perfil',
+  'contact.channel.linkedin.text': 'Conexión profesional, novedades y proyectos recientes:',
+  'contact.channel.linkedin.title': '02 / Red profesional',
+  'contact.channels.description':
+    'Puedes ponerte en contacto mediante el formulario o directamente a través de los canales siguientes.',
+  'contact.channels.eyebrow': 'Canales directos',
+  'contact.channels.title': 'Datos de contacto y documentación',
+  'contact.eyebrow': 'Contacto directo',
   'contact.label': 'Contacto',
-  'contact.lets_talk': 'Hablemos',
-  'contact.subtitle': '¿Tienes alguna pregunta? ¡Ponte en contacto conmigo!',
+  'contact.new_tab': '(se abre en una pestaña nueva)',
+  'contact.subtitle':
+    'Para colaboraciones, encargos institucionales, proyectos educativos o consultorías pedagógicas.',
 
   // Contact form
   'contact.form.email': 'Correo electrónico',
-  'contact.form.experience_advanced': 'Avanzado',
-  'contact.form.experience_beginner': 'Principiante',
-  'contact.form.experience_intermediate': 'Intermedio',
-  'contact.form.experience_legend': 'Tu nivel de experiencia',
-  'contact.form.first_name': 'Nombre',
-  'contact.form.first_name_validation': 'Necesito tu nombre para poder dirigirme a ti correctamente',
-  'contact.form.interest_community': 'Transformación comunitaria',
-  'contact.form.interest_education': 'Educación y formación',
-  'contact.form.interest_gender': 'Perspectiva de género',
-  'contact.form.interest_sexuality': 'Educación afectivosexual',
-  'contact.form.interests_legend': '¿Cuál es tu interés?',
-  'contact.form.interests_validation': 'Por favor, selecciona al menos un área de interés',
-  'contact.form.message': 'Mensaje',
-  'contact.form.newsletter': 'Suscribirme al boletín',
-  'contact.form.phone': 'Teléfono',
-  'contact.form.preferences_legend': 'Tus preferencias',
-  'contact.form.send': 'Enviar mensaje',
-  'contact.form.updates': 'Recibir actualizaciones',
-
-  // Contact info
-  'contact.info.address_label': 'Dirección:',
-  'contact.info.description':
-    'Puedes contactarme para cualquier consulta sobre formación, asesoramiento o colaboración en proyectos de educación afectivosexual, perspectiva de género o transformación comunitaria.',
-  'contact.info.email_label': 'Correo electrónico:',
-  'contact.info.hours': 'Pendiente de confirmar',
-  'contact.info.hours_label': 'Horario de atención:',
-  'contact.info.phone_label': 'Teléfono:',
-  'contact.info.social_facebook': 'Ir a mi página de Facebook, se abre en una pestaña nueva',
-  'contact.info.social_linkedin': 'Ir a mi perfil de LinkedIn, se abre en una pestaña nueva',
-  'contact.info.social_twitter': 'Ir a mi página de Twitter, se abre en una pestaña nueva',
-  'contact.info.title': 'Contáctame',
+  'contact.form.email_placeholder': 'nombre@ejemplo.es',
+  'contact.form.email_validation': 'Escribe un correo electrónico válido, por ejemplo nombre@ejemplo.es',
+  'contact.form.entity': 'Entidad / organización',
+  'contact.form.entity_placeholder': 'Escuela, Ayuntamiento, Asociación…',
+  'contact.form.error_config':
+    'El formulario todavía no está configurado para enviar mensajes. Escríbeme directamente al correo.',
+  'contact.form.error_generic':
+    'No se ha podido enviar la consulta. Inténtalo de nuevo en unos minutos o escríbeme directamente al correo.',
+  'contact.form.error_rate': 'Se han hecho demasiados envíos seguidos. Espera unos minutos e inténtalo de nuevo.',
+  'contact.form.error_summary': 'Hay un problema con el envío. Hay que revisar estos campos:',
+  'contact.form.eyebrow': 'Formulario de inicio de proyecto',
+  'contact.form.message': 'Mensaje / descripción del proyecto',
+  'contact.form.message_placeholder':
+    'Explica brevemente el contexto, los objetivos, las fechas previstas o el número aproximado de asistentes…',
+  'contact.form.message_validation': 'Escribe tu mensaje',
+  'contact.form.name': 'Nombre y apellidos',
+  'contact.form.name_placeholder': 'Ej. María Pérez García',
+  'contact.form.name_validation': 'Escribe tu nombre y apellidos',
+  'contact.form.privacy': 'He leído y acepto la política de privacidad',
+  'contact.form.privacy_note':
+    "El tratamiento de datos es de acuerdo con el RGPD. Tus datos solo se utilizarán para responder a esta solicitud.",
+  'contact.form.privacy_validation': 'Hay que aceptar la política de privacidad para enviar la consulta',
+  'contact.form.required_note': '* Campos obligatorios',
+  'contact.form.required_validation': 'Este campo es obligatorio',
+  'contact.form.send': 'Enviar consulta',
+  'contact.form.sending': 'Enviando…',
+  'contact.form.subject': 'Nueva consulta desde la web',
+  'contact.form.type': 'Tipo de consulta',
+  'contact.form.type_collaboration': 'Colaboración',
+  'contact.form.type_consulting': 'Consultoría',
+  'contact.form.type_institutional': 'Encargo institucional',
+  'contact.form.type_other': 'Otros',
+  'contact.form.type_placeholder': 'Selecciona una opción',
+  'contact.form.type_training': 'Formación',
+  'contact.form.type_validation': 'Selecciona un tipo de consulta',
 
   // Sitemap
   'sitemap.auto_updated': 'Actualizado automáticamente en cada construcción',
@@ -392,8 +474,7 @@ const es: Record<keyof typeof ca, string> = {
 
   // Thank you
   'thank_you.label': 'Gracias',
-  'thank_you.notice':
-    'Esto es una prueba del sistema de validación de formularios, no se ha enviado ningún correo electrónico.',
+  'thank_you.notice': 'Hemos recibido tu mensaje y te responderemos lo antes posible.',
   'thank_you.send_another': 'Enviar otro mensaje',
   'thank_you.subtitle': 'El formulario se ha enviado correctamente.',
   'thank_you.title': '¡Gracias!',

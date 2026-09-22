@@ -1,0 +1,280 @@
+---
+import { Form, Input, Textarea } from 'accessible-astro-components'
+import { Icon } from 'astro-icon/components'
+import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
+
+/**
+ * ContactForm Component
+ *
+ * @description Contact form sent to Web3Forms. With JavaScript it is sent with fetch: the result or the error
+ * is shown in a live region and, on success, the visitor goes to the thank-you page. Without JavaScript the
+ * browser posts the form to Web3Forms, which redirects to the thank-you page. The starter's Form validates
+ * the fields and shows its error summary before anything is sent.
+ */
+const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
+
+const endpoint = 'https://api.web3forms.com/submit'
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY ?? ''
+const thankYouPath = getHref('/thank-you', false, locale)
+const thankYouUrl = new URL(thankYouPath, Astro.site ?? Astro.url).href
+
+const consultationTypes = ['collaboration', 'institutional', 'training', 'consulting', 'other'] as const
+
+const controlClass =
+  'w-full border-2 border-(--border-color) bg-(--background-color) p-2 text-(--foreground-color) placeholder:text-(--color-on-surface-variant)'
+---
+
+<div class="mb-6 flex items-end justify-between gap-4 border-b border-(--border-color) pb-2">
+  <h2
+    class="font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--color-accent-rose-dark) uppercase"
+  >
+    {t('contact.form.eyebrow')}
+  </h2>
+  <p
+    class="font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--color-on-surface-variant) uppercase"
+  >
+    {t('contact.form.required_note')}
+  </p>
+</div>
+
+<Form
+  name="contact"
+  action={endpoint}
+  method="post"
+  class="contact-form"
+  errorSummaryMessage={t('contact.form.error_summary')}
+  defaultFieldValidationMessage={t('contact.form.required_validation')}
+  data-endpoint={endpoint}
+  data-has-key={accessKey ? 'true' : 'false'}
+  data-success-url={thankYouPath}
+  data-msg-sending={t('contact.form.sending')}
+  data-msg-generic={t('contact.form.error_generic')}
+  data-msg-rate={t('contact.form.error_rate')}
+  data-msg-config={t('contact.form.error_config')}
+>
+  <input type="hidden" name="access_key" value={accessKey} />
+  <input type="hidden" name="subject" value={t('contact.form.subject')} />
+  <input type="hidden" name="from_name" value={t('name')} />
+  <input type="hidden" name="redirect" value={thankYouUrl} />
+  <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
+
+  <div class="grid items-start gap-6 md:grid-cols-[repeat(2,minmax(0,1fr))]">
+    <Input
+      name="name"
+      label={t('contact.form.name')}
+      required
+      requiredText="*"
+      data-validation={t('contact.form.name_validation')}
+      autocomplete="name"
+      placeholder={t('contact.form.name_placeholder')}
+    />
+    <Input
+      name="email"
+      type="email"
+      label={t('contact.form.email')}
+      required
+      requiredText="*"
+      data-validation={t('contact.form.email_validation')}
+      autocomplete="email"
+      placeholder={t('contact.form.email_placeholder')}
+    />
+    <div class="input-group select-group">
+      <label class="input-group-label" for="input-type" data-validation={t('contact.form.type_validation')}>
+        <span>{t('contact.form.type')}</span><span>*</span>
+      </label>
+      <select
+        id="input-type"
+        name="type"
+        required
+        aria-describedby="input-type-validation"
+        data-validation={t('contact.form.type_validation')}
+        class={controlClass}
+      >
+        <option value="">{t('contact.form.type_placeholder')}</option>
+        {consultationTypes.map((type) => <option value={type}>{t(`contact.form.type_${type}`)}</option>)}
+      </select>
+      <small id="input-type-validation"><span class="message"></span></small>
+    </div>
+    <Input
+      name="entity"
+      label={t('contact.form.entity')}
+      autocomplete="organization"
+      placeholder={t('contact.form.entity_placeholder')}
+    />
+  </div>
+
+  <Textarea
+    name="message"
+    label={t('contact.form.message')}
+    required
+    requiredText="*"
+    data-validation={t('contact.form.message_validation')}
+    placeholder={t('contact.form.message_placeholder')}
+    rows={6}
+  />
+
+  <div class="flex flex-col gap-1">
+    <div class="checkbox-group">
+      <input
+        type="checkbox"
+        id="checkbox-privacy"
+        name="privacy"
+        value="accepted"
+        required
+        aria-describedby="privacy-note"
+      />
+      <label for="checkbox-privacy" data-validation={t('contact.form.privacy_validation')}>
+        <span>{t('contact.form.privacy')}</span>
+      </label>
+    </div>
+    <p id="privacy-note" class="text-sm text-(--color-on-surface-variant)">{t('contact.form.privacy_note')}</p>
+  </div>
+
+  <div class="flex flex-col items-start gap-3">
+    <button
+      type="submit"
+      class="contact-submit inline-flex items-center gap-2 border border-(--border-color) bg-(--foreground-color) px-6 py-4 font-(family-name:--font-family-special) text-sm! leading-[1.125rem]! font-semibold! tracking-widest! text-(--background-color) uppercase disabled:opacity-60"
+    >
+      {t('contact.form.send')}
+      <Icon aria-hidden="true" name="lucide:arrow-right" size="1.125rem" />
+    </button>
+    <p class="contact-status max-w-xl text-sm text-(--foreground-color)" aria-live="polite"></p>
+  </div>
+</Form>
+
+<style is:global>
+  .contact-form :is(input:not([type='checkbox']), textarea, select) {
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    background-color: var(--background-color);
+    padding: 0.5rem;
+    inline-size: 100%;
+    min-inline-size: 0;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .contact-form select {
+    box-sizing: border-box;
+    block-size: 2.625rem;
+  }
+
+  .contact-form :is(.input-group-label, .textarea-group label) {
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .contact-form .select-group {
+    display: grid;
+    gap: var(--space-4xs);
+  }
+
+  .contact-form .select-group label {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3xs);
+  }
+
+  .contact-form .select-group small {
+    display: none;
+    margin-block-start: var(--space-2xs);
+    color: var(--text-color);
+  }
+
+  .contact-form .select-group:has([aria-invalid='true']) {
+    --text-color: light-dark(hsl(355, 78%, 39%), hsl(339, 88%, 69%));
+  }
+
+  .contact-form .select-group:has([aria-invalid='true']) label {
+    color: var(--text-color);
+  }
+
+  .contact-form .select-group select[aria-invalid='true'] {
+    border-color: var(--color-error-border);
+  }
+
+  .contact-form .select-group:has([aria-invalid='true']) small {
+    display: block;
+  }
+
+  .contact-form .checkbox-group,
+  .contact-form .checkbox-group label {
+    align-items: start;
+  }
+
+  .contact-form .checkbox-group label {
+    color: var(--color-on-surface-variant);
+    font-size: 0.875rem;
+  }
+
+  .contact-form .checkbox-group input {
+    appearance: none;
+    margin: 0.125rem 0 0;
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    background-color: var(--background-color);
+    inline-size: 1rem;
+    block-size: 1rem;
+  }
+
+  .contact-form .checkbox-group input:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M3 8.5l3.2 3L13 4.5'/%3E%3C/svg%3E");
+    background-size: 100% 100%;
+    background-color: var(--foreground-color);
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form.contact-form')
+
+  if (form) {
+    const status = form.querySelector<HTMLElement>('.contact-status')
+    const button = form.querySelector<HTMLButtonElement>('.contact-submit')
+    const { endpoint, hasKey, successUrl, msgSending, msgGeneric, msgRate, msgConfig } = form.dataset
+
+    const showStatus = (message: string, isError: boolean) => {
+      if (!status) return
+      status.textContent = message
+      status.setAttribute('role', isError ? 'alert' : 'status')
+      status.classList.toggle('font-bold', isError)
+    }
+
+    // The starter's Form calls form.submit() once every field is valid; this replaces the native post with fetch.
+    form.submit = async () => {
+      if (hasKey !== 'true') {
+        console.error('Contact form: PUBLIC_WEB3FORMS_ACCESS_KEY is not set, nothing was sent.')
+        showStatus(msgConfig ?? '', true)
+        return
+      }
+
+      if (button) button.disabled = true
+      showStatus(msgSending ?? '', false)
+
+      try {
+        const response = await fetch(endpoint ?? '', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        })
+        const result = await response.json().catch(() => null)
+
+        if (response.ok && result?.success) {
+          window.location.href = successUrl ?? '/'
+          return
+        }
+
+        console.error('Contact form: Web3Forms rejected the submission', response.status, result)
+        showStatus(response.status === 429 ? (msgRate ?? '') : (msgGeneric ?? ''), true)
+      } catch (error) {
+        console.error('Contact form: the submission could not be sent', error)
+        showStatus(msgGeneric ?? '', true)
+      }
+
+      if (button) button.disabled = false
+    }
+  }
+</script>

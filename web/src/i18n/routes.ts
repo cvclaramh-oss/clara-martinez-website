@@ -1,7 +1,6 @@
 export const routes = {
     ca: {
       projects: 'projectes',
-      tag: 'etiqueta',
       contact: 'contacte',
       'accessibility-statement': 'declaracio-accessibilitat',
       sitemap: 'mapa-lloc',
@@ -18,7 +17,6 @@ export const routes = {
     },
     es: {
       projects: 'proyectos',
-      tag: 'etiqueta',
       materials: 'materiales',
       'materials-guides': 'guias-y-recursos',
       'materials-games': 'juegos',

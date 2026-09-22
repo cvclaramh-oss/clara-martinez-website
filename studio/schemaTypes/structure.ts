@@ -87,6 +87,7 @@ export const structure: StructureResolver = (S) =>
               materialList(S, 'Jocs', 'materials-jocs', 'games'),
               materialList(S, 'Publicacions', 'materials-publicacions', 'publications'),
               materialList(S, 'Campanyes', 'materials-campanyes', 'campaigns'),
+              materialList(S, 'Audiovisuals', 'materials-audiovisuals', 'audiovisual'),
             ]),
         ),
       categoryList(S, 'Formacions', 'formations'),

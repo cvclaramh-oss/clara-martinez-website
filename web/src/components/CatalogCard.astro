@@ -28,9 +28,16 @@ interface Props {
    * @default "h3"
    */
   headingLevel?: 'h2' | 'h3' | 'h4'
+  /**
+   * Shows the band with the category (the subcategory for materials) above the image. Hide it in the catalog
+   * pages, where every card already belongs to the category of the page. Without it the card takes four rows of
+   * the grid instead of five.
+   * @default true
+   */
+  showCategory?: boolean
 }
 
-const { item, headingLevel = 'h3' } = Astro.props
+const { item, headingLevel = 'h3', showCategory = true } = Astro.props
 const HeadingTag = headingLevel
 const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
@@ -43,19 +50,29 @@ const myWorkFirst = myWorkSentences ? myWorkSentences[1] : (data.myWork ?? '').t
 const myWorkRest = myWorkSentences?.[2] ?? ''
 // Catalog page the band label links to: the subcategory page for materials, the category page otherwise.
 const catalogPage = data.category === 'materials' && data.subcategory ? `materials-${data.subcategory}` : data.category
+// Rows of the parent grid the card spans: band (optional), image, `myWork`, text and footer. Full class names,
+// not built with a variable, so Tailwind finds them when it scans the source.
+const rowSpan = showCategory ? 'row-span-5' : 'row-span-4'
 ---
 
 <article
-  class="group relative row-span-5 grid grid-rows-subgrid border-r border-b border-(--border-color) bg-(--background-color)"
+  class:list={[
+    'group relative grid grid-rows-subgrid border-r border-b border-(--border-color) bg-(--background-color)',
+    rowSpan,
+  ]}
 >
-  <div class="flex items-center border-b border-(--border-color) bg-(--color-surface-container-low) px-4 py-1">
-    <a
-      href={getHref(`/${catalogPage}`, false, locale)}
-      class="relative z-10 border border-(--border-color) bg-(--color-accent-rose) px-1 py-0.5 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-wider text-(--color-on-accent)! uppercase no-underline! hover:bg-(--color-on-accent) hover:text-white!"
-    >
-      {t(CATEGORY_LABEL_KEYS[catalogPage])}
-    </a>
-  </div>
+  {
+    showCategory && (
+      <div class="flex items-center border-b border-(--border-color) bg-(--color-surface-container-low) px-4 py-1">
+        <a
+          href={getHref(`/${catalogPage}`, false, locale)}
+          class="relative z-10 border border-(--border-color) bg-(--color-accent-rose) px-1 py-0.5 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-wider text-(--color-on-accent)! uppercase no-underline! hover:bg-(--color-on-accent) hover:text-white!"
+        >
+          {t(CATEGORY_LABEL_KEYS[catalogPage])}
+        </a>
+      </div>
+    )
+  }
 
   <div class="aspect-16/10 overflow-hidden border-b border-(--border-color) bg-(--color-surface-container-low)">
     <img

@@ -1,4 +1,4 @@
-import { sanityClient } from './client'
+import { fetchAllInBatches } from './fetchAllInBatchesQuery'
 import { catalogItemCardFields } from './catalogItemsQuery'
 import type { CatalogItem, CatalogItemCategory } from './catalogItemsQuery'
 import type { SanityImage } from './imageUrlBuilder'
@@ -70,8 +70,9 @@ export async function getCatalogItemDetailsByCategory(
   locale: Locale,
   category: CatalogItemCategory,
 ): Promise<CatalogItemDetail[]> {
-  return sanityClient.fetch<CatalogItemDetail[]>(
-    `*[_type == "catalogItem" && category == $category && language == $locale] | order(slug.current asc) ${catalogItemDetailProjection}`,
+  return fetchAllInBatches<CatalogItemDetail>(
+    '*[_type == "catalogItem" && category == $category && language == $locale] | order(slug.current asc, _id asc) ',
+    catalogItemDetailProjection,
     { locale, category },
   )
 }

@@ -43,7 +43,7 @@ El tipo de documento cubre las 4 categorías del sitio (`projects`/`materials`/`
 
 `CatalogItem` (`catalogItemsQuery.ts`) es ahora solo la forma de **tarjeta**: `title`, `subtitle`, `image`, `imageAlt`, `category`, `subcategory`, `tags`, `myWork` y `author`. El documento completo es `CatalogItemDetail` (`catalogItemDetailQuery.ts`), que se construye a partir de los mismos campos de tarjeta (`catalogItemCardFields`) y añade descripción larga, autoría institucional, año, enlace externo, vídeos, galería, documentos, botón, `createdBy`, `designedBy` y secciones (los campos de archivo llegan resueltos a su URL). Las listas y las páginas de tarjeta usan `getCatalogItemsByCategory` / `getFeaturedCatalogItems`; la ficha usa `getCatalogItemDetailsByCategory`, una consulta por categoría e idioma. Sigue vigente la forma `{slug, data}`.
 
-## Nota (2026-09-21): fichas de detalle para las cuatro categorías
+## Nota (2026-09-20): fichas de detalle para las cuatro categorías
 
 `[...slug].astro` genera una ficha por cada elemento de `projects`, `materials`, `formations` y `workshops` (antes solo de proyectos, y las tarjetas de las otras categorías enlazaban a páginas que no existían). Todas se pintan con `CatalogItemDetailView.astro` (antes `ProjectDetailView`), que pide el documento completo con `getCatalogItemDetailsByCategory`. El anterior y el siguiente se calculan en la propia vista, por título, dentro de la misma categoría e idioma.
 
