@@ -1,7 +1,7 @@
 # 0008 — Tags de proyectos como texto libre en Sanity
 
 - **Fecha:** 2026-09-12
-- **Estado:** Vigente
+- **Estado:** Sustituido en parte por [0019](0019-etiquetes-com-a-document.md) (la opción B, etiqueta como documento `tag`, se implementó el 2026-09-22)
 
 ## Contexto
 
