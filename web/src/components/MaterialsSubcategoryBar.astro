@@ -1,0 +1,42 @@
+---
+import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
+import { CATALOG_PAGES, type CatalogPage } from '@constants/constCatalog'
+import { CATEGORY_LABEL_KEYS } from '@constants/constLabels'
+
+/**
+ * MaterialsSubcategoryBar Component
+ *
+ * @description Full-width tab bar for the Materials pages (Tots + its 5 subcategories), styled like the
+ * navbar's own menu items (same text, hover and current-page colors as Navigation.astro).
+ */
+interface Props {
+  activeCatalogPage: CatalogPage
+}
+
+const locale = getLangFromUrl(Astro.url)
+const t = useTranslations(locale)
+const { activeCatalogPage } = Astro.props
+
+const materialsPages = (Object.keys(CATALOG_PAGES) as CatalogPage[]).filter(
+  (page) => CATALOG_PAGES[page].category === 'materials',
+)
+
+const tabClass = (isActive: boolean) =>
+  `flex items-center justify-center gap-1 border-r border-b border-(--border-color) px-2 py-1.5 text-center text-[0.625rem] leading-3.5 text-balance font-semibold tracking-wider uppercase no-underline! md:px-4 md:py-2 md:text-xs md:leading-4 ${
+    isActive
+      ? 'bg-(--color-accent-rose) text-(--color-on-accent)! font-bold!'
+      : 'bg-(--background-color) text-(--color-on-surface-variant)! hover:bg-(--color-surface-container-low) hover:text-(--foreground-color)! focus-visible:bg-(--color-surface-container-low) focus-visible:text-(--foreground-color)!'
+  }`
+---
+
+<nav aria-label={t('materials.subcategories_aria')} class="w-full border-b border-(--border-color)">
+  <div class="-mr-px grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+    {
+      materialsPages.map((page) => (
+        <a href={getHref(`/${page}`, false, locale)} aria-current={page === activeCatalogPage ? 'page' : undefined} class={tabClass(page === activeCatalogPage)}>
+          {page === 'materials' ? t('materials.all_tab.label') : t(CATEGORY_LABEL_KEYS[page])}
+        </a>
+      ))
+    }
+  </div>
+</nav>

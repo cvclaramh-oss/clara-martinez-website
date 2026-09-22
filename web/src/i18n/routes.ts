@@ -14,6 +14,7 @@ export const routes = {
       formations: 'formacions',
       workshops: 'tallers',
       bio: 'bio',
+      tag: 'etiqueta',
     },
     es: {
       projects: 'proyectos',
@@ -26,6 +27,7 @@ export const routes = {
       formations: 'formaciones',
       workshops: 'talleres',
       bio: 'bio',
+      tag: 'etiqueta',
       contact: 'contacto',
       'accessibility-statement': 'declaracion-accesibilidad',
       sitemap: 'mapa-sitio',
