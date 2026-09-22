@@ -168,7 +168,7 @@ export const catalogItem = defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: {source: 'title', maxLength: 96},
+      options: {source: (doc) => `${doc.title}-${doc.language}`, maxLength: 96},
       fieldset: 'card',
       validation: (rule) =>
         rule.required().custom((slug) => {
