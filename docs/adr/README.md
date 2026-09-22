@@ -19,3 +19,4 @@
 | [0015](0015-escala-de-breakpoints.md) | Escala de breakpoints | Vigente |
 | [0016](0016-tipografias-autoalojadas.md) | Tipografías autoalojadas | Vigente |
 | [0017](0017-listados-de-catalogo.md) | Listados de catálogo | Vigente |
+| [0018](0018-cloudflare-pages-no-workers.md) | Despliegue en Cloudflare Pages, no Workers | Vigente |
