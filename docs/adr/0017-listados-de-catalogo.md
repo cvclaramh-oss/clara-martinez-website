@@ -1,7 +1,7 @@
 # 0017 — Listados de catálogo
 
 - **Fecha:** 2026-09-22
-- **Estado:** Vigente
+- **Estado:** Vigente — el punto 3 (barra de subcategorías de Materials) sustituido en parte por [0020](0020-barra-subcategories-materials.md)
 
 ## Contexto
 
