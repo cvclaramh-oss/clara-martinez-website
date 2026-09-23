@@ -53,12 +53,12 @@ const pageNumbers = (() => {
   return pages.flatMap((page, index) => (index > 0 && page - pages[index - 1] > 1 ? ['…', page] : [page]))
 })()
 
-const cellClass = `flex items-center justify-center gap-1 border-r border-(--border-color) px-2 py-1 last:border-r-0 md:px-3 ${microLabelClassName}`
+const cellClass = `flex items-center justify-center gap-1 border-r border-(--border-color) min-h-6 min-w-6 px-2 py-1 last:border-r-0 md:px-3 ${microLabelClassName}`
 ---
 
 {
   totalPages > 1 && (
-    <div class="flex flex-col items-center gap-3 border-b border-(--border-color) px-4 py-3 text-center md:flex-row md:justify-between md:px-6 md:text-left lg:px-8">
+    <div class="flex flex-col items-center gap-3 border-b border-(--border-color) px-(--grid-gutter) py-3 text-center md:flex-row md:justify-between md:text-left">
       <p
         class={`flex flex-col items-center gap-1 text-(--color-on-surface-variant) md:flex-row md:gap-4 ${microLabelClassName}`}
       >
