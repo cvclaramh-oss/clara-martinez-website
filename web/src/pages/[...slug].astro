@@ -43,6 +43,7 @@ export async function getStaticPaths() {
       category?: CatalogItemCategory
       itemSlug?: string
       itemTitle?: string
+      itemSubtitle?: string
       section?: string
       tag?: CatalogTag
     }
@@ -100,7 +101,7 @@ export async function getStaticPaths() {
           params: {
             slug: `${prefix}${routeSegment(locale, category)}/${item.slug}`,
           },
-          props: { locale, pageType: 'catalog-item', category, itemSlug: item.slug, itemTitle: item.data.title },
+          props: { locale, pageType: 'catalog-item', category, itemSlug: item.slug, itemTitle: item.data.title, itemSubtitle: item.data.subtitle },
         })
       }
     }
@@ -117,11 +118,12 @@ interface Props {
   category?: CatalogItemCategory
   itemSlug?: string
   itemTitle?: string
+  itemSubtitle?: string
   section?: string
   tag?: CatalogTag
 }
 
-const { locale, pageType, pageNum = 1, catalogPage, category, itemSlug, itemTitle, section, tag } = Astro.props
+const { locale, pageType, pageNum = 1, catalogPage, category, itemSlug, itemTitle, itemSubtitle, section, tag } = Astro.props
 const t = useTranslations(locale)
 
 const isHome = pageType === 'home'
@@ -144,6 +146,8 @@ const seoTitle = {
 
 const seoDescription = {
   catalog: catalogPage ? t(CATALOG_PAGES[catalogPage].subtitleKey) : undefined,
+  'catalog-item': itemSubtitle || undefined,
+  contact: t('contact.subtitle'),
   sitemap: t('sitemap.subtitle'),
   'accessibility-statement': t('accessibility.subtitle'),
 }[pageType]
@@ -154,6 +158,7 @@ const seoDescription = {
   description={seoDescription}
   useTitleTemplate={!isHome}
   showCallToAction={pageType !== 'contact'}
+  noindex={pageType === 'thank-you'}
 >
   {pageType === 'home' && <HomeView />}
   {pageType === 'catalog' && catalogPage && <CatalogsView catalogPage={catalogPage} pageNum={pageNum} />}
