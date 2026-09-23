@@ -6,7 +6,7 @@
 | [0002](0002-paleta-radical-clarity.md) | Paleta Radical Clarity | Vigente |
 | [0003](0003-sanity-cms-headless.md) | Sanity como CMS headless | Vigente |
 | [0004](0004-i18n-desde-el-inicio.md) | i18n desde el inicio | Vigente |
-| [0005](0005-override-border-radius.md) | Override global de border-radius (temporal) | Implementado |
+| [0005](0005-override-border-radius.md) | Override global de border-radius (temporal) | Implementado (parcial) |
 | [0006](0006-i18n-cat-es.md) | i18n CAT/ES — Implementación | Sustituido en parte por 0013 (solo los textos en JSON) |
 | [0007](0007-i18n-ssg-rutes.md) | i18n SSG: Estrategia de rutas | Implementado |
 | [0008](0008-tags-texto-libre.md) | Tags de proyectos como texto libre en Sanity | Sustituido en parte por 0019 |
@@ -24,3 +24,5 @@
 | [0020](0020-barra-subcategories-materials.md) | Barra de subcategorías de Materials | Temporal |
 | [0021](0021-componentes-en-vez-de-constantes-para-reutilizar-tailwind.md) | Componentes en vez de constantes para reutilizar clases de Tailwind | Vigente — puntos 2 y 3 sustituidos en parte por 0022 |
 | [0022](0022-utilidades-propias-de-tailwind-para-estilos-combinados.md) | Utilidades propias de Tailwind (`@utility`) para estilos combinados | Vigente |
+| [0023](0023-responsive-fluido-con-la-escala-de-utopia.md) | Responsive fluido con la escala de Utopia | Implementado |
+| [0024](0024-estilos-de-enlace-capa-base-y-hover.md) | Estilos de enlace: capa base, contenido frente a interfaz y hover solo con puntero | Implementado |

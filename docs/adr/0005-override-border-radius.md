@@ -1,7 +1,11 @@
 # 0005 — Override global de border-radius (temporal)
 
 - **Fecha:** 2026-09-09
-- **Estado:** Implementado
+- **Estado:** Implementado (parcial)
+
+## Actualización (2026-09-23)
+
+**La colisión de `--radius-*` está confirmada y sigue sin resolver.** En el CSS compilado, el `:root` del paquete `accessible-astro-components` va después del `_root.scss` del proyecto y gana, así que `--radius-*: 0` no tiene efecto (valen de 0.125rem a 1rem). En la práctica afecta poco: los componentes del paquete que se ven redondeados (`Notification` y el resumen de errores del formulario, `SkipLink`) llevan el radio escrito a mano (`.5rem`), no la variable, y los campos del formulario ya se ponen a 0 desde `ContactForm.astro`. Se probó importar el CSS del paquete antes que el del proyecto (`import 'accessible-astro-components/styles'` en `DefaultLayout.astro`): invierte el orden sin cambios visibles, pero se deshizo para no introducir un cambio sin efecto comprobable. Pendiente: decidir si se ponen a 0 esas esquinas con reglas propias.
 
 ## Actualización (2026-09-22)
 
