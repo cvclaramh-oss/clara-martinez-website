@@ -1,7 +1,7 @@
 # 0021 — Componentes en vez de constantes para reutilizar clases de Tailwind
 
 - **Fecha:** 2026-09-22
-- **Estado:** Vigente
+- **Estado:** Vigente — puntos 2 y 3 sustituidos en parte por [0022](0022-utilidades-propias-de-tailwind-para-estilos-combinados.md) (la etiqueta pequeña pasa de constante de TypeScript a utilidad `@utility micro-label`, 2026-09-23)
 
 ## Contexto
 

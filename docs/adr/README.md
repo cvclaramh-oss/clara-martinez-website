@@ -22,4 +22,5 @@
 | [0018](0018-cloudflare-pages-no-workers.md) | Despliegue en Cloudflare Pages, no Workers | Vigente |
 | [0019](0019-etiquetes-com-a-document.md) | Etiquetas como documento en Sanity | Vigente |
 | [0020](0020-barra-subcategories-materials.md) | Barra de subcategorías de Materials | Temporal |
-| [0021](0021-componentes-en-vez-de-constantes-para-reutilizar-tailwind.md) | Componentes en vez de constantes para reutilizar clases de Tailwind | Vigente |
+| [0021](0021-componentes-en-vez-de-constantes-para-reutilizar-tailwind.md) | Componentes en vez de constantes para reutilizar clases de Tailwind | Vigente — puntos 2 y 3 sustituidos en parte por 0022 |
+| [0022](0022-utilidades-propias-de-tailwind-para-estilos-combinados.md) | Utilidades propias de Tailwind (`@utility`) para estilos combinados | Vigente |
