@@ -34,7 +34,7 @@ const { class: className, limit = 6, title = t('featured_projects.title') } = As
 const featuredCatalogItems = (await getFeaturedCatalogItems(locale)).slice(0, limit)
 ---
 
-<section id="featured" class:list={[className, 'scroll-mt-16']}>
+<section id="featured" class={className}>
   <div
     class="flex flex-col justify-between gap-2 border-b border-(--border-color) px-(--grid-gutter) py-4 md:flex-row md:items-end lg:py-6"
   >
