@@ -4,6 +4,9 @@ import { Link } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 import themeConfig from '@theme-config'
+import Button from '@components/Button.astro'
+import { getCvFileUrl } from '@lib/sanity/siteSettingsQuery'
+import { getExternalLinkAttributes } from '@utils/externalLinkAttributes'
 
 /**
  * Footer Component
@@ -24,6 +27,7 @@ const { showCallToAction = true } = Astro.props
 const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 const currentYear = new Date().getFullYear()
+const cvFileUrl = await getCvFileUrl()
 ---
 
 <footer>
@@ -41,7 +45,7 @@ const currentYear = new Date().getFullYear()
       <span class="mb-4 block text-xs font-bold tracking-widest text-(--color-accent-rose-dark) uppercase">
         {t('footer.portfolio_index')}
       </span>
-      <ul class="columns-2 gap-x-4 text-xs font-bold tracking-wide uppercase [&>li]:pb-1">
+      <ul class="columns-2 gap-x-4 text-xs font-bold tracking-wide uppercase">
         <li><Link href={getHref('/', false, locale)} class="footer-link">{t('home.label')}</Link></li>
         <li><Link href={getHref('/projects', false, locale)} class="footer-link">{t('projects.label')}</Link></li>
         <li><Link href={getHref('/materials', false, locale)} class="footer-link">{t('materials.label')}</Link></li>
@@ -57,7 +61,7 @@ const currentYear = new Date().getFullYear()
         <span class="block text-xs font-bold tracking-widest text-(--color-accent-rose-dark) uppercase">
           {t('footer.contact_heading')}
         </span>
-        <Link href={`mailto:${themeConfig.contactEmail}`} class="footer-link pt-2 text-sm font-bold tracking-wide">
+        <Link href={`mailto:${themeConfig.contactEmail}`} class="footer-link text-sm font-bold tracking-wide">
           {themeConfig.contactEmail}
         </Link>
       </div>
@@ -66,35 +70,41 @@ const currentYear = new Date().getFullYear()
           <ul class="flex flex-col gap-1 text-sm">
             {themeConfig.socials.map((social) => (
               <li>
-                <Link href={social.href} isExternal={social.external} hideIcon class="footer-link pt-2 text-xs font-bold tracking-wide uppercase">
+                <Link href={social.href} isExternal={social.external} hideIcon class="footer-link text-xs font-bold tracking-wide uppercase">
                   {social.label}
+                  {social.external && <span class="sr-only">{t('detail.new_tab')}</span>}
                 </Link>
               </li>
             ))}
           </ul>
         )
       }
-      {/* TODO: point href at Clara's real cvFile once Bio/Sanity is wired up. */}
-      <Link
-        href="#"
-        class="footer-link mt-2 inline-flex w-fit items-center gap-1 border border-(--border-color) px-2 py-1 text-xs font-bold tracking-wide uppercase bg-(--color-surface-container-low) hover:bg-(--color-accent-rose) hover:text-(--color-on-accent)"
+      <Button
+        href={cvFileUrl ?? undefined}
+        disabled={!cvFileUrl}
+        {...(cvFileUrl ? getExternalLinkAttributes() : {})}
+        size="sm"
+        tone="ghost"
+        class="w-fit"
       >
         <Icon aria-hidden="true" name="lucide:download" size={14} />
         {t('button_cv_download')}
-      </Link>
+        {cvFileUrl && <span class="sr-only">{t('detail.new_tab')}</span>}
+      </Button>
     </div>
 
-    <div class="cell flex flex-col justify-between gap-6">
+    <div class="cell flex flex-col gap-1">
       <div class="flex flex-col gap-2">
         <span class="block text-xs font-bold tracking-widest text-(--color-accent-rose-dark) uppercase">
           {t('footer.accessibility_heading')}
         </span>
         <p class="text-sm text-(--color-on-surface-variant)">{t('footer.accessibility_description')}</p>
-        <p class="pt-2 text-xs font-bold tracking-wide uppercase">
-          <Link href={getHref('/accessibility-statement', false, locale)} class="footer-link">
-            {t('accessibility.label')}
-          </Link>
-        </p>
+        <Link
+          href={getHref('/accessibility-statement', false, locale)}
+          class="footer-link text-xs font-bold tracking-wide uppercase"
+        >
+          {t('accessibility.label')}
+        </Link>
       </div>
       <span
         class="inline-block self-start border border-(--border-color) bg-(--color-surface-container-high) px-2 py-1 text-xs font-bold tracking-wide text-(--foreground-color) uppercase"
@@ -161,6 +171,8 @@ const currentYear = new Date().getFullYear()
   }
 
   .footer-link {
+    display: inline-block;
+    padding-block: 0.375rem;
     color: var(--color-on-surface-variant);
     text-decoration: none;
     transition: none;

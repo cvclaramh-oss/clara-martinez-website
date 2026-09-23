@@ -1,0 +1,35 @@
+---
+/**
+ * PageTitleBand Component
+ *
+ * @description The title band under a page's breadcrumb: optional small eyebrow label, `h1`, optional
+ * subtitle. Same block already used identically in `CatalogsView.astro`/`ContactView.astro`, pulled out
+ * so every simple page (no cover image, no tags, no action button) shares it instead of each copying it.
+ */
+interface Props {
+  title: string
+  eyebrow?: string
+  subtitle?: string
+}
+
+const { title, eyebrow, subtitle } = Astro.props
+---
+
+<section class="border-b border-(--border-color) px-4 py-8 md:px-6 lg:px-8 lg:py-10">
+  <div class="max-w-4xl">
+    {
+      eyebrow && (
+        <div class="mb-1 flex items-center gap-1">
+          <span class="inline-block h-2.5 w-2.5 bg-(--foreground-color)" />
+          <span class="font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--color-accent-rose-dark) uppercase">
+            {eyebrow}
+          </span>
+        </div>
+      )
+    }
+    <h1 class="mb-4 text-(length:--font-size-6) leading-(length:--font-size-7) tracking-tight text-(--foreground-color) uppercase">
+      {title}
+    </h1>
+    {subtitle && <p class="max-w-2xl text-lg leading-relaxed text-(--color-on-surface-variant)">{subtitle}</p>}
+  </div>
+</section>

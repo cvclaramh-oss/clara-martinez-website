@@ -1,6 +1,6 @@
 ---
-import PageHeader from '@components/PageHeader.astro'
-import { Heading, Notification } from 'accessible-astro-components'
+import PageTitleBand from '@components/PageTitleBand.astro'
+import { Notification } from 'accessible-astro-components'
 import { getLangFromUrl, useTranslations } from '@utils/i18n'
 
 /**
@@ -14,13 +14,15 @@ const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 ---
 
-<PageHeader title={t('accessibility.label')} subtitle={t('accessibility.subtitle')} bgType="bordered" />
+<PageTitleBand title={t('accessibility.label')} subtitle={t('accessibility.subtitle')} />
 <section class="my-16">
   <div class="container space-content">
-    <Notification type="info">
+    <Notification type="info" class="rounded-none">
       <p>{t('accessibility.pending_notice')}</p>
     </Notification>
-    <Heading level="h2">{t('accessibility.commitment')}</Heading>
+    <h2 class="text-balance">
+      {t('accessibility.commitment')}
+    </h2>
     <p>{t('accessibility.placeholder')}</p>
   </div>
 </section>

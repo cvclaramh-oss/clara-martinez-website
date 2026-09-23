@@ -37,7 +37,7 @@ const ca = {
 
   // Footer
   'footer.accessibility_description':
-    "Arquitectura web d'alt contrast, tipografia llegible i navegació semàntica conforme a WCAG 2.2 nivell AA.",
+    "Arquitectura web d'alt contrast, tipografia llegible i navegació semàntica conforme a WCAG 2.2 AA.",
   'footer.accessibility_heading': 'Accessibilitat & criteris',
   'footer.contact_heading': 'Contacte & documentació',
   'footer.cta_button': 'Iniciar conversa',
@@ -80,9 +80,6 @@ const ca = {
   // Item detail
   'featured_projects.eyebrow': 'Catàleg seleccionat',
   'featured_projects.title': 'Continguts destacats',
-  'project_share.back': 'Tornar als projectes',
-  'project_share.description': "T'agrada aquest projecte? Comparteix-lo amb la teva xarxa!",
-  'project_share.title': 'Comparteix aquest projecte',
 
   // Projects
   'projects.label': 'Projectes',
@@ -283,7 +280,7 @@ const es: Record<keyof typeof ca, string> = {
 
   // Footer
   'footer.accessibility_description':
-    'Arquitectura web de alto contraste, tipografía legible y navegación semántica conforme a WCAG 2.2 nivel AA.',
+    'Arquitectura web de alto contraste, tipografía legible y navegación semántica conforme a WCAG 2.2 AA.',
   'footer.accessibility_heading': 'Accesibilidad & criterios',
   'footer.contact_heading': 'Contacto & documentación',
   'footer.cta_button': 'Iniciar conversación',
@@ -326,9 +323,6 @@ const es: Record<keyof typeof ca, string> = {
   // Item detail
   'featured_projects.eyebrow': 'Catálogo seleccionado',
   'featured_projects.title': 'Contenidos destacados',
-  'project_share.back': 'Volver a los proyectos',
-  'project_share.description': '¿Te gusta este proyecto? ¡Compártelo con tu red!',
-  'project_share.title': 'Comparte este proyecto',
 
   // Projects
   'projects.label': 'Proyectos',

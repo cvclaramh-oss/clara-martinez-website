@@ -1,0 +1,46 @@
+---
+/**
+ * Breadcrumb Component
+ *
+ * @description The trail of links above a page's title. The last item has no `href` — it's the current
+ * page, rendered as plain text with `aria-current="page"`, not a link to itself.
+ */
+interface BreadcrumbItem {
+  label: string
+  href?: string
+}
+
+interface Props {
+  items: BreadcrumbItem[]
+  ariaLabel: string
+  class?: string
+}
+
+const { items, ariaLabel, class: className } = Astro.props
+
+const labelClass =
+  'font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
+---
+
+<nav aria-label={ariaLabel} class={className}>
+  <ol class:list={['flex min-w-0 flex-wrap items-center gap-1 text-(--color-on-surface-variant)', labelClass]}>
+    {
+      items.map((item, index) => (
+        <>
+          {index > 0 && <li aria-hidden="true">/</li>}
+          <li class="min-w-0">
+            {item.href ? (
+              <a href={item.href} class="text-(--color-on-surface-variant)! no-underline! hover:underline!">
+                {item.label}
+              </a>
+            ) : (
+              <span aria-current="page" class="block max-w-[28ch] truncate text-(--foreground-color)">
+                {item.label}
+              </span>
+            )}
+          </li>
+        </>
+      ))
+    }
+  </ol>
+</nav>

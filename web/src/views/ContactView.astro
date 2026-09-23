@@ -3,17 +3,22 @@ import ContactForm from '@components/ContactForm.astro'
 import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 import themeConfig from '@theme-config'
+import Button from '@components/Button.astro'
+import Breadcrumb from '@components/Breadcrumb.astro'
+import PageTitleBand from '@components/PageTitleBand.astro'
+import { getCvFileUrl } from '@lib/sanity/siteSettingsQuery'
+import { getExternalLinkAttributes } from '@utils/externalLinkAttributes'
 
 /**
  * ContactView Component
  *
- * @description Contact page: title band, direct channels (email, LinkedIn, CV) and the contact form. The
- * CV download is a placeholder until the file is read from Sanity.
+ * @description Contact page: title band, direct channels (email, LinkedIn, CV) and the contact form.
  */
 const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 
 const linkedin = themeConfig.socials?.find((social) => social.label === 'LinkedIn')
+const cvFileUrl = await getCvFileUrl()
 
 const labelClass =
   'font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
@@ -22,32 +27,13 @@ const channelLinkClass =
   'inline-flex items-center gap-2 break-all font-(family-name:--font-family-special) text-xl leading-[1.625rem] font-bold tracking-tight text-(--foreground-color)! no-underline! hover:underline!'
 ---
 
-<nav aria-label={t('detail.breadcrumb')} class="border-b border-(--border-color) px-4 py-2 md:px-6 lg:px-8">
-  <ol class={`flex flex-wrap items-center gap-1 text-(--color-on-surface-variant) ${labelClass}`}>
-    <li>
-      <a href={getHref('/', false, locale)} class="text-(--color-on-surface-variant)! no-underline! hover:underline!">
-        {t('home.label')}
-      </a>
-    </li>
-    <li aria-hidden="true">/</li>
-    <li aria-current="page" class="text-(--foreground-color)">{t('contact.label')}</li>
-  </ol>
-</nav>
+<Breadcrumb
+  ariaLabel={t('detail.breadcrumb')}
+  class="border-b border-(--border-color) px-4 py-2 md:px-6 lg:px-8"
+  items={[{ label: t('home.label'), href: getHref('/', false, locale) }, { label: t('contact.label') }]}
+/>
 
-<section class="border-b border-(--border-color) px-4 py-8 md:px-6 lg:px-8 lg:py-10">
-  <div class="max-w-4xl">
-    <div class="mb-1 flex items-center gap-1">
-      <span class="inline-block h-2.5 w-2.5 bg-(--foreground-color)"></span>
-      <span class={`${labelClass} text-(--color-accent-rose-dark)`}>{t('contact.eyebrow')}</span>
-    </div>
-    <h1
-      class="mb-4 font-(family-name:--font-family-special) text-[2.75rem] leading-12 font-bold tracking-tight text-(--foreground-color) uppercase lg:text-7xl lg:leading-19"
-    >
-      {t('contact.label')}
-    </h1>
-    <p class="max-w-2xl text-lg leading-relaxed text-(--color-on-surface-variant)">{t('contact.subtitle')}</p>
-  </div>
-</section>
+<PageTitleBand eyebrow={t('contact.eyebrow')} title={t('contact.label')} subtitle={t('contact.subtitle')} />
 
 <div class="grid grid-cols-1 border-b border-(--border-color) lg:grid-cols-2">
   <section
@@ -56,7 +42,7 @@ const channelLinkClass =
     <div>
       <p class={`mb-1 text-(--color-accent-rose-dark) ${labelClass}`}>{t('contact.channels.eyebrow')}</p>
       <h2
-        class="mb-2 font-(family-name:--font-family-special) text-xl leading-[1.625rem] font-bold tracking-tight text-(--foreground-color) uppercase"
+        class="mb-2 text-(length:--font-size-1) leading-(length:--font-size-2) tracking-tight text-(--foreground-color) uppercase"
       >
         {t('contact.channels.title')}
       </h2>
@@ -98,13 +84,17 @@ const channelLinkClass =
         <span class="text-(--color-on-surface-variant)">{t('contact.channel.cv.badge')}</span>
       </div>
       <p class="text-sm text-(--color-on-surface-variant)">{t('contact.channel.cv.text')}</p>
-      <span
-        aria-disabled="true"
-        class="flex items-center justify-between gap-2 border border-(--border-color) bg-(--foreground-color) px-4 py-2 font-(family-name:--font-family-special) text-xs leading-4 font-semibold tracking-wider text-(--background-color) uppercase"
+      <Button
+        href={cvFileUrl ?? undefined}
+        disabled={!cvFileUrl}
+        {...(cvFileUrl ? getExternalLinkAttributes() : {})}
+        size="md"
+        class="w-full justify-between"
       >
         {t('contact.channel.cv.button')}
         <Icon aria-hidden="true" name="lucide:download" size="1.25rem" />
-      </span>
+        {cvFileUrl && <span class="sr-only">{t('contact.new_tab')}</span>}
+      </Button>
     </div>
   </section>
 

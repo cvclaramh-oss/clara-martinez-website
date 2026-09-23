@@ -2,6 +2,7 @@
 import { Form, Input, Textarea } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
+import Button from '@components/Button.astro'
 
 /**
  * ContactForm Component
@@ -27,7 +28,7 @@ const controlClass =
 
 <div class="mb-6 flex items-end justify-between gap-4 border-b border-(--border-color) pb-2">
   <h2
-    class="font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--color-accent-rose-dark) uppercase"
+    class="text-[0.6875rem] leading-3.5 tracking-widest text-(--color-accent-rose-dark) uppercase"
   >
     {t('contact.form.eyebrow')}
   </h2>
@@ -132,13 +133,10 @@ const controlClass =
   </div>
 
   <div class="flex flex-col items-start gap-3">
-    <button
-      type="submit"
-      class="contact-submit inline-flex items-center gap-2 border border-(--border-color) bg-(--foreground-color) px-6 py-4 font-(family-name:--font-family-special) text-sm! leading-[1.125rem]! font-semibold! tracking-widest! text-(--background-color) uppercase disabled:opacity-60"
-    >
+    <Button type="submit" class="contact-submit">
       {t('contact.form.send')}
       <Icon aria-hidden="true" name="lucide:arrow-right" size="1.125rem" />
-    </button>
+    </Button>
     <p class="contact-status max-w-xl text-sm text-(--foreground-color)" aria-live="polite"></p>
   </div>
 </Form>

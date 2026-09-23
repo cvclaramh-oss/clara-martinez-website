@@ -1,7 +1,7 @@
 ---
-import { Heading, Link } from 'accessible-astro-components'
-import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
+import Button from '@components/Button.astro'
+import PageTitleBand from '@components/PageTitleBand.astro'
 
 interface Props {
   sectionLabel?: string
@@ -12,18 +12,13 @@ const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 ---
 
-<section class="my-12">
-  <div class="container">
-    <Heading level="h1">{sectionLabel ?? t('coming_soon.title')}</Heading>
-  </div>
-</section>
+<PageTitleBand title={sectionLabel ?? t('coming_soon.title')} />
 
 <section class="my-12">
   <div class="space-content container">
     <p class="text-2xl">{t('coming_soon.message')}</p>
-    <Link href={getHref('/', false, locale)} isButton type="primary" animateOnHover animationType="nudge">
+    <Button href={getHref('/', false, locale)} animateOnHover animationType="nudge">
       {t('back_home')}
-      <Icon aria-hidden="true" name="lucide:home" size="1.5rem" />
-    </Link>
+    </Button>
   </div>
 </section>

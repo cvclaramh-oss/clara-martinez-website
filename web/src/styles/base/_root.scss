@@ -65,8 +65,8 @@
   --outline-color: light-dark(var(--color-outline-200), var(--color-outline-100));
 
   // theme settings
-  --radius-small: 3px;
-  --radius-large: 6px;
+  --radius-small: 0;
+  --radius-large: 0;
   --gap-default: 2rem;
   --font-measure: 70ch;
   --font-family-default: 'Hanken Grotesk', sans-serif;
@@ -112,12 +112,12 @@
   --grid-gutter: var(--space-s-l, clamp(1.125rem, 0.6467rem + 2.3913vw, 2.5rem));
   --grid-columns: 12;
 
-  // border radius
-  --radius-xs: 0.125rem;
-  --radius-s: 0.25rem;
-  --radius-m: 0.5rem;
-  --radius-l: 0.75rem;
-  --radius-h: 1rem;
+  // border radius — Radical Clarity: esquinas rectas (ADR 0005)
+  --radius-xs: 0;
+  --radius-s: 0;
+  --radius-m: 0;
+  --radius-l: 0;
+  --radius-h: 0;
 
   // elevations
   --elevation-1: 0 1px 3px rgba(0 0 0 / 0.12);

@@ -8,6 +8,8 @@ import { getCatalogPageItems } from '@lib/sanity/catalogItemsQuery'
 import { getCatalogTags, filterByTagSlug, type CatalogTag } from '@utils/catalogTags'
 import { CATALOG_PAGES, CATALOGS_PAGE_SIZE, type CatalogPage } from '@constants/constCatalog'
 import { CATEGORY_LABEL_KEYS } from '@constants/constLabels'
+import Breadcrumb from '@components/Breadcrumb.astro'
+import PageTitleBand from '@components/PageTitleBand.astro'
 
 /**
  * CatalogsView Component
@@ -49,74 +51,23 @@ const pageItems = activeTag ? filteredItems : items.slice(startIndex, startIndex
 
 const labelClass =
   'font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
+
+const breadcrumbItems = [
+  { label: t('home.label'), href: getHref('/', false, locale) },
+  ...(isMaterialsSubcategory ? [{ label: t('materials.label'), href: getHref('/materials', false, locale) }] : []),
+  ...(activeTag
+    ? [{ label: title, href: getHref(`/${catalogPage}`, false, locale) }, { label: `#${activeTag.text}` }]
+    : [{ label: title }]),
+]
 ---
 
-<nav aria-label={t('detail.breadcrumb')} class="border-b border-(--border-color) px-4 py-2 md:px-6 lg:px-8">
-  <ol class={`flex flex-wrap items-center gap-1 text-(--color-on-surface-variant) ${labelClass}`}>
-    <li>
-      <a href={getHref('/', false, locale)} class="text-(--color-on-surface-variant)! no-underline! hover:underline!">
-        {t('home.label')}
-      </a>
-    </li>
-    <li aria-hidden="true">/</li>
-    {
-      isMaterialsSubcategory && (
-        <>
-          <li>
-            <a
-              href={getHref('/materials', false, locale)}
-              class="text-(--color-on-surface-variant)! no-underline! hover:underline!"
-            >
-              {t('materials.label')}
-            </a>
-          </li>
-          <li aria-hidden="true">/</li>
-        </>
-      )
-    }
-    {
-      activeTag ? (
-        <>
-          <li>
-            <a
-              href={getHref(`/${catalogPage}`, false, locale)}
-              class="text-(--color-on-surface-variant)! no-underline! hover:underline!"
-            >
-              {title}
-            </a>
-          </li>
-          <li aria-hidden="true">/</li>
-          <li aria-current="page" class="text-(--foreground-color)">#{activeTag.text}</li>
-        </>
-      ) : (
-        <li aria-current="page" class="text-(--foreground-color)">
-          {title}
-        </li>
-      )
-    }
-  </ol>
-</nav>
+<Breadcrumb
+  ariaLabel={t('detail.breadcrumb')}
+  class="border-b border-(--border-color) px-4 py-2 md:px-6 lg:px-8"
+  items={breadcrumbItems}
+/>
 
-<section class="border-b border-(--border-color) px-4 py-8 md:px-6 lg:px-8 lg:py-10">
-  <div class="max-w-4xl">
-    <div class="mb-1 flex items-center gap-1">
-      <span class="inline-block h-2.5 w-2.5 bg-(--foreground-color)"></span>
-      <span
-        class="font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--color-accent-rose-dark) uppercase"
-      >
-        {t('catalog.eyebrow')}
-      </span>
-    </div>
-    <h1
-      class="mb-4 font-(family-name:--font-family-special) text-[2.75rem] leading-12 font-bold tracking-tight text-(--foreground-color) uppercase lg:text-7xl lg:leading-19"
-    >
-      {title}
-    </h1>
-    <p class="max-w-2xl text-lg leading-relaxed text-(--color-on-surface-variant)">
-      {t(CATALOG_PAGES[catalogPage].subtitleKey)}
-    </p>
-  </div>
-</section>
+<PageTitleBand eyebrow={t('catalog.eyebrow')} title={title} subtitle={t(CATALOG_PAGES[catalogPage].subtitleKey)} />
 
 {CATALOG_PAGES[catalogPage].category === 'materials' && <MaterialsSubcategoryBar activeCatalogPage={catalogPage} />}
 
@@ -127,7 +78,7 @@ const labelClass =
 {
   pageItems.length === 0 ? (
     <section class="border-b border-(--border-color) px-4 py-12 md:px-6 lg:px-8 lg:py-16">
-      <h2 class="mb-2 font-(family-name:--font-family-special) text-2xl leading-8 font-bold text-(--foreground-color) uppercase">
+      <h2 class="mb-2 text-(length:--font-size-2) leading-(length:--font-size-3) text-(--foreground-color) uppercase">
         {t('catalog.empty_title')}
       </h2>
       <p class="mb-4 max-w-2xl text-(--color-on-surface-variant)">{t('catalog.empty_text')}</p>
