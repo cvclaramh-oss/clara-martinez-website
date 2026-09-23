@@ -28,7 +28,7 @@ const { items, ariaLabel, class: className } = Astro.props
           {index > 0 && <li aria-hidden="true">/</li>}
           <li class="min-w-0">
             {item.href ? (
-              <a href={item.href} class="text-(--color-on-surface-variant)! no-underline! hover:underline!">
+              <a href={item.href} class="text-(--color-on-surface-variant) no-underline hover:underline">
                 {item.label}
               </a>
             ) : (

@@ -1,7 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
-import { linkResetClassName } from '@constants/constClassNames'
 
 /**
  * CatalogPagination Component
@@ -79,7 +78,7 @@ const cellClass = `flex items-center justify-center gap-1 border-r border-(--bor
             rel="prev"
             href={pageHref(pageNum - 1)}
             aria-label={t('catalog.previous_page')}
-            class={`${cellClass} ${linkResetClassName} hover:bg-(--color-surface-container-low)`}
+            class={`${cellClass} text-(--foreground-color) no-underline hover:bg-(--color-surface-container-low)`}
           >
             <Icon aria-hidden="true" name="lucide:arrow-left" size="1rem" />
             <span>{t('detail.previous')}</span>
@@ -101,7 +100,7 @@ const cellClass = `flex items-center justify-center gap-1 border-r border-(--bor
               href={pageHref(pageNum)}
               aria-current="page"
               aria-label={`${t('catalog.page')} ${page}`}
-              class={`${cellClass} bg-(--foreground-color) text-(--background-color)! no-underline!`}
+              class={`${cellClass} bg-(--foreground-color) text-(--background-color) no-underline`}
             >
               {page}
             </a>
@@ -109,7 +108,7 @@ const cellClass = `flex items-center justify-center gap-1 border-r border-(--bor
             <a
               href={pageHref(Number(page))}
               aria-label={`${t('catalog.page')} ${page}`}
-              class={`${cellClass} ${linkResetClassName} hover:bg-(--color-surface-container-low) max-md:hidden`}
+              class={`${cellClass} text-(--foreground-color) no-underline hover:bg-(--color-surface-container-low) max-md:hidden`}
             >
               {page}
             </a>
@@ -120,7 +119,7 @@ const cellClass = `flex items-center justify-center gap-1 border-r border-(--bor
             rel="next"
             href={pageHref(pageNum + 1)}
             aria-label={t('catalog.next_page')}
-            class={`${cellClass} ${linkResetClassName} hover:bg-(--color-surface-container-low)`}
+            class={`${cellClass} text-(--foreground-color) no-underline hover:bg-(--color-surface-container-low)`}
           >
             <span>{t('detail.next')}</span>
             <Icon aria-hidden="true" name="lucide:arrow-right" size="1rem" />

@@ -20,10 +20,10 @@ const t = useTranslations(locale)
 const { tags, activeSlug, catalogPage } = Astro.props
 
 const chipClass = (isActive: boolean) =>
-  `border px-2 py-1 no-underline! micro-label ${
+  `border px-2 py-1 no-underline micro-label ${
     isActive
-      ? 'border-(--foreground-color) bg-(--foreground-color) text-(--background-color)!'
-      : 'border-(--border-color) text-(--foreground-color)! hover:bg-(--color-surface-container-high)'
+      ? 'border-(--foreground-color) bg-(--foreground-color) text-(--background-color)'
+      : 'border-(--border-color) text-(--foreground-color) hover:bg-(--color-surface-container-high)'
   }`
 ---
 

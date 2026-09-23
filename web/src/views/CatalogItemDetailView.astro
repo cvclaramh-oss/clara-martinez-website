@@ -6,7 +6,6 @@ import type { CatalogItemCategory } from '@lib/sanity/catalogItemsQuery'
 import { urlFor, imageSize } from '@lib/sanity/imageUrlBuilder'
 import { portableTextToHtml } from '@lib/sanity/renders/portableTextRender'
 import { CATEGORY_LABEL_KEYS } from '@constants/constLabels'
-import { linkResetClassName } from '@constants/constClassNames'
 import VideoEmbed from '@components/VideoEmbed.astro'
 import { getExternalLinkAttributes } from '@utils/externalLinkAttributes'
 import Button from '@components/Button.astro'
@@ -114,7 +113,7 @@ const factRows = [
                 <li>
                   <a
                     href={getHref(`/${catalogPage}/tag/${tag.slug}`, false, locale)}
-                    class="inline-flex min-w-6 items-center justify-center border border-(--border-color) px-1.5 py-1.5 text-(--color-on-surface-variant)! no-underline! hover:bg-(--color-surface-container-high) hover:text-(--foreground-color)!"
+                    class="inline-flex min-w-6 items-center justify-center border border-(--border-color) px-1.5 py-1.5 text-(--color-on-surface-variant) no-underline hover:bg-(--color-surface-container-high) hover:text-(--foreground-color)"
                   >
                     #{tag.text}
                   </a>
@@ -262,7 +261,7 @@ const factRows = [
             <a
               rel="prev"
               href={getHref(`/${category}/${previousItem.slug}`, false, locale)}
-              class={`flex items-center gap-4 border-b border-(--border-color) p-(--grid-gutter) md:col-start-1 md:border-r md:border-b-0 ${linkResetClassName} hover:bg-(--color-surface-container-low)`}
+              class={`flex items-center gap-4 border-b border-(--border-color) p-(--grid-gutter) md:col-start-1 md:border-r md:border-b-0 text-(--foreground-color) no-underline hover:bg-(--color-surface-container-low)`}
             >
               <Icon aria-hidden="true" name="lucide:arrow-left" size="1.5rem" />
               <span class="flex flex-col gap-1">
@@ -275,7 +274,7 @@ const factRows = [
             <a
               rel="next"
               href={getHref(`/${category}/${nextItem.slug}`, false, locale)}
-              class={`flex items-center justify-between gap-4 p-(--grid-gutter) text-right md:col-start-2 ${linkResetClassName} hover:bg-(--color-surface-container-low)`}
+              class={`flex items-center justify-between gap-4 p-(--grid-gutter) text-right md:col-start-2 text-(--foreground-color) no-underline hover:bg-(--color-surface-container-low)`}
             >
               <span class="ml-auto flex flex-col gap-1">
                 <span class="micro-label text-(--color-on-surface-variant)">{t('detail.next')}</span>
