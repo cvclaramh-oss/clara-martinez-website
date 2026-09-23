@@ -106,6 +106,12 @@
   --space-4xl: clamp(8rem, 7.6522rem + 1.7403vw, 8.25rem);
   --space-5xl: clamp(10rem, 9.5652rem + 2.1741vw, 10.5rem);
 
+  // space pairs (same Utopia config): one step on mobile growing to a larger one on desktop
+  --space-s-m: clamp(1rem, 0.7609rem + 1.1957vw, 1.6875rem);
+  --space-m-l: clamp(1.5rem, 1.2391rem + 1.3043vw, 2.25rem);
+  --space-m-xl: clamp(1.5rem, 0.8478rem + 3.2609vw, 3.375rem);
+  --space-xl-2xl: clamp(3rem, 2.4783rem + 2.6087vw, 4.5rem);
+
   // grid
   // https://utopia.fyi/grid/calculator?c=320,18,1.2,1240,20,1.25,5,2,&s=0.75%7C0.5%7C0.25,1.5%7C2%7C3%7C4%7C6,s-l&g=s,l,xl,12
   --grid-max-width: 90rem;

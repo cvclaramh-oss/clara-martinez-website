@@ -70,11 +70,11 @@ const breadcrumbItems = [
 
 {catalogTags.length > 0 && <TagFilterBar tags={catalogTags} activeSlug={activeTag?.slug} catalogPage={catalogPage} />}
 
-<div class="h-8 border-b border-(--border-color)" />
+<div class="h-(--space-l) border-b border-(--border-color)" />
 
 {
   pageItems.length === 0 ? (
-    <section class="border-b border-(--border-color) px-(--grid-gutter) py-12 lg:py-16">
+    <section class="border-b border-(--border-color) px-(--grid-gutter) py-(--space-xl-2xl)">
       <h2 class="mb-2 text-(length:--font-size-2) leading-(--font-size-3) text-(--foreground-color) uppercase">
         {t('catalog.empty_title')}
       </h2>
@@ -103,4 +103,4 @@ const breadcrumbItems = [
   )
 }
 
-<div class="h-20 border-b border-(--border-color)"></div>
+<div class="h-(--space-2xl) border-b border-(--border-color)"></div>

@@ -15,7 +15,7 @@ const [firstName, ...surnames] = t('name').split(' ')
 ---
 
 <section class="hero border-b border-(--border-color)">
-  <div class="px-(--grid-gutter) pt-10 pb-6 lg:pt-16 lg:pb-12">
+  <div class="px-(--grid-gutter) pt-(--space-xl-2xl) pb-(--space-m-xl)">
     <h1
       class="text-[clamp(3.25rem,1.8587rem+6.9565vw,7.25rem)] leading-[0.88] tracking-[-0.04em] text-(--foreground-color) uppercase"
     >
@@ -23,7 +23,7 @@ const [firstName, ...surnames] = t('name').split(' ')
       <span class="block">{surnames.join(' ')}</span>
     </h1>
 
-    <div class="mt-6 flex flex-wrap items-center gap-2 lg:mt-10">
+    <div class="mt-(--space-m-l) flex flex-wrap items-center gap-2">
       <div class="h-1 w-4 border border-(--border-color) bg-(--color-accent-rose)"></div>
       <p
         class="font-(family-name:--font-family-special) text-(length:--font-size--1) font-bold tracking-[0.2em] text-(--foreground-color) uppercase"
@@ -32,9 +32,9 @@ const [firstName, ...surnames] = t('name').split(' ')
       </p>
     </div>
 
-    <div class="my-6 w-full border-t border-(--border-color)"></div>
+    <div class="my-(--space-m) w-full border-t border-(--border-color)"></div>
 
-    <div class="grid grid-cols-1 items-end gap-6 lg:grid-cols-12">
+    <div class="grid grid-cols-1 items-end gap-(--space-m) lg:grid-cols-12">
       <p
         class="max-w-4xl font-(family-name:--font-family-special) text-(length:--font-size-2) leading-[1.3] font-medium text-(--foreground-color) lg:col-span-8 lg:tracking-[-0.01em]"
       >

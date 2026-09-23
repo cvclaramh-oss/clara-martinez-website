@@ -36,7 +36,7 @@ const channelLinkClass =
 
 <div class="grid grid-cols-1 border-b border-(--border-color) lg:grid-cols-2">
   <section
-    class="flex flex-col gap-6 border-b border-(--border-color) px-(--grid-gutter) py-8 lg:border-r lg:border-b-0"
+    class="flex flex-col gap-6 border-b border-(--border-color) px-(--grid-gutter) py-(--space-l) lg:border-r lg:border-b-0"
   >
     <div>
       <Eyebrow class="mb-1">{t('contact.channels.eyebrow')}</Eyebrow>
@@ -97,9 +97,9 @@ const channelLinkClass =
     </div>
   </section>
 
-  <section class="bg-(--color-surface-container-low) px-(--grid-gutter) py-8">
+  <section class="bg-(--color-surface-container-low) px-(--grid-gutter) py-(--space-l)">
     <ContactForm />
   </section>
 </div>
 
-<div class="h-20 border-b border-(--border-color)"></div>
+<div class="h-(--space-2xl) border-b border-(--border-color)"></div>

@@ -23,7 +23,7 @@ interface Props {
 const { title, eyebrow, subtitle, buttonHref, buttonLabel } = Astro.props
 ---
 
-<section class="border-b border-(--border-color) px-(--grid-gutter) py-8 lg:py-10">
+<section class="border-b border-(--border-color) px-(--grid-gutter) py-(--space-l)">
   
     {eyebrow && <Eyebrow icon class="mb-1">{eyebrow}</Eyebrow>}
     <h1 class="mb-4 text-(length:--font-size-6) leading-(--font-size-7) tracking-tight text-(--foreground-color) uppercase">
