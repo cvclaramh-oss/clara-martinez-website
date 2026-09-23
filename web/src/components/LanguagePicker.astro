@@ -47,6 +47,8 @@ const esHref = await getHref('es')
 </ul>
 
 <style lang="scss">
+  @use 'base/mixins' as *;
+
   .language-picker {
     display: flex;
     align-items: center;
@@ -72,7 +74,7 @@ const esHref = await getHref('es')
     color: var(--color-on-surface-variant);
     transition: none;
 
-    &:where(:hover, :focus-visible) {
+    @include hover-focus {
       color: var(--foreground-color);
     }
 

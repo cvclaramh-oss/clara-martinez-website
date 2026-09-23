@@ -372,7 +372,7 @@ const t = useTranslations(locale)
       color: var(--color-on-surface-variant);
       transition: none;
 
-      &:where(:hover, :focus-visible) {
+      @include hover-focus {
         background-color: var(--color-surface-container-low);
         color: var(--foreground-color);
       }
@@ -393,7 +393,7 @@ const t = useTranslations(locale)
       color: var(--color-on-surface-variant);
       transition: none;
 
-      &:where(:hover, :focus-visible) {
+      @include hover-focus {
         background-color: var(--color-surface-container-low);
         color: var(--foreground-color);
       }
@@ -531,7 +531,7 @@ const t = useTranslations(locale)
         block-size: 1.25rem;
       }
 
-      &:where(:hover, :focus-visible) {
+      @include hover-focus {
         background-color: var(--color-surface-container-low);
         box-shadow: none;
       }

@@ -27,7 +27,7 @@ body {
     transition: color var(--animation-speed-fast) var(--cubic-bezier);
     color: var(--link-color);
 
-    &:where(:hover, :focus-visible) {
+    @include hover-focus {
       color: var(--link-hover-color);
     }
   }
@@ -38,7 +38,7 @@ body {
 
     color: var(--link-color);
 
-    &:where(:hover, :focus-visible) {
+    @include hover-focus {
       color: var(--link-hover-color);
     }
 

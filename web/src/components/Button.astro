@@ -62,6 +62,8 @@ const pulseClass = pulse ? 'animation-pulse' : ''
 </Tag>
 
 <style lang="scss">
+  @use 'base/mixins' as *;
+
   .button {
     display: inline-flex;
     align-items: center;
@@ -108,7 +110,7 @@ const pulseClass = pulse ? 'animation-pulse' : ''
     background-color: var(--foreground-color);
     color: var(--background-color);
 
-    &:where(:hover, :focus-visible) {
+    @include hover-focus {
       background-color: var(--background-color);
       color: var(--foreground-color);
     }
@@ -118,7 +120,7 @@ const pulseClass = pulse ? 'animation-pulse' : ''
     background-color: var(--color-accent-rose);
     color: var(--color-on-accent);
 
-    &:where(:hover, :focus-visible) {
+    @include hover-focus {
       background-color: var(--color-on-accent);
       color: white;
     }
@@ -128,7 +130,7 @@ const pulseClass = pulse ? 'animation-pulse' : ''
     background-color: var(--color-surface-container-low);
     color: var(--foreground-color);
 
-    &:where(:hover, :focus-visible) {
+    @include hover-focus {
       background-color: var(--color-accent-rose);
       color: var(--color-on-accent);
     }

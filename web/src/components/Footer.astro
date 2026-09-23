@@ -124,6 +124,7 @@ const cvFileUrl = await getCvFileUrl()
 
 <style lang="scss">
   @use 'base/breakpoint' as *;
+  @use 'base/mixins' as *;
 
   // The -1px margin makes the top border overlap the bottom border of the last block of the page, so pages
   // that end with their own border do not show a double line above the CTA.
@@ -170,8 +171,10 @@ const cvFileUrl = await getCvFileUrl()
     transition: none;
   }
 
-  .footer-link:where(:hover, :focus-visible) {
-    color: var(--foreground-color);
-    text-decoration: underline;
+  .footer-link {
+    @include hover-focus {
+      color: var(--foreground-color);
+      text-decoration: underline;
+    }
   }
 </style>
