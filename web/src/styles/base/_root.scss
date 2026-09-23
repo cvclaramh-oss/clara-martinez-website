@@ -65,8 +65,8 @@
   --outline-color: light-dark(var(--color-outline-200), var(--color-outline-100));
 
   // theme settings
-  --radius-small: 3px;
-  --radius-large: 6px;
+  --radius-small: 0;
+  --radius-large: 0;
   --gap-default: 2rem;
   --font-measure: 70ch;
   --font-family-default: 'Hanken Grotesk', sans-serif;
@@ -106,18 +106,27 @@
   --space-4xl: clamp(8rem, 7.6522rem + 1.7403vw, 8.25rem);
   --space-5xl: clamp(10rem, 9.5652rem + 2.1741vw, 10.5rem);
 
+  // space pairs (same Utopia config): one step on mobile growing to a larger one on desktop
+  --space-s-m: clamp(1rem, 0.7609rem + 1.1957vw, 1.6875rem);
+  --space-m-l: clamp(1.5rem, 1.2391rem + 1.3043vw, 2.25rem);
+  --space-m-xl: clamp(1.5rem, 0.8478rem + 3.2609vw, 3.375rem);
+  --space-xl-2xl: clamp(3rem, 2.4783rem + 2.6087vw, 4.5rem);
+
   // grid
   // https://utopia.fyi/grid/calculator?c=320,18,1.2,1240,20,1.25,5,2,&s=0.75%7C0.5%7C0.25,1.5%7C2%7C3%7C4%7C6,s-l&g=s,l,xl,12
   --grid-max-width: 90rem;
-  --grid-gutter: var(--space-s-l, clamp(1.125rem, 0.6467rem + 2.3913vw, 2.5rem));
+  --grid-gutter: clamp(1rem, 0.6522rem + 1.7391vw, 2rem);
   --grid-columns: 12;
 
-  // border radius
-  --radius-xs: 0.125rem;
-  --radius-s: 0.25rem;
-  --radius-m: 0.5rem;
-  --radius-l: 0.75rem;
-  --radius-h: 1rem;
+  // fixed header bar (Navigation.astro): the offset of <main>, the scroll padding and the mobile menu height
+  --header-height: 4rem;
+
+  // border radius — Radical Clarity: esquinas rectas (ADR 0005)
+  --radius-xs: 0;
+  --radius-s: 0;
+  --radius-m: 0;
+  --radius-l: 0;
+  --radius-h: 0;
 
   // elevations
   --elevation-1: 0 1px 3px rgba(0 0 0 / 0.12);

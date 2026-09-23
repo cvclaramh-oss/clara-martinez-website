@@ -6,7 +6,7 @@
 
 body {
   font-weight: 400;
-  font-size: 1.15rem;
+  font-size: var(--font-size-0);
   line-height: 1.5;
   font-family: var(--font-body);
   font-synthesis: none;
@@ -19,33 +19,27 @@ body {
   color: var(--foreground-color);
 }
 
-a {
-  transition: color var(--animation-speed-fast) var(--cubic-bezier);
-  color: var(--link-color);
+// Default link styles go in the base layer (like _reset and _font) so Tailwind utilities override them
+// without `!` (see styles-audit_v2, A2). The focus rules below stay unlayered on purpose: the focus
+// indicator must always win.
+@layer base {
+  a {
+    transition: color var(--animation-speed-fast) var(--cubic-bezier);
+    color: var(--link-color);
 
-  &:where(:hover, :focus-visible) {
-    color: var(--link-hover-color);
-  }
-}
-
-main a,
-footer a {
-  @include text-decoration(var(--link-color), var(--link-hover-color));
-
-  color: var(--link-color);
-
-  &:where(:hover, :focus-visible) {
-    color: var(--link-hover-color);
+    @include hover-focus {
+      color: var(--link-hover-color);
+    }
   }
 
-  &.external-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-3xs);
+  main a,
+  footer a {
+    @include text-decoration(var(--link-color), var(--link-hover-color));
 
-    // small visual correction
-    svg {
-      margin-block-start: 3px;
+    color: var(--link-color);
+
+    @include hover-focus {
+      color: var(--link-hover-color);
     }
   }
 }

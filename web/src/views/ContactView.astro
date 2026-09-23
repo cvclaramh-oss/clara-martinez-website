@@ -3,72 +3,57 @@ import ContactForm from '@components/ContactForm.astro'
 import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 import themeConfig from '@theme-config'
+import Button from '@components/Button.astro'
+import Breadcrumb from '@components/Breadcrumb.astro'
+import PageTitleBand from '@components/PageTitleBand.astro'
+import Eyebrow from '@components/Eyebrow.astro'
+import { getCvFileUrl } from '@lib/sanity/siteSettingsQuery'
+import { getExternalLinkAttributes } from '@utils/externalLinkAttributes'
 
 /**
  * ContactView Component
  *
- * @description Contact page: title band, direct channels (email, LinkedIn, CV) and the contact form. The
- * CV download is a placeholder until the file is read from Sanity.
+ * @description Contact page: title band, direct channels (email, LinkedIn, CV) and the contact form.
  */
 const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 
 const linkedin = themeConfig.socials?.find((social) => social.label === 'LinkedIn')
+const cvFileUrl = await getCvFileUrl()
 
-const labelClass =
-  'font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
-const channelHeaderClass = `flex items-center justify-between gap-2 border-b border-(--border-color) pb-1 ${labelClass}`
+const channelHeaderClass = `flex items-center justify-between gap-2 border-b border-(--border-color) pb-1 micro-label`
 const channelLinkClass =
-  'inline-flex items-center gap-2 break-all font-(family-name:--font-family-special) text-xl leading-[1.625rem] font-bold tracking-tight text-(--foreground-color)! no-underline! hover:underline!'
+  'inline-flex items-center gap-2 break-all font-(family-name:--font-family-special) text-(length:--font-size-0) leading-tight font-bold tracking-tight text-(--foreground-color) no-underline hover:underline'
 ---
 
-<nav aria-label={t('detail.breadcrumb')} class="border-b border-(--border-color) px-4 py-2 md:px-6 lg:px-8">
-  <ol class={`flex flex-wrap items-center gap-1 text-(--color-on-surface-variant) ${labelClass}`}>
-    <li>
-      <a href={getHref('/', false, locale)} class="text-(--color-on-surface-variant)! no-underline! hover:underline!">
-        {t('home.label')}
-      </a>
-    </li>
-    <li aria-hidden="true">/</li>
-    <li aria-current="page" class="text-(--foreground-color)">{t('contact.label')}</li>
-  </ol>
-</nav>
+<Breadcrumb
+  ariaLabel={t('detail.breadcrumb')}
+  class="border-b border-(--border-color) px-(--grid-gutter) py-2"
+  items={[{ label: t('home.label'), href: getHref('/', false, locale) }, { label: t('contact.label') }]}
+/>
 
-<section class="border-b border-(--border-color) px-4 py-8 md:px-6 lg:px-8 lg:py-10">
-  <div class="max-w-4xl">
-    <div class="mb-1 flex items-center gap-1">
-      <span class="inline-block h-2.5 w-2.5 bg-(--foreground-color)"></span>
-      <span class={`${labelClass} text-(--color-accent-rose-dark)`}>{t('contact.eyebrow')}</span>
-    </div>
-    <h1
-      class="mb-4 font-(family-name:--font-family-special) text-[2.75rem] leading-12 font-bold tracking-tight text-(--foreground-color) uppercase lg:text-7xl lg:leading-19"
-    >
-      {t('contact.label')}
-    </h1>
-    <p class="max-w-2xl text-lg leading-relaxed text-(--color-on-surface-variant)">{t('contact.subtitle')}</p>
-  </div>
-</section>
+<PageTitleBand eyebrow={t('contact.eyebrow')} title={t('contact.label')} subtitle={t('contact.subtitle')} />
 
 <div class="grid grid-cols-1 border-b border-(--border-color) lg:grid-cols-2">
   <section
-    class="flex flex-col gap-6 border-b border-(--border-color) px-4 py-8 md:px-6 lg:border-r lg:border-b-0 lg:px-8"
+    class="flex flex-col gap-(--space-l) border-b border-(--border-color) px-(--grid-gutter) py-(--space-l) lg:border-r lg:border-b-0"
   >
     <div>
-      <p class={`mb-1 text-(--color-accent-rose-dark) ${labelClass}`}>{t('contact.channels.eyebrow')}</p>
+      <Eyebrow class="mb-1">{t('contact.channels.eyebrow')}</Eyebrow>
       <h2
-        class="mb-2 font-(family-name:--font-family-special) text-xl leading-[1.625rem] font-bold tracking-tight text-(--foreground-color) uppercase"
+        class="mb-2 text-(length:--font-size-1) leading-(--font-size-2) tracking-tight text-(--foreground-color) uppercase"
       >
         {t('contact.channels.title')}
       </h2>
-      <p class="text-sm leading-relaxed text-(--color-on-surface-variant)">{t('contact.channels.description')}</p>
+      <p class="text-(length:--font-size--1) leading-relaxed text-(--color-on-surface-variant)">{t('contact.channels.description')}</p>
     </div>
 
-    <div class="flex flex-col gap-2 border-t border-(--border-color) pt-4">
+    <div class="flex flex-col gap-2">
       <div class={channelHeaderClass}>
-        <h3 class={`text-(--color-accent-rose-dark) ${labelClass}`}>{t('contact.channel.email.title')}</h3>
+        <h3 class="micro-label text-(--color-accent-rose-dark)">{t('contact.channel.email.title')}</h3>
         <span class="text-(--color-on-surface-variant)">{t('contact.channel.email.badge')}</span>
       </div>
-      <p class="text-sm text-(--color-on-surface-variant)">{t('contact.channel.email.text')}</p>
+      <p class="text-(length:--font-size--1) text-(--color-on-surface-variant)">{t('contact.channel.email.text')}</p>
       <a href={`mailto:${themeConfig.contactEmail}`} class={channelLinkClass}>
         {themeConfig.contactEmail}
         <Icon aria-hidden="true" name="lucide:arrow-up-right" size="1.25rem" />
@@ -79,10 +64,10 @@ const channelLinkClass =
       linkedin && (
         <div class="flex flex-col gap-2">
           <div class={channelHeaderClass}>
-            <h3 class={`text-(--color-accent-rose-dark) ${labelClass}`}>{t('contact.channel.linkedin.title')}</h3>
+            <h3 class="micro-label text-(--color-accent-rose-dark)">{t('contact.channel.linkedin.title')}</h3>
             <span class="text-(--color-on-surface-variant)">{t('contact.channel.linkedin.badge')}</span>
           </div>
-          <p class="text-sm text-(--color-on-surface-variant)">{t('contact.channel.linkedin.text')}</p>
+          <p class="text-(length:--font-size--1) text-(--color-on-surface-variant)">{t('contact.channel.linkedin.text')}</p>
           <a href={linkedin.href} target="_blank" rel="noopener noreferrer" class={channelLinkClass}>
             {linkedin.label}
             <Icon aria-hidden="true" name="lucide:arrow-up-right" size="1.25rem" />
@@ -94,23 +79,27 @@ const channelLinkClass =
 
     <div class="flex flex-col gap-2">
       <div class={channelHeaderClass}>
-        <h3 class={`text-(--color-accent-rose-dark) ${labelClass}`}>{t('contact.channel.cv.title')}</h3>
+        <h3 class="micro-label text-(--color-accent-rose-dark)">{t('contact.channel.cv.title')}</h3>
         <span class="text-(--color-on-surface-variant)">{t('contact.channel.cv.badge')}</span>
       </div>
-      <p class="text-sm text-(--color-on-surface-variant)">{t('contact.channel.cv.text')}</p>
-      <span
-        aria-disabled="true"
-        class="flex items-center justify-between gap-2 border border-(--border-color) bg-(--foreground-color) px-4 py-2 font-(family-name:--font-family-special) text-xs leading-4 font-semibold tracking-wider text-(--background-color) uppercase"
+      <p class="text-(length:--font-size--1) text-(--color-on-surface-variant)">{t('contact.channel.cv.text')}</p>
+      <Button
+        href={cvFileUrl ?? undefined}
+        disabled={!cvFileUrl}
+        {...(cvFileUrl ? getExternalLinkAttributes() : {})}
+        size="md"
+        class="w-full justify-between"
       >
         {t('contact.channel.cv.button')}
         <Icon aria-hidden="true" name="lucide:download" size="1.25rem" />
-      </span>
+        {cvFileUrl && <span class="sr-only">{t('contact.new_tab')}</span>}
+      </Button>
     </div>
   </section>
 
-  <section class="bg-(--color-surface-container-low) px-4 py-8 md:px-6 lg:px-8">
+  <section class="bg-(--color-surface-container-low) px-(--grid-gutter) py-(--space-l)">
     <ContactForm />
   </section>
 </div>
 
-<div class="h-20 border-b border-(--border-color)"></div>
+<div class="h-(--space-2xl) border-b border-(--border-color)"></div>

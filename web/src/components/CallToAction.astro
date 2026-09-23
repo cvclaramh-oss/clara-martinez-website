@@ -1,6 +1,6 @@
 ---
-import { Heading, Link } from 'accessible-astro-components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
+import Button from '@components/Button.astro'
 
 /**
  * CallToAction Component
@@ -13,33 +13,26 @@ const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 ---
 
-<section class="cta px-4 md:px-6 lg:px-8">
-  <div class="mx-auto flex max-w-6xl flex-col gap-4 py-12 md:py-16">
-    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-      <div class="flex-1">
-        <div class="mb-2 flex items-center gap-2">
-          <span class="inline-block h-3 w-3 bg-(--color-on-accent)"></span>
-          <span class="text-xs font-bold tracking-widest text-(--color-on-accent) uppercase">
-            {t('footer.cta_eyebrow')}
-          </span>
-        </div>
-        <Heading
-          level="h2"
-          class="max-w-[36ch] text-wrap! text-2xl leading-tight font-bold tracking-tight uppercase md:text-4xl"
-        >
-          {t('footer.cta_heading')}
-        </Heading>
+<section class="cta px-(--grid-gutter)">
+  <div class="flex flex-col gap-4 py-(--space-xl-2xl) md:grid md:grid-cols-[1fr_auto] md:gap-x-8">
+    <div>
+      <div class="mb-2 flex items-center gap-2">
+        <span class="inline-block h-3 w-3 bg-(--color-on-accent)"></span>
+        <span class="micro-label text-(--color-on-accent)">
+          {t('footer.cta_eyebrow')}
+        </span>
       </div>
-      <Link
-        href={getHref('/contact', false, locale)}
-        isButton
-        size="md"
-        class="rounded-none! bg-(--color-on-accent)! text-white! border-(--color-on-accent)! uppercase tracking-widest whitespace-nowrap"
-      >
-        {t('footer.cta_button')}
-      </Link>
+      <h2 class="text-wrap text-(length:--font-size-5) leading-(--font-size-6) tracking-tight uppercase">
+        {t('footer.cta_heading')}
+      </h2>
     </div>
-    <p class="max-w-2xl text-(--color-on-accent)">{t('footer.cta_description')}</p>
+    <p class="max-w-2xl text-(--color-on-accent) md:col-start-1">{t('footer.cta_description')}</p>
+    <Button
+      href={getHref('/contact', false, locale)}
+      class="self-start whitespace-nowrap md:col-start-2 md:row-start-1 md:self-end"
+    >
+      {t('footer.cta_button')}
+    </Button>
   </div>
 </section>
 

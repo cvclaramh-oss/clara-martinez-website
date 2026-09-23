@@ -1,8 +1,8 @@
 ---
-import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 import { urlFor } from '@lib/sanity/imageUrlBuilder'
 import { CATEGORY_LABEL_KEYS } from '@constants/constLabels'
+import Insignia from '@components/Insignia.astro'
 import type { CatalogItem } from '@lib/sanity/catalogItemsQuery'
 
 /**
@@ -10,13 +10,12 @@ import type { CatalogItem } from '@lib/sanity/catalogItemsQuery'
  *
  * @description Card for one catalog item (project, material, formation or workshop): a band with the
  * category (the subcategory for materials) that links to its catalog page, a 16/10 image, the "my work"
- * text (first sentence on one line, the rest on a second one), the title, the short description and a
- * "view details" footer. The cards of a row share their rows through subgrid, so titles and footers line
- * up whatever the length of each text.
+ * text (first sentence on one line, the rest on a second one), the title and the short description. The cards
+ * of a row share their rows through subgrid, so the titles line up whatever the length of each text.
  *
- * Links: the footer link is stretched over the whole card, its accessible name is "View details: <title>"
- * (it contains the visible label, WCAG 2.5.3, and stays unique among the cards, 2.4.4), and the band label
- * is a second, separate link. A card therefore has two keyboard stops.
+ * Links: the title link is stretched over the whole card, so its accessible name is the title itself (unique
+ * among the cards, WCAG 2.4.4), and the band label is a second, separate link. A card therefore has two
+ * keyboard stops.
  */
 interface Props {
   /**
@@ -30,8 +29,8 @@ interface Props {
   headingLevel?: 'h2' | 'h3' | 'h4'
   /**
    * Shows the band with the category (the subcategory for materials) above the image. Hide it in the catalog
-   * pages, where every card already belongs to the category of the page. Without it the card takes four rows of
-   * the grid instead of five.
+   * pages, where every card already belongs to the category of the page. Without it the card takes three rows of
+   * the grid instead of four.
    * @default true
    */
   showCategory?: boolean
@@ -43,16 +42,16 @@ const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 const { slug, data } = item
 // `myWork` is free text: the card shows its first sentence on one line and the rest on a second line,
-// each truncated to one line. The cards of a row share their rows (subgrid: band, image, `myWork`, text and
-// footer), so the titles line up while `myWork` sits right above each title.
+// each truncated to one line. The cards of a row share their rows (subgrid: band, image, `myWork` and text), so
+// the titles line up while `myWork` sits right above each title.
 const myWorkSentences = (data.myWork ?? '').replace(/\s+/g, ' ').trim().match(/^(.*?\.)(?:\s+(.*))?$/)
 const myWorkFirst = myWorkSentences ? myWorkSentences[1] : (data.myWork ?? '').trim()
 const myWorkRest = myWorkSentences?.[2] ?? ''
 // Catalog page the band label links to: the subcategory page for materials, the category page otherwise.
 const catalogPage = data.category === 'materials' && data.subcategory ? `materials-${data.subcategory}` : data.category
-// Rows of the parent grid the card spans: band (optional), image, `myWork`, text and footer. Full class names,
-// not built with a variable, so Tailwind finds them when it scans the source.
-const rowSpan = showCategory ? 'row-span-5' : 'row-span-4'
+// Rows of the parent grid the card spans: band (optional), image, `myWork` and text. Full class names, not built
+// with a variable, so Tailwind finds them when it scans the source.
+const rowSpan = showCategory ? 'row-span-4' : 'row-span-3'
 ---
 
 <article
@@ -64,12 +63,9 @@ const rowSpan = showCategory ? 'row-span-5' : 'row-span-4'
   {
     showCategory && (
       <div class="flex items-center border-b border-(--border-color) bg-(--color-surface-container-low) px-4 py-1">
-        <a
-          href={getHref(`/${catalogPage}`, false, locale)}
-          class="relative z-10 border border-(--border-color) bg-(--color-accent-rose) px-1 py-0.5 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-wider text-(--color-on-accent)! uppercase no-underline! hover:bg-(--color-on-accent) hover:text-white!"
-        >
+        <Insignia href={getHref(`/${catalogPage}`, false, locale)} class="relative z-10">
           {t(CATEGORY_LABEL_KEYS[catalogPage])}
-        </a>
+        </Insignia>
       </div>
     )
   }
@@ -87,31 +83,26 @@ const rowSpan = showCategory ? 'row-span-5' : 'row-span-4'
   </div>
 
   <p
-    class="self-end px-4 pt-4 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--color-on-surface-variant) uppercase lg:px-6 lg:pt-6"
+    class="micro-label self-end px-(--space-s-m) pt-(--space-s-m) text-(--color-on-surface-variant)"
   >
     <span class="block truncate">{myWorkFirst}</span>
     {myWorkRest && <span class="block truncate">{myWorkRest}</span>}
   </p>
 
-  <div class="px-4 pt-1 pb-4 lg:px-6 lg:pb-6">
+  <div class="px-(--space-s-m) pt-1 pb-(--space-s-m)">
     <HeadingTag
-      class="mb-2 font-(family-name:--font-family-special) text-xl leading-tight font-bold tracking-tight text-(--foreground-color) uppercase motion-safe:transition-colors group-focus-within:text-(--color-accent-rose-dark) group-hover:text-(--color-accent-rose-dark)"
+      class="mb-2 text-(length:--font-size-1) leading-tight tracking-tight text-(--foreground-color) uppercase motion-safe:transition-colors group-focus-within:text-(--color-accent-rose-dark) group-hover:text-(--color-accent-rose-dark)"
     >
-      {data.title}
+      <a
+        href={getHref(`/${data.category}/${slug}`, false, locale)}
+        class="text-inherit no-underline after:absolute after:inset-0 after:content-['']"
+      >
+        {data.title}
+      </a>
     </HeadingTag>
-    <p class="line-clamp-3 text-sm leading-relaxed tracking-[0.01em] text-(--color-on-surface-variant)">
+    <p class="line-clamp-3 text-(length:--font-size--1) leading-relaxed tracking-[0.01em] text-(--color-on-surface-variant)">
       {data.subtitle}
     </p>
   </div>
 
-  <div class="flex items-center justify-end border-t border-(--border-color) bg-(--color-surface-container-low) p-4">
-    <a
-      href={getHref(`/${data.category}/${slug}`, false, locale)}
-      class="flex items-center gap-1 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--foreground-color)! uppercase no-underline! group-hover:underline! focus-visible:underline! after:absolute after:inset-0 after:content-['']"
-    >
-      <span>{t('view_details')}</span>
-      <span class="sr-only">: {data.title}</span>
-      <Icon aria-hidden="true" name="lucide:arrow-right" size="1rem" />
-    </a>
-  </div>
 </article>

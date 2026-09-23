@@ -7,12 +7,17 @@ import { urlFor, imageSize } from '@lib/sanity/imageUrlBuilder'
 import { portableTextToHtml } from '@lib/sanity/renders/portableTextRender'
 import { CATEGORY_LABEL_KEYS } from '@constants/constLabels'
 import VideoEmbed from '@components/VideoEmbed.astro'
+import { getExternalLinkAttributes } from '@utils/externalLinkAttributes'
+import Button from '@components/Button.astro'
+import Breadcrumb from '@components/Breadcrumb.astro'
+import Eyebrow from '@components/Eyebrow.astro'
+import Insignia from '@components/Insignia.astro'
 
 /**
  * CatalogItemDetail Component
  *
  * @description Renders a single catalog item (project, material, formation or workshop) from its full
- * document (getCatalogItemDetailsByCategory): a context bar with the way back, the trail and the tags; the
+ * document (getCatalogItemDetailsByCategory): a context bar with the trail and the tags; the
  * header with the title, the subtitle, the single action button and the cover; the long description next to
  * the fact sheet; the gallery with the videos; and the previous and next items of the category (by title). All internal links are localized through getHref.
  */
@@ -50,13 +55,10 @@ const bodyHtml = portableTextToHtml(data?.descriptionLong)
 const coverUrl = urlFor(data?.image, 960)
 const coverSize = imageSize(data?.image)
 
-// The `download` attribute is ignored for files on another origin (the Sanity CDN), and the PDF would open in
-// the browser: `?dl=` makes the CDN send it as an attachment.
-const asDownload = (fileUrl: string) => `${fileUrl}${fileUrl.includes('?') ? '&' : '?'}dl=`
-
-// The button is either a download (file) or a link (url), never both: the Studio validates it.
+// The button is either a download (file) or a link (url), never both: the Studio validates it. Both open
+// in a new tab; files aren't forced to download — the person can open, view and save from there.
 const button = data?.button?.visible ? data.button : null
-const buttonHref = button ? (button.type === 'download' ? (button.fileUrl && asDownload(button.fileUrl)) : button.url) : null
+const buttonHref = button ? (button.type === 'download' ? button.fileUrl : button.url) : null
 const buttonLabel = button?.label || t(button?.type === 'download' ? 'detail.download' : 'detail.open_link')
 
 const externalHost = (() => {
@@ -71,55 +73,51 @@ const documents = (data?.documents ?? []).filter((doc) => doc.fileUrl)
 const gallery = data?.gallery ?? []
 const videos = (data?.videos ?? []).filter((video) => video.url || video.fileUrl)
 
-const labelClass =
-  'font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
-const linkReset = 'text-(--foreground-color)! no-underline!'
+// Fact sheet: one row per field that has a value in Sanity, all rendered by the same template. The link and
+// document rows below the text rows share the same classes.
+const factRowClass = 'grid grid-cols-1 sm:grid-cols-3'
+const factTermClass = 'flex items-center bg-(--color-surface-container-low) p-(--space-xs) text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) micro-label'
+const factValueClass = 'p-(--space-xs) sm:col-span-2'
+const factRows = [
+  { label: t('detail.category'), value: catalogPage !== category ? `${categoryLabel} / ${catalogLabel}` : categoryLabel },
+  { label: t('detail.year'), value: data?.year },
+  { label: t('detail.created_by'), value: data?.createdBy },
+  { label: t('detail.designed_by'), value: data?.designedBy },
+  { label: t('detail.institutional_authorship'), value: data?.institutionalAuthorship },
+  { label: t('detail.my_work'), value: data?.myWork },
+].filter((row) => row.value)
+
 ---
 
 {
   item && data && (
     <>
       <div class="flex flex-col border-b border-(--border-color) md:flex-row md:items-stretch md:justify-between">
-        <div class="flex flex-wrap items-stretch">
-          <a
-            href={getHref(`/${catalogPage}`, false, locale)}
-            class={`flex items-center gap-1 border-r border-(--border-color) px-4 py-2 md:px-6 lg:px-8 font-(family-name:--font-family-special) text-xs font-semibold tracking-wider uppercase ${linkReset} hover:bg-(--color-accent-rose) hover:text-(--color-on-accent)!`}
-          >
-            <Icon aria-hidden="true" name="lucide:arrow-left" size="1rem" />
-            <span>
-              {t('detail.back')} {catalogLabel}
-            </span>
-          </a>
-          <nav aria-label={t('detail.breadcrumb')} class="flex min-w-0 items-center px-4 py-2 md:px-6">
-            <ol class={`flex flex-wrap items-center gap-1 text-(--color-on-surface-variant) ${labelClass}`}>
-              <li>
-                <a href={getHref(`/${category}`, false, locale)} class="text-(--color-on-surface-variant)! no-underline! hover:underline!">
-                  {categoryLabel}
-                </a>
-              </li>
-              {catalogPage !== category && (
-                <>
-                  <li aria-hidden="true">/</li>
-                  <li>
-                    <a href={getHref(`/${catalogPage}`, false, locale)} class="text-(--color-on-surface-variant)! no-underline! hover:underline!">
-                      {catalogLabel}
-                    </a>
-                  </li>
-                </>
-              )}
-              <li aria-hidden="true">/</li>
-              <li aria-current="page" class="max-w-[28ch] truncate text-(--foreground-color)">
-                {data.title}
-              </li>
-            </ol>
-          </nav>
-        </div>
+        <Breadcrumb
+          ariaLabel={t('detail.breadcrumb')}
+          class="flex min-w-0 items-center px-(--grid-gutter) py-2"
+          items={[
+            { label: t('home.label'), href: getHref('/', false, locale) },
+            { label: categoryLabel, href: getHref(`/${category}`, false, locale) },
+            ...(catalogPage !== category
+              ? [{ label: catalogLabel, href: getHref(`/${catalogPage}`, false, locale) }]
+              : []),
+            { label: data.title },
+          ]}
+        />
         {data.tags.length > 0 && (
-          <div class={`flex flex-wrap items-center gap-2 border-t border-(--border-color) px-4 py-2 md:border-t-0 md:border-l md:px-6 lg:px-8 ${labelClass}`}>
+          <div class={`flex flex-wrap items-center gap-2 border-t border-(--border-color) px-(--grid-gutter) py-2 md:border-t-0 md:border-l micro-label`}>
             <span class="text-(--color-accent-rose-dark)">{t('detail.tags')}:</span>
             <ul class="flex flex-wrap gap-1">
               {data.tags.map((tag) => (
-                <li class="border border-(--border-color) px-1.5 py-0.5 text-(--color-on-surface-variant)">#{tag.text}</li>
+                <li>
+                  <a
+                    href={getHref(`/${catalogPage}/tag/${tag.slug}`, false, locale)}
+                    class="inline-flex min-w-6 items-center justify-center border border-(--border-color) px-1.5 py-1.5 text-(--color-on-surface-variant) no-underline hover:bg-(--color-surface-container-high) hover:text-(--foreground-color)"
+                  >
+                    #{tag.text}
+                  </a>
+                </li>
               ))}
             </ul>
           </div>
@@ -129,38 +127,29 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
       <section class="grid grid-cols-1 border-b border-(--border-color) lg:grid-cols-12">
         <div
           class:list={[
-            'flex flex-col justify-between p-4 md:p-6 lg:p-8',
+            'flex flex-col justify-between p-(--grid-gutter)',
             coverUrl ? 'border-b border-(--border-color) lg:col-span-7 lg:border-r lg:border-b-0' : 'lg:col-span-12',
           ]}
         >
           <div>
-            <p
-              class={`mb-4 inline-flex items-center gap-1 border border-(--border-color) bg-(--color-accent-rose) px-2 py-1 text-(--color-on-accent) ${labelClass}`}
-            >
-              <span class="inline-block h-2 w-2 bg-(--color-on-accent)" />
-              {catalogLabel}
-            </p>
-            <h1 class="mb-4 font-(family-name:--font-family-special) text-[2.75rem] leading-12 font-bold tracking-tight text-(--foreground-color) uppercase lg:text-7xl lg:leading-19">
+            <Eyebrow icon class="mb-1">{catalogLabel}</Eyebrow>
+            <h1 class="mb-4 text-(length:--font-size-6) leading-(length:--font-size-7) tracking-tight text-(--foreground-color) uppercase">
               {data.title}
             </h1>
-            <p class="mb-6 max-w-2xl text-lg leading-relaxed text-(--color-on-surface-variant)">{data.subtitle}</p>
+            <p class="mb-6 max-w-2xl text-(length:--font-size-1) leading-relaxed text-(--color-on-surface-variant)">{data.subtitle}</p>
           </div>
           {buttonHref && (
             <div class="mt-6 border-t border-(--border-color) pt-4">
-              <a
-                href={buttonHref}
-                {...(button?.type === 'download' ? { download: '' } : { target: '_blank', rel: 'noopener noreferrer' })}
-                class="inline-flex items-center justify-center gap-2 border border-(--border-color) bg-(--foreground-color) px-6 py-4 font-(family-name:--font-family-special) text-sm leading-4.5 font-semibold tracking-widest text-(--background-color)! uppercase no-underline! hover:bg-(--background-color) hover:text-(--foreground-color)!"
-              >
+              <Button href={buttonHref} {...getExternalLinkAttributes()}>
                 <span>{buttonLabel}</span>
                 <Icon aria-hidden="true" name={button?.type === 'download' ? 'lucide:download' : 'lucide:external-link'} size="1.25rem" />
-                {button?.type !== 'download' && <span class="sr-only">{t('detail.new_tab')}</span>}
-              </a>
+                <span class="sr-only">{t('detail.new_tab')}</span>
+              </Button>
             </div>
           )}
         </div>
         {coverUrl && (
-          <div class="flex items-center justify-center bg-(--color-surface-container-low) p-4 md:p-6 lg:col-span-5 lg:p-8">
+          <div class="flex items-center justify-center bg-(--color-surface-container-low) p-(--grid-gutter) lg:col-span-5">
             <div class="w-full max-w-md border border-(--border-color) bg-(--background-color) p-2">
               <img
                 class="block h-auto w-full"
@@ -176,65 +165,37 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
       </section>
 
       <section class="grid grid-cols-1 border-b border-(--border-color) lg:grid-cols-12">
-        <div class="border-b border-(--border-color) p-4 md:p-6 lg:col-span-7 lg:border-r lg:border-b-0 lg:p-8">
+        <div class="border-b border-(--border-color) p-(--grid-gutter) lg:col-span-7 lg:border-r lg:border-b-0">
           {(bodyHtml || data.sections.length > 0) && (
             <>
-              <h2 class="mb-4 border-b border-(--border-color) pb-1 font-(family-name:--font-family-special) text-xl leading-6.5 font-bold tracking-tight text-(--foreground-color) uppercase">
+              <h2 class="mb-4 border-b border-(--border-color) pb-1 text-(length:--font-size-1) leading-(length:--font-size-2) tracking-tight text-(--foreground-color) uppercase">
                 {t('detail.description')}
               </h2>
-              <div class="detail-body text-base leading-relaxed text-(--color-on-surface-variant)" set:html={bodyHtml} />
+              <div class="detail-body text-(length:--font-size-0) leading-relaxed text-(--color-on-surface-variant)" set:html={bodyHtml} />
               {data.sections.map((section) => (
                 <div class="mt-6">
-                  {section.title && <h3 class="mb-1 font-(family-name:--font-family-special) text-base font-bold tracking-tight text-(--foreground-color) uppercase">{section.title}</h3>}
+                  {section.title && <h3 class="mb-1 text-(length:--font-size-0) leading-(length:--font-size-1) tracking-tight text-(--foreground-color) uppercase">{section.title}</h3>}
                   {section.text && <p class="leading-relaxed whitespace-pre-line text-(--color-on-surface-variant)">{section.text}</p>}
                 </div>
               ))}
             </>
           )}
         </div>
-        <div class="p-4 md:p-6 lg:col-span-5 lg:p-8">
-          <h2 class="mb-4 border-b border-(--border-color) pb-1 font-(family-name:--font-family-special) text-xl leading-6.5 font-bold tracking-tight text-(--foreground-color) uppercase">
+        <div class="p-(--grid-gutter) lg:col-span-5">
+          <h2 class="mb-4 border-b border-(--border-color) pb-1 text-(length:--font-size-1) leading-(length:--font-size-2) tracking-tight text-(--foreground-color) uppercase">
             {t('detail.fact_sheet')}
           </h2>
-          <dl class="divide-y divide-(--border-color) border border-(--border-color) text-sm">
-            <div class="grid grid-cols-1 sm:grid-cols-3">
-              <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.category')}</dt>
-              <dd class="p-2 font-medium text-(--foreground-color) sm:col-span-2">{catalogPage !== category ? `${categoryLabel} / ${catalogLabel}` : categoryLabel}</dd>
-            </div>
-            {data.year && (
-              <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.year')}</dt>
-                <dd class="p-2 text-(--foreground-color) sm:col-span-2">{data.year}</dd>
+          <dl class="divide-y divide-(--border-color) border border-(--border-color) text-(length:--font-size--1)">
+            {factRows.map((row) => (
+              <div class={factRowClass}>
+                <dt class={factTermClass}>{row.label}</dt>
+                <dd class={`${factValueClass} whitespace-pre-line text-(--foreground-color)`}>{row.value}</dd>
               </div>
-            )}
-            {data.createdBy && (
-              <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.created_by')}</dt>
-                <dd class="p-2 font-medium whitespace-pre-line text-(--foreground-color) sm:col-span-2">{data.createdBy}</dd>
-              </div>
-            )}
-            {data.designedBy && (
-              <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.designed_by')}</dt>
-                <dd class="p-2 whitespace-pre-line text-(--foreground-color) sm:col-span-2">{data.designedBy}</dd>
-              </div>
-            )}
-            {data.institutionalAuthorship && (
-              <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.institutional_authorship')}</dt>
-                <dd class="p-2 whitespace-pre-line text-(--foreground-color) sm:col-span-2">{data.institutionalAuthorship}</dd>
-              </div>
-            )}
-            {data.myWork && (
-              <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.my_work')}</dt>
-                <dd class="p-2 whitespace-pre-line text-(--foreground-color) sm:col-span-2">{data.myWork}</dd>
-              </div>
-            )}
+            ))}
             {data.externalLink && (
-              <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.external_link')}</dt>
-                <dd class="p-2 sm:col-span-2">
+              <div class={factRowClass}>
+                <dt class={factTermClass}>{t('detail.external_link')}</dt>
+                <dd class={factValueClass}>
                   <a href={data.externalLink} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 break-all">
                     {externalHost}
                     <Icon aria-hidden="true" name="lucide:arrow-up-right" size="0.875rem" />
@@ -244,15 +205,16 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
               </div>
             )}
             {documents.length > 0 && (
-              <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.documents')}</dt>
-                <dd class="p-2 sm:col-span-2">
+              <div class={factRowClass}>
+                <dt class={factTermClass}>{t('detail.documents')}</dt>
+                <dd class={factValueClass}>
                   <ul class="space-y-1">
                     {documents.map((doc) => (
                       <li>
-                        <a href={asDownload(doc.fileUrl ?? '')} download class="inline-flex items-center gap-1">
+                        <a href={doc.fileUrl ?? ''} {...getExternalLinkAttributes()} class="inline-flex items-center gap-1">
                           {doc.title || t('detail.download')}
                           <Icon aria-hidden="true" name="lucide:download" size="0.875rem" />
+                          <span class="sr-only">{t('detail.new_tab')}</span>
                         </a>
                       </li>
                     ))}
@@ -279,12 +241,11 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
                   loading="lazy"
                   decoding="async"
                 />
-                <span
-                  class="absolute top-2 left-2 border border-(--border-color) bg-(--background-color) px-1.5 py-0.5 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--foreground-color) uppercase"
-                  aria-hidden="true"
-                >
-                  {t('detail.figure')} {String(position + 1).padStart(2, '0')}
-                </span>
+                <Insignia tone="light" class="absolute top-2 left-2">
+                  {t('detail.figure')}
+                  {' '}
+                  {String(position + 1).padStart(2, '0')}
+                </Insignia>
               </div>
             ))}
             {videos.map((video, position) => (
@@ -300,12 +261,12 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
             <a
               rel="prev"
               href={getHref(`/${category}/${previousItem.slug}`, false, locale)}
-              class={`flex items-center gap-4 border-b border-(--border-color) p-4 md:col-start-1 md:border-r md:border-b-0 md:p-6 lg:p-8 ${linkReset} hover:bg-(--color-surface-container-low)`}
+              class={`flex items-center gap-4 border-b border-(--border-color) p-(--grid-gutter) md:col-start-1 md:border-r md:border-b-0 text-(--foreground-color) no-underline hover:bg-(--color-surface-container-low)`}
             >
               <Icon aria-hidden="true" name="lucide:arrow-left" size="1.5rem" />
               <span class="flex flex-col gap-1">
-                <span class={`text-(--color-on-surface-variant) ${labelClass}`}>{t('detail.previous')}</span>
-                <span class="font-(family-name:--font-family-special) text-xl leading-6.5 font-bold uppercase">{previousItem.data.title}</span>
+                <span class="micro-label text-(--color-on-surface-variant)">{t('detail.previous')}</span>
+                <span class="font-(family-name:--font-family-special) text-(length:--font-size-0) leading-tight font-bold uppercase">{previousItem.data.title}</span>
               </span>
             </a>
           )}
@@ -313,11 +274,11 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
             <a
               rel="next"
               href={getHref(`/${category}/${nextItem.slug}`, false, locale)}
-              class={`flex items-center justify-between gap-4 p-4 text-right md:col-start-2 md:p-6 lg:p-8 ${linkReset} hover:bg-(--color-surface-container-low)`}
+              class={`flex items-center justify-between gap-4 p-(--grid-gutter) text-right md:col-start-2 text-(--foreground-color) no-underline hover:bg-(--color-surface-container-low)`}
             >
               <span class="ml-auto flex flex-col gap-1">
-                <span class={`text-(--color-on-surface-variant) ${labelClass}`}>{t('detail.next')}</span>
-                <span class="font-(family-name:--font-family-special) text-xl leading-6.5 font-bold uppercase">{nextItem.data.title}</span>
+                <span class="micro-label text-(--color-on-surface-variant)">{t('detail.next')}</span>
+                <span class="font-(family-name:--font-family-special) text-(length:--font-size-0) leading-tight font-bold uppercase">{nextItem.data.title}</span>
               </span>
               <Icon aria-hidden="true" name="lucide:arrow-right" size="1.5rem" />
             </a>
@@ -334,15 +295,13 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
     :global(ul + p),
     :global(p + ul),
     :global(h2 + p) {
-      margin-block-start: 1rem;
+      margin-block-start: var(--space-s);
     }
 
     :global(h2) {
-      margin-block-start: 1.5rem;
-      font-family: var(--font-family-special);
-      font-size: 1.25rem;
-      line-height: 1.625rem;
-      font-weight: 600;
+      margin-block-start: var(--space-m);
+      font-size: var(--font-size-1);
+      line-height: var(--font-size-2);
       letter-spacing: 0;
       text-transform: uppercase;
       color: var(--foreground-color);
@@ -355,7 +314,7 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
     }
 
     :global(li + li) {
-      margin-block-start: 0.25rem;
+      margin-block-start: var(--space-3xs);
     }
   }
 </style>

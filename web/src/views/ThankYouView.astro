@@ -1,7 +1,5 @@
 ---
-import PageHeader from '@components/PageHeader.astro'
-import { Link, Notification } from 'accessible-astro-components'
-import { Icon } from 'astro-icon/components'
+import PageTitleBand from '@components/PageTitleBand.astro'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 
 /**
@@ -14,16 +12,9 @@ const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 ---
 
-<PageHeader title={t('thank_you.title')} subtitle={t('thank_you.subtitle')} bgType="gradient" />
-<section class="container my-16">
-  <div class="space-content">
-    <Notification type="info">
-      <Icon aria-hidden="true" name="lucide:info" size={24} />
-      <p>{t('thank_you.notice')}</p>
-    </Notification>
-    <Link href={getHref('/contact', false, locale)} isButton type="primary" animateOnHover animation="boop" pulse>
-      <Icon aria-hidden="true" name="lucide:mail" size={24} />
-      {t('thank_you.send_another')}
-    </Link>
-  </div>
-</section>
+<PageTitleBand
+  title={t('thank_you.title')}
+  subtitle={`${t('thank_you.subtitle')} ${t('thank_you.notice')}`}
+  buttonHref={getHref('/contact', false, locale)}
+  buttonLabel={t('thank_you.send_another')}
+/>

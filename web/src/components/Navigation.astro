@@ -19,7 +19,7 @@ const t = useTranslations(locale)
 ---
 
 <div id="main-navigation" class="w-full">
-  <div class="nav-bar h-16 flex flex-row items-stretch justify-between">
+  <div class="nav-bar h-(--header-height) flex flex-row items-stretch justify-between">
     <div class="nav-brand">
       <Logo />
     </div>
@@ -244,6 +244,11 @@ const t = useTranslations(locale)
   @use 'base/mixins' as *;
   @use 'base/breakpoint' as *;
 
+  // Anchors and keyboard focus stop below the fixed header instead of under it (WCAG 2.4.11).
+  html {
+    scroll-padding-block-start: var(--header-height);
+  }
+
   #main-navigation {
     position: fixed;
     inset-block-start: 0;
@@ -359,7 +364,7 @@ const t = useTranslations(locale)
       block-size: 100%;
       padding-inline: 1rem;
       font-family: var(--font-family-special);
-      font-size: 0.75rem;
+      font-size: var(--font-size--2);
       line-height: 1rem;
       font-weight: 600;
       letter-spacing: 0.05em;
@@ -367,7 +372,7 @@ const t = useTranslations(locale)
       color: var(--color-on-surface-variant);
       transition: none;
 
-      &:where(:hover, :focus-visible) {
+      @include hover-focus {
         background-color: var(--color-surface-container-low);
         color: var(--foreground-color);
       }
@@ -385,18 +390,12 @@ const t = useTranslations(locale)
       align-items: center;
       padding: 0.5rem 1rem;
       border-block-end: 1px solid var(--border-color);
-      font-family: var(--font-family-special);
-      font-size: 0.6875rem;
-      line-height: 0.875rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
       color: var(--color-on-surface-variant);
       transition: none;
 
-      &:where(:hover, :focus-visible) {
-        background-color: var(--color-accent-rose);
-        color: var(--color-on-accent);
+      @include hover-focus {
+        background-color: var(--color-surface-container-low);
+        color: var(--foreground-color);
       }
     }
 
@@ -404,9 +403,13 @@ const t = useTranslations(locale)
       border-block-end: none;
     }
 
+    // The header is fixed, so an open menu taller than the screen scrolls on its own (landscape phones, zoom).
     .mobile-menu {
       flex-basis: 100%;
       margin-block-start: var(--space-m);
+      max-block-size: calc(100dvh - var(--header-height) - var(--space-m));
+      overflow-y: auto;
+      overscroll-behavior: contain;
       border: 1px solid var(--border-color-subtle);
       padding: var(--space-m);
 
@@ -528,7 +531,7 @@ const t = useTranslations(locale)
         block-size: 1.25rem;
       }
 
-      &:where(:hover, :focus-visible) {
+      @include hover-focus {
         background-color: var(--color-surface-container-low);
         box-shadow: none;
       }

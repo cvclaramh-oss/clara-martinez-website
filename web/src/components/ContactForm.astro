@@ -2,6 +2,8 @@
 import { Form, Input, Textarea } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
+import Button from '@components/Button.astro'
+import Eyebrow from '@components/Eyebrow.astro'
 
 /**
  * ContactForm Component
@@ -26,13 +28,10 @@ const controlClass =
 ---
 
 <div class="mb-6 flex items-end justify-between gap-4 border-b border-(--border-color) pb-2">
-  <h2
-    class="font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--color-accent-rose-dark) uppercase"
-  >
-    {t('contact.form.eyebrow')}
-  </h2>
+  <h2 class="sr-only">{t('contact.form.eyebrow')}</h2>
+  <Eyebrow>{t('contact.form.eyebrow')}</Eyebrow>
   <p
-    class="font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--color-on-surface-variant) uppercase"
+    class="micro-label text-(--color-on-surface-variant)"
   >
     {t('contact.form.required_note')}
   </p>
@@ -128,18 +127,15 @@ const controlClass =
         <span>{t('contact.form.privacy')}</span>
       </label>
     </div>
-    <p id="privacy-note" class="text-sm text-(--color-on-surface-variant)">{t('contact.form.privacy_note')}</p>
+    <p id="privacy-note" class="text-(length:--font-size--1) text-(--color-on-surface-variant)">{t('contact.form.privacy_note')}</p>
   </div>
 
   <div class="flex flex-col items-start gap-3">
-    <button
-      type="submit"
-      class="contact-submit inline-flex items-center gap-2 border border-(--border-color) bg-(--foreground-color) px-6 py-4 font-(family-name:--font-family-special) text-sm! leading-[1.125rem]! font-semibold! tracking-widest! text-(--background-color) uppercase disabled:opacity-60"
-    >
+    <Button type="submit" class="contact-submit">
       {t('contact.form.send')}
       <Icon aria-hidden="true" name="lucide:arrow-right" size="1.125rem" />
-    </button>
-    <p class="contact-status max-w-xl text-sm text-(--foreground-color)" aria-live="polite"></p>
+    </Button>
+    <p class="contact-status max-w-xl text-(length:--font-size--1) text-(--foreground-color)" aria-live="polite"></p>
   </div>
 </Form>
 
@@ -151,7 +147,7 @@ const controlClass =
     padding: 0.5rem;
     inline-size: 100%;
     min-inline-size: 0;
-    font-size: 1rem;
+    font-size: var(--font-size-0);
     line-height: 1.5rem;
   }
 
@@ -160,10 +156,14 @@ const controlClass =
     block-size: 2.625rem;
   }
 
+  /* Same values as the `micro-label` utility (tailwind.css): these labels are rendered by the package's Input
+     and Textarea, which can't take the class, and this unlayered rule is what beats the package's own styles. */
   .contact-form :is(.input-group-label, .textarea-group label) {
+    font-family: var(--font-family-special);
     font-weight: 700;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
+    font-size: var(--font-size--2);
+    line-height: 0.875rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
   }
 
@@ -208,7 +208,7 @@ const controlClass =
 
   .contact-form .checkbox-group label {
     color: var(--color-on-surface-variant);
-    font-size: 0.875rem;
+    font-size: var(--font-size--1);
   }
 
   .contact-form .checkbox-group input {

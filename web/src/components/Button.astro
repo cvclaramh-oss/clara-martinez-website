@@ -1,0 +1,138 @@
+---
+/**
+ * Button Component
+ *
+ * @description A button, styled consistently everywhere it appears (Radical Clarity: flat border, no
+ * radius, color inverts on hover, no transition per the Stitch prototype). Renders `<a href>` when
+ * given an `href` (real navigation) or `<button>` otherwise (an in-page action) — never styles one as
+ * the other, so the accessible role, and the native Enter/Space keyboard behaviour, always match what
+ * the button actually does. Reuses the animation classes/variables from accessible-astro-components
+ * (`animate-*-svg`, `animation-pulse`, already respecting `prefers-reduced-motion`) instead of
+ * reimplementing them.
+ *
+ * `size`/`tone` combinations confirmed against the Stitch prototype so far:
+ * - `size="lg" tone="dark"` (default): CTA, 404, coming-soon, thank-you.
+ * - `size="md" tone="accent"`: Hero.
+ * - `size="sm" tone="ghost"`: footer CV download.
+ */
+interface Props {
+  href?: string
+  /**
+   * Native button type, only relevant without `href` (a link has no `type`).
+   * @default "button"
+   */
+  type?: 'button' | 'submit'
+  /** @default "lg" */
+  size?: 'sm' | 'md' | 'lg'
+  /** @default "dark" */
+  tone?: 'dark' | 'accent' | 'ghost'
+  /** Only relevant without `href` (a link can't be natively disabled — see ContactView's CV placeholder). */
+  disabled?: boolean
+  class?: string
+  animateOnHover?: boolean
+  animationType?: 'rotate' | 'boop' | 'bouncing' | 'nudge' | 'none'
+  pulse?: boolean
+}
+
+const {
+  href,
+  type = 'button',
+  size = 'lg',
+  tone = 'dark',
+  class: className,
+  animateOnHover = false,
+  animationType = 'boop',
+  pulse = false,
+  ...rest
+} = Astro.props
+
+const Tag = href ? 'a' : 'button'
+const shouldAnimate = animateOnHover && animationType !== 'none'
+const animationClass = shouldAnimate ? `animate-${animationType}-svg` : ''
+const pulseClass = pulse ? 'animation-pulse' : ''
+---
+
+<Tag
+  href={href}
+  type={Tag === 'button' ? type : undefined}
+  class:list={['button', `button--${size}`, `button--${tone}`, animationClass, pulseClass, className]}
+  {...rest}
+>
+  <slot />
+</Tag>
+
+<style lang="scss">
+  @use 'base/mixins' as *;
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2xs);
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    font-family: var(--font-family-special);
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: none;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .button--lg {
+    padding: var(--space-s) var(--space-m);
+    font-size: var(--font-size--1);
+    line-height: 1.125rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+
+  .button--md {
+    padding: var(--space-2xs) var(--space-m);
+    font-size: var(--font-size--2);
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+
+  .button--sm {
+    padding: var(--space-3xs) var(--space-2xs);
+    font-size: var(--font-size--2);
+    line-height: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .button--dark {
+    background-color: var(--foreground-color);
+    color: var(--background-color);
+
+    @include hover-focus {
+      background-color: var(--background-color);
+      color: var(--foreground-color);
+    }
+  }
+
+  .button--accent {
+    background-color: var(--color-accent-rose);
+    color: var(--color-on-accent);
+
+    @include hover-focus {
+      background-color: var(--color-on-accent);
+      color: white;
+    }
+  }
+
+  .button--ghost {
+    background-color: var(--color-surface-container-low);
+    color: var(--foreground-color);
+
+    @include hover-focus {
+      background-color: var(--color-accent-rose);
+      color: var(--color-on-accent);
+    }
+  }
+</style>

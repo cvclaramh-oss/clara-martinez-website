@@ -1,0 +1,26 @@
+---
+
+/**
+ * Eyebrow Component
+ *
+ * @description Small rose label above a title. Never a heading — decorative only.
+ */
+interface Props {
+  /**
+   * Shows the small square marker before the text
+   * @default false
+   */
+  icon?: boolean
+  /**
+   * Additional classes, typically margin
+   */
+  class?: string
+}
+
+const { icon = false, class: className } = Astro.props
+---
+
+<p class:list={[className, 'inline-flex items-center gap-1 text-(--color-accent-rose-dark) micro-label']}>
+  {icon && <span class="inline-block h-2.5 w-2.5 bg-(--foreground-color)" aria-hidden="true" />}
+  <slot />
+</p>

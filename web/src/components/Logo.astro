@@ -6,31 +6,31 @@ import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 /**
  * Logo Component
  *
- * @description Brand cell (logo). The tagline is stacked under the name, inside the same cell, on mobile
- * (name 13px) and from the `nav` breakpoint up to `tagline` (name 20px), where the desktop menu leaves no
- * room for another cell. On tablet (`m` up to `nav`) and from `tagline` up the cell is a single line and
- * the tagline gets its own bordered cell (see .tagline below). All three widths come from the map in
- * styles/base/_breakpoint.scss.
+ * @description Brand cell (logo). Name and tagline use the fluid type scale (`--font-size-0`, `--font-size--2`).
+ * The tagline is stacked under the name, inside the same cell, below `tagline-s` and from the `nav` breakpoint
+ * up to `tagline`, where there is no room for another cell. From `tagline-s` up to `nav` and from `tagline` up
+ * the cell is a single line and the tagline gets its own bordered cell (see .tagline below). The widths come
+ * from the map in styles/base/_breakpoint.scss, measured with the longest tagline (es).
  */
 
 const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 ---
 
-<Link href={getHref('/', false, locale)} class="brand-link flex h-full px-4 hover:bg-(--color-surface-container-low) transition-none">
+<Link href={getHref('/', false, locale)} class="brand-link flex h-full ps-(--grid-gutter) pe-4 hover:bg-(--color-surface-container-low) transition-none">
   <span
     class="brand-name font-(family-name:--font-family-special) font-bold uppercase tracking-tight text-(--foreground-color) whitespace-nowrap"
   >
     {themeConfig.name}
   </span>
   <span
-    class="brand-tagline font-(family-name:--font-family-special) font-bold uppercase tracking-widest text-(--color-on-surface-variant) whitespace-nowrap"
+    class="brand-tagline micro-label text-(--color-on-surface-variant) whitespace-nowrap"
   >
     {t('tagline')}
   </span>
 </Link>
 <span
-  class="tagline items-center h-full px-4 border-r border-(--border-color) bg-(--color-surface-container-low) font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold uppercase tracking-widest text-(--color-on-surface-variant) whitespace-nowrap"
+  class="tagline items-center h-full px-4 border-r border-(--border-color) bg-(--color-surface-container-low) micro-label text-(--color-on-surface-variant) whitespace-nowrap"
 >
   {t('tagline')}
 </span>
@@ -38,19 +38,19 @@ const t = useTranslations(locale)
 <style lang="scss">
   @use 'base/breakpoint' as *;
 
-  // The tagline is stacked under the name on mobile and while the desktop menu leaves no room for a cell
-  // (from `nav` up to `tagline`); it is its own cell on tablet and from `tagline` up.
+  // The tagline is stacked under the name below `tagline-s` and while the desktop menu leaves no room for a cell
+  // (from `nav` up to `tagline`); it is its own cell from `tagline-s` up to `nav` and from `tagline` up.
   .brand-link {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     gap: 0.125rem;
 
-    @include breakpoint('m') {
+    @include breakpoint('tagline-s') {
       border-inline-end: 1px solid var(--border-color);
     }
 
-    @include breakpoint('m', 'nav') {
+    @include breakpoint('tagline-s', 'nav') {
       flex-direction: row;
       align-items: center;
       gap: 0;
@@ -64,25 +64,12 @@ const t = useTranslations(locale)
   }
 
   .brand-name {
-    font-size: 0.8125rem;
-    line-height: 1rem;
-
-    @include breakpoint('m') {
-      font-size: 1.25rem;
-      line-height: 1.625rem;
-    }
+    font-size: var(--font-size-0);
+    line-height: var(--font-size-1);
   }
 
   .brand-tagline {
-    font-size: 0.5625rem;
-    line-height: 0.75rem;
-
-    @include breakpoint('nav') {
-      font-size: 0.6875rem;
-      line-height: 0.875rem;
-    }
-
-    @include breakpoint('m', 'nav') {
+    @include breakpoint('tagline-s', 'nav') {
       display: none;
     }
 
@@ -94,7 +81,7 @@ const t = useTranslations(locale)
   .tagline {
     display: none;
 
-    @include breakpoint('m', 'nav') {
+    @include breakpoint('tagline-s', 'nav') {
       display: flex;
     }
 

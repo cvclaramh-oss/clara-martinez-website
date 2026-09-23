@@ -1,3 +1,17 @@
+/// Hover styles only for devices that can hover (the same as Tailwind's `hover:` variant), while keyboard
+/// focus always gets them. `:where()` keeps the specificity the combined `:where(:hover, :focus-visible)` had.
+@mixin hover-focus {
+  &:where(:focus-visible) {
+    @content;
+  }
+
+  @media (hover: hover) {
+    &:where(:hover) {
+      @content;
+    }
+  }
+}
+
 @mixin text-decoration(
   $color: var(--text-decoration-color),
   $hoverColor: var(--text-decoration-hover-color),
@@ -16,7 +30,7 @@
   text-decoration-skip-ink: none;
   text-underline-offset: $underlineOffset;
 
-  &:where(:hover, :focus-visible) {
+  @include hover-focus {
     text-decoration-color: $hoverColor;
     text-decoration-thickness: $hoverThickness;
     text-underline-offset: $hoverUnderlineOffset;
@@ -27,28 +41,4 @@
   outline: 3px dotted var(--outline-color);
   outline-offset: 4px;
   box-shadow: none;
-}
-
-@mixin sr-only {
-  position: absolute;
-  margin: -1px;
-  padding: 0;
-  inline-size: 1px;
-  block-size: 1px;
-  overflow: clip;
-  clip: rect(0, 0, 0, 0);
-  border-width: 0;
-  white-space: nowrap;
-}
-
-@mixin rotate-icon-on-hover {
-  .icon svg {
-    transition: rotate var(--animation-speed-fast) var(--cubic-bezier);
-  }
-
-  &:where(:hover, :focus-visible) {
-    .icon svg {
-      rotate: -90deg;
-    }
-  }
 }

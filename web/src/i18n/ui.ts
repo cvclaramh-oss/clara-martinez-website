@@ -23,7 +23,6 @@ const ca = {
   button_contact: 'Contactar',
   button_cv_download: 'Descarregar CV (PDF)',
   view_all_projects: 'Veure tots els projectes',
-  view_details: 'Veure detalls',
   view_featured: 'Veure contingut destacat',
 
   // Navigation accessibility
@@ -37,7 +36,7 @@ const ca = {
 
   // Footer
   'footer.accessibility_description':
-    "Arquitectura web d'alt contrast, tipografia llegible i navegació semàntica conforme a WCAG 2.2 nivell AA.",
+    "Arquitectura web d'alt contrast, tipografia llegible i navegació semàntica conforme a WCAG 2.2 AA.",
   'footer.accessibility_heading': 'Accessibilitat & criteris',
   'footer.contact_heading': 'Contacte & documentació',
   'footer.cta_button': 'Iniciar conversa',
@@ -52,7 +51,6 @@ const ca = {
   // PAGES
 
   // Catalog item detail
-  'detail.back': 'Tornar a',
   'detail.breadcrumb': 'Ruta',
   'detail.category': 'Categoria',
   'detail.created_by': 'Elaborat per',
@@ -80,9 +78,6 @@ const ca = {
   // Item detail
   'featured_projects.eyebrow': 'Catàleg seleccionat',
   'featured_projects.title': 'Continguts destacats',
-  'project_share.back': 'Tornar als projectes',
-  'project_share.description': "T'agrada aquest projecte? Comparteix-lo amb la teva xarxa!",
-  'project_share.title': 'Comparteix aquest projecte',
 
   // Projects
   'projects.label': 'Projectes',
@@ -269,7 +264,6 @@ const es: Record<keyof typeof ca, string> = {
   button_contact: 'Contactar',
   button_cv_download: 'Descargar CV (PDF)',
   view_all_projects: 'Ver todos los proyectos',
-  view_details: 'Ver detalles',
   view_featured: 'Ver contenido destacado',
 
   // Navigation accessibility
@@ -283,7 +277,7 @@ const es: Record<keyof typeof ca, string> = {
 
   // Footer
   'footer.accessibility_description':
-    'Arquitectura web de alto contraste, tipografía legible y navegación semántica conforme a WCAG 2.2 nivel AA.',
+    'Arquitectura web de alto contraste, tipografía legible y navegación semántica conforme a WCAG 2.2 AA.',
   'footer.accessibility_heading': 'Accesibilidad & criterios',
   'footer.contact_heading': 'Contacto & documentación',
   'footer.cta_button': 'Iniciar conversación',
@@ -298,7 +292,6 @@ const es: Record<keyof typeof ca, string> = {
   // PAGES
 
   // Catalog item detail
-  'detail.back': 'Volver a',
   'detail.breadcrumb': 'Ruta',
   'detail.category': 'Categoría',
   'detail.created_by': 'Elaborado por',
@@ -326,9 +319,6 @@ const es: Record<keyof typeof ca, string> = {
   // Item detail
   'featured_projects.eyebrow': 'Catálogo seleccionado',
   'featured_projects.title': 'Contenidos destacados',
-  'project_share.back': 'Volver a los proyectos',
-  'project_share.description': '¿Te gusta este proyecto? ¡Compártelo con tu red!',
-  'project_share.title': 'Comparte este proyecto',
 
   // Projects
   'projects.label': 'Proyectos',

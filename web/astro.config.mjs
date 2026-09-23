@@ -32,7 +32,11 @@ const viteConfig = {
 export default defineConfig({
   compressHTML: true,
   site: 'https://claramartinezhernandez.net',
-  integrations: [icon(), sitemap()],
+  integrations: [
+    icon(),
+    // The thank-you page is noindex, so it stays out of the sitemap (segments from src/i18n/routes.ts).
+    sitemap({ filter: (page) => !/\/(gracies|gracias)\/$/.test(page) }),
+  ],
   vite: viteConfig,
   i18n: {
     locales: ['ca', 'es'],
