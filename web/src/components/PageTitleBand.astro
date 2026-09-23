@@ -1,28 +1,35 @@
 ---
 import Eyebrow from '@components/Eyebrow.astro'
+import Button from '@components/Button.astro'
 
 /**
  * PageTitleBand Component
  *
  * @description The title band under a page's breadcrumb: optional small eyebrow label, `h1`, optional
- * subtitle. Same block already used identically in `CatalogsView.astro`/`ContactView.astro`, pulled out
- * so every simple page (no cover image, no tags, no action button) shares it instead of each copying it.
+ * subtitle and optional action button. Same block already used identically in `CatalogsView.astro`/`ContactView.astro`,
+ * pulled out so every simple page (no cover image, no tags) shares it instead of each copying it.
  */
 interface Props {
   title: string
   eyebrow?: string
   subtitle?: string
+  /**
+   * Link of the action button; the button shows only when `buttonLabel` is also set
+   */
+  buttonHref?: string
+  buttonLabel?: string
 }
 
-const { title, eyebrow, subtitle } = Astro.props
+const { title, eyebrow, subtitle, buttonHref, buttonLabel } = Astro.props
 ---
 
-<section class="border-b border-(--border-color) px-4 py-8 md:px-6 lg:px-8 lg:py-10">
-  <div class="max-w-4xl">
+<section class="border-b border-(--border-color) px-(--grid-gutter) py-8 lg:py-10">
+  
     {eyebrow && <Eyebrow icon class="mb-1">{eyebrow}</Eyebrow>}
-    <h1 class="mb-4 text-(length:--font-size-6) leading-(length:--font-size-7) tracking-tight text-(--foreground-color) uppercase">
+    <h1 class="mb-4 text-(length:--font-size-6) leading-(--font-size-7) tracking-tight text-(--foreground-color) uppercase">
       {title}
     </h1>
     {subtitle && <p class="max-w-2xl text-lg leading-relaxed text-(--color-on-surface-variant)">{subtitle}</p>}
-  </div>
+    {buttonHref && buttonLabel && <Button href={buttonHref} class="mt-(--space-m)">{buttonLabel}</Button>}
+
 </section>

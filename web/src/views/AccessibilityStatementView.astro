@@ -15,8 +15,8 @@ const t = useTranslations(locale)
 ---
 
 <PageTitleBand title={t('accessibility.label')} subtitle={t('accessibility.subtitle')} />
-<section class="my-16">
-  <div class="container space-content">
+<section class="my-(--space-2xl) px-(--grid-gutter)">
+  <div class="space-content max-w-(--font-measure)">
     <Notification type="info" class="rounded-none">
       <p>{t('accessibility.pending_notice')}</p>
     </Notification>

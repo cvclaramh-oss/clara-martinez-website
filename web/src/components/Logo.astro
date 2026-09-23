@@ -17,7 +17,7 @@ const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 ---
 
-<Link href={getHref('/', false, locale)} class="brand-link flex h-full px-4 hover:bg-(--color-surface-container-low) transition-none">
+<Link href={getHref('/', false, locale)} class="brand-link flex h-full ps-(--grid-gutter) pe-4 hover:bg-(--color-surface-container-low) transition-none">
   <span
     class="brand-name font-(family-name:--font-family-special) font-bold uppercase tracking-tight text-(--foreground-color) whitespace-nowrap"
   >

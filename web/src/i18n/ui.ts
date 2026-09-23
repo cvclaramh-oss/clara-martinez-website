@@ -52,7 +52,6 @@ const ca = {
   // PAGES
 
   // Catalog item detail
-  'detail.back': 'Tornar a',
   'detail.breadcrumb': 'Ruta',
   'detail.category': 'Categoria',
   'detail.created_by': 'Elaborat per',
@@ -295,7 +294,6 @@ const es: Record<keyof typeof ca, string> = {
   // PAGES
 
   // Catalog item detail
-  'detail.back': 'Volver a',
   'detail.breadcrumb': 'Ruta',
   'detail.category': 'Categoría',
   'detail.created_by': 'Elaborado por',

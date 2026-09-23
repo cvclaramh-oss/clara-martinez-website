@@ -60,7 +60,7 @@ const breadcrumbItems = [
 
 <Breadcrumb
   ariaLabel={t('detail.breadcrumb')}
-  class="border-b border-(--border-color) px-4 py-2 md:px-6 lg:px-8"
+  class="border-b border-(--border-color) px-(--grid-gutter) py-2"
   items={breadcrumbItems}
 />
 
@@ -74,7 +74,7 @@ const breadcrumbItems = [
 
 {
   pageItems.length === 0 ? (
-    <section class="border-b border-(--border-color) px-4 py-12 md:px-6 lg:px-8 lg:py-16">
+    <section class="border-b border-(--border-color) px-(--grid-gutter) py-12 lg:py-16">
       <h2 class="mb-2 text-(length:--font-size-2) leading-(--font-size-3) text-(--foreground-color) uppercase">
         {t('catalog.empty_title')}
       </h2>

@@ -36,7 +36,7 @@ const featuredCatalogItems = (await getFeaturedCatalogItems(locale)).slice(0, li
 
 <section id="featured" class:list={[className, 'scroll-mt-16']}>
   <div
-    class="flex flex-col justify-between gap-2 border-b border-(--border-color) px-4 py-4 md:flex-row md:items-end md:px-6 lg:px-8 lg:py-6"
+    class="flex flex-col justify-between gap-2 border-b border-(--border-color) px-(--grid-gutter) py-4 md:flex-row md:items-end lg:py-6"
   >
     <div>
       <Eyebrow icon class="mb-1">{t('featured_projects.eyebrow')}</Eyebrow>

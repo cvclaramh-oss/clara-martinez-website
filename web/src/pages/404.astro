@@ -1,25 +1,17 @@
 ---
 import DefaultLayout from '@layouts/DefaultLayout.astro'
-import { Heading } from 'accessible-astro-components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
-import Button from '@components/Button.astro'
+import PageTitleBand from '@components/PageTitleBand.astro'
 
 const locale = getLangFromUrl(Astro.url)
 const t = useTranslations(locale)
 ---
 
-<DefaultLayout title="404">
-  <section class="my-12">
-    <div class="container">
-      <Heading level="h1">404</Heading>
-    </div>
-  </section>
-  <section class="my-12">
-    <div class="space-content container">
-      <p class="text-2xl">{t('page_404.message')}</p>
-      <Button href={getHref('/', false, locale)} animateOnHover animationType="nudge">
-        {t('back_home')}
-      </Button>
-    </div>
-  </section>
+<DefaultLayout title="404" noindex>
+  <PageTitleBand
+    title="404"
+    subtitle={t('page_404.message')}
+    buttonHref={getHref('/', false, locale)}
+    buttonLabel={t('back_home')}
+  />
 </DefaultLayout>
