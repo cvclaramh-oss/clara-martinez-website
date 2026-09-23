@@ -22,14 +22,14 @@ const t = useTranslations(locale)
   class:list={[
     className,
     'responsive-toggle',
-    'flex items-center justify-center h-full w-(--header-height) border-r border-(--border-color) hover:bg-(--color-surface-container-low) transition-none',
+    'items-center justify-center h-full w-(--header-height) hover:bg-(--color-surface-container-low) transition-none',
   ]}
   aria-expanded="false"
   aria-label={t('nav.open_menu')}
   data-open-label={t('nav.open_menu')}
   data-close-label={t('nav.close_menu')}
 >
-  <svg width="26" height="21" aria-hidden="true" fill="var(--link-color)" xmlns="http://www.w3.org/2000/svg"
+  <svg width="26" height="21" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
     ><path
       d="M2 1.667h24m-24 8h24m-24 8h24"
       stroke="var(--foreground-color)"
@@ -85,13 +85,8 @@ const t = useTranslations(locale)
 
 <style lang="scss">
   .responsive-toggle {
-    display: none;
     border: none;
     background: transparent;
     padding: 0;
-
-    svg path {
-      transition: fill var(--animation-speed-fast) var(--cubic-bezier);
-    }
   }
 </style>

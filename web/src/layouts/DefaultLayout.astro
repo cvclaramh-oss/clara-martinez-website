@@ -123,8 +123,6 @@ const imageUrl = new URL(imagePath, Astro.site).href
     </main>
     <Footer showCallToAction={showCallToAction} />
     <style lang="scss" is:global>
-      @use 'base/mixins' as *;
-
       // sticky footer on low content pages
       html,
       body {
@@ -142,18 +140,6 @@ const imageUrl = new URL(imagePath, Astro.site).href
 
         footer {
           flex-shrink: 0;
-        }
-      }
-
-      pre {
-        border: 2px solid var(--link-color);
-        border-radius: 0.35rem;
-        padding: 1rem;
-      }
-
-      .card {
-        a {
-          @include text-decoration(transparent, var(--foreground-color), 4px, 2px);
         }
       }
     </style>

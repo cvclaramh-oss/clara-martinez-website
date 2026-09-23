@@ -41,17 +41,6 @@ body {
     @include hover-focus {
       color: var(--link-hover-color);
     }
-
-    &.external-link {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-3xs);
-
-      // small visual correction
-      svg {
-        margin-block-start: 3px;
-      }
-    }
   }
 }
 
