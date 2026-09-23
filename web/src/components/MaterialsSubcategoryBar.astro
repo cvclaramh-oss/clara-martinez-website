@@ -22,15 +22,15 @@ const materialsPages = (Object.keys(CATALOG_PAGES) as CatalogPage[]).filter(
 )
 
 const tabClass = (isActive: boolean) =>
-  `flex items-center justify-center gap-1 border-r border-b border-(--border-color) px-2 py-1.5 text-center text-(length:--font-size--2) leading-3.5 text-balance tracking-wider uppercase no-underline md:px-4 md:py-2 ${
+  `flex items-center justify-center gap-1 border-r border-b px-2 py-1.5 text-center text-(length:--font-size--2) leading-3.5 text-balance tracking-wider uppercase no-underline md:px-4 md:py-2 ${
     isActive
-      ? 'bg-(--color-accent-rose) text-(--color-on-accent) font-bold'
-      : 'bg-(--background-color) font-semibold text-(--color-on-surface-variant) hover:bg-(--color-surface-container-low) hover:text-(--foreground-color) focus-visible:bg-(--color-surface-container-low) focus-visible:text-(--foreground-color)'
+      ? 'relative z-10 border-(--color-accent-rose) bg-(--color-accent-rose) text-(--color-on-accent) font-bold shadow-[0_0_0_2px_var(--color-accent-rose)]'
+      : 'border-(--border-color) bg-(--background-color) font-semibold text-(--color-on-surface-variant) hover:bg-(--color-surface-container-low) hover:text-(--foreground-color) focus-visible:bg-(--color-surface-container-low) focus-visible:text-(--foreground-color)'
   }`
 ---
 
-<nav aria-label={t('materials.subcategories_aria')} class="w-full border-b border-(--border-color)">
-  <div class="-mr-px grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+<nav aria-label={t('materials.subcategories_aria')} class="w-full overflow-hidden border-b border-(--border-color)">
+  <div class="-mr-px -mb-px grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
     {
       materialsPages.map((page) => (
         <a href={getHref(`/${page}`, false, locale)} aria-current={page === activeCatalogPage ? 'page' : undefined} class={tabClass(page === activeCatalogPage)}>
