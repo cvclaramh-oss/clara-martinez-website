@@ -9,7 +9,6 @@ import PageTitleBand from '@components/PageTitleBand.astro'
 import Eyebrow from '@components/Eyebrow.astro'
 import { getCvFileUrl } from '@lib/sanity/siteSettingsQuery'
 import { getExternalLinkAttributes } from '@utils/externalLinkAttributes'
-import { microLabelClassName } from '@constants/constClassNames'
 
 /**
  * ContactView Component
@@ -22,9 +21,9 @@ const t = useTranslations(locale)
 const linkedin = themeConfig.socials?.find((social) => social.label === 'LinkedIn')
 const cvFileUrl = await getCvFileUrl()
 
-const channelHeaderClass = `flex items-center justify-between gap-2 border-b border-(--border-color) pb-1 ${microLabelClassName}`
+const channelHeaderClass = `flex items-center justify-between gap-2 border-b border-(--border-color) pb-1 micro-label`
 const channelLinkClass =
-  'inline-flex items-center gap-2 break-all font-(family-name:--font-family-special) text-xl leading-[1.625rem] font-bold tracking-tight text-(--foreground-color)! no-underline! hover:underline!'
+  'inline-flex items-center gap-2 break-all font-(family-name:--font-family-special) text-(length:--font-size-0) leading-tight font-bold tracking-tight text-(--foreground-color)! no-underline! hover:underline!'
 ---
 
 <Breadcrumb
@@ -46,15 +45,15 @@ const channelLinkClass =
       >
         {t('contact.channels.title')}
       </h2>
-      <p class="text-sm leading-relaxed text-(--color-on-surface-variant)">{t('contact.channels.description')}</p>
+      <p class="text-(length:--font-size--1) leading-relaxed text-(--color-on-surface-variant)">{t('contact.channels.description')}</p>
     </div>
 
     <div class="flex flex-col gap-2 border-t border-(--border-color) pt-4">
       <div class={channelHeaderClass}>
-        <h3 class={`text-(--color-accent-rose-dark) ${microLabelClassName}`}>{t('contact.channel.email.title')}</h3>
+        <h3 class="micro-label text-(--color-accent-rose-dark)">{t('contact.channel.email.title')}</h3>
         <span class="text-(--color-on-surface-variant)">{t('contact.channel.email.badge')}</span>
       </div>
-      <p class="text-sm text-(--color-on-surface-variant)">{t('contact.channel.email.text')}</p>
+      <p class="text-(length:--font-size--1) text-(--color-on-surface-variant)">{t('contact.channel.email.text')}</p>
       <a href={`mailto:${themeConfig.contactEmail}`} class={channelLinkClass}>
         {themeConfig.contactEmail}
         <Icon aria-hidden="true" name="lucide:arrow-up-right" size="1.25rem" />
@@ -65,10 +64,10 @@ const channelLinkClass =
       linkedin && (
         <div class="flex flex-col gap-2">
           <div class={channelHeaderClass}>
-            <h3 class={`text-(--color-accent-rose-dark) ${microLabelClassName}`}>{t('contact.channel.linkedin.title')}</h3>
+            <h3 class="micro-label text-(--color-accent-rose-dark)">{t('contact.channel.linkedin.title')}</h3>
             <span class="text-(--color-on-surface-variant)">{t('contact.channel.linkedin.badge')}</span>
           </div>
-          <p class="text-sm text-(--color-on-surface-variant)">{t('contact.channel.linkedin.text')}</p>
+          <p class="text-(length:--font-size--1) text-(--color-on-surface-variant)">{t('contact.channel.linkedin.text')}</p>
           <a href={linkedin.href} target="_blank" rel="noopener noreferrer" class={channelLinkClass}>
             {linkedin.label}
             <Icon aria-hidden="true" name="lucide:arrow-up-right" size="1.25rem" />
@@ -80,10 +79,10 @@ const channelLinkClass =
 
     <div class="flex flex-col gap-2">
       <div class={channelHeaderClass}>
-        <h3 class={`text-(--color-accent-rose-dark) ${microLabelClassName}`}>{t('contact.channel.cv.title')}</h3>
+        <h3 class="micro-label text-(--color-accent-rose-dark)">{t('contact.channel.cv.title')}</h3>
         <span class="text-(--color-on-surface-variant)">{t('contact.channel.cv.badge')}</span>
       </div>
-      <p class="text-sm text-(--color-on-surface-variant)">{t('contact.channel.cv.text')}</p>
+      <p class="text-(length:--font-size--1) text-(--color-on-surface-variant)">{t('contact.channel.cv.text')}</p>
       <Button
         href={cvFileUrl ?? undefined}
         disabled={!cvFileUrl}

@@ -85,7 +85,7 @@ const rowSpan = showCategory ? 'row-span-5' : 'row-span-4'
   </div>
 
   <p
-    class="self-end px-4 pt-4 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--color-on-surface-variant) uppercase lg:px-6 lg:pt-6"
+    class="micro-label self-end px-4 pt-4 text-(--color-on-surface-variant) lg:px-6 lg:pt-6"
   >
     <span class="block truncate">{myWorkFirst}</span>
     {myWorkRest && <span class="block truncate">{myWorkRest}</span>}
@@ -93,11 +93,11 @@ const rowSpan = showCategory ? 'row-span-5' : 'row-span-4'
 
   <div class="px-4 pt-1 pb-4 lg:px-6 lg:pb-6">
     <HeadingTag
-      class="mb-2 font-(family-name:--font-family-special) text-xl leading-tight font-bold tracking-tight text-(--foreground-color) uppercase motion-safe:transition-colors group-focus-within:text-(--color-accent-rose-dark) group-hover:text-(--color-accent-rose-dark)"
+      class="mb-2 text-(length:--font-size-1) leading-tight tracking-tight text-(--foreground-color) uppercase motion-safe:transition-colors group-focus-within:text-(--color-accent-rose-dark) group-hover:text-(--color-accent-rose-dark)"
     >
       {data.title}
     </HeadingTag>
-    <p class="line-clamp-3 text-sm leading-relaxed tracking-[0.01em] text-(--color-on-surface-variant)">
+    <p class="line-clamp-3 text-(length:--font-size--1) leading-relaxed tracking-[0.01em] text-(--color-on-surface-variant)">
       {data.subtitle}
     </p>
   </div>
@@ -105,7 +105,7 @@ const rowSpan = showCategory ? 'row-span-5' : 'row-span-4'
   <div class="flex items-center justify-end border-t border-(--border-color) bg-(--color-surface-container-low) p-4">
     <a
       href={getHref(`/${data.category}/${slug}`, false, locale)}
-      class="flex items-center gap-1 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--foreground-color)! uppercase no-underline! group-hover:underline! focus-visible:underline! after:absolute after:inset-0 after:content-['']"
+      class="micro-label flex items-center gap-1 text-(--foreground-color)! no-underline! group-hover:underline! focus-visible:underline! after:absolute after:inset-0 after:content-['']"
     >
       <span>{t('view_details')}</span>
       <span class="sr-only">: {data.title}</span>

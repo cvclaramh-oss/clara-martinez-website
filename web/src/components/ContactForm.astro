@@ -31,7 +31,7 @@ const controlClass =
   <h2 class="sr-only">{t('contact.form.eyebrow')}</h2>
   <Eyebrow>{t('contact.form.eyebrow')}</Eyebrow>
   <p
-    class="font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--color-on-surface-variant) uppercase"
+    class="micro-label text-(--color-on-surface-variant)"
   >
     {t('contact.form.required_note')}
   </p>
@@ -127,7 +127,7 @@ const controlClass =
         <span>{t('contact.form.privacy')}</span>
       </label>
     </div>
-    <p id="privacy-note" class="text-sm text-(--color-on-surface-variant)">{t('contact.form.privacy_note')}</p>
+    <p id="privacy-note" class="text-(length:--font-size--1) text-(--color-on-surface-variant)">{t('contact.form.privacy_note')}</p>
   </div>
 
   <div class="flex flex-col items-start gap-3">
@@ -135,7 +135,7 @@ const controlClass =
       {t('contact.form.send')}
       <Icon aria-hidden="true" name="lucide:arrow-right" size="1.125rem" />
     </Button>
-    <p class="contact-status max-w-xl text-sm text-(--foreground-color)" aria-live="polite"></p>
+    <p class="contact-status max-w-xl text-(length:--font-size--1) text-(--foreground-color)" aria-live="polite"></p>
   </div>
 </Form>
 
@@ -156,10 +156,14 @@ const controlClass =
     block-size: 2.625rem;
   }
 
+  /* Same values as the `micro-label` utility (tailwind.css): these labels are rendered by the package's Input
+     and Textarea, which can't take the class, and this unlayered rule is what beats the package's own styles. */
   .contact-form :is(.input-group-label, .textarea-group label) {
+    font-family: var(--font-family-special);
     font-weight: 700;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
+    font-size: var(--font-size--2);
+    line-height: 0.875rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
   }
 

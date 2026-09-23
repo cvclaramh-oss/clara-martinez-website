@@ -24,13 +24,13 @@ const t = useTranslations(locale)
     {themeConfig.name}
   </span>
   <span
-    class="brand-tagline font-(family-name:--font-family-special) font-bold uppercase tracking-widest text-(--color-on-surface-variant) whitespace-nowrap"
+    class="brand-tagline micro-label text-(--color-on-surface-variant) whitespace-nowrap"
   >
     {t('tagline')}
   </span>
 </Link>
 <span
-  class="tagline items-center h-full px-4 border-r border-(--border-color) bg-(--color-surface-container-low) font-(family-name:--font-family-special) text-(length:--font-size--2) leading-(--font-size--1) font-bold uppercase tracking-widest text-(--color-on-surface-variant) whitespace-nowrap"
+  class="tagline items-center h-full px-4 border-r border-(--border-color) bg-(--color-surface-container-low) micro-label text-(--color-on-surface-variant) whitespace-nowrap"
 >
   {t('tagline')}
 </span>
@@ -69,9 +69,6 @@ const t = useTranslations(locale)
   }
 
   .brand-tagline {
-    font-size: var(--font-size--2);
-    line-height: var(--font-size--1);
-
     @include breakpoint('tagline-s', 'nav') {
       display: none;
     }

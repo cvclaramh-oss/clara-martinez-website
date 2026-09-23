@@ -2,7 +2,6 @@
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 import type { CatalogTag } from '@utils/catalogTags'
 import type { CatalogPage } from '@constants/constCatalog'
-import { microLabelClassName } from '@constants/constClassNames'
 
 /**
  * TagFilterBar Component
@@ -21,7 +20,7 @@ const t = useTranslations(locale)
 const { tags, activeSlug, catalogPage } = Astro.props
 
 const chipClass = (isActive: boolean) =>
-  `border px-2 py-1 no-underline! ${microLabelClassName} ${
+  `border px-2 py-1 no-underline! micro-label ${
     isActive
       ? 'border-(--foreground-color) bg-(--foreground-color) text-(--background-color)!'
       : 'border-(--border-color) text-(--foreground-color)! hover:bg-(--color-surface-container-high)'

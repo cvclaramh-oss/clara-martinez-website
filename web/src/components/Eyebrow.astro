@@ -1,5 +1,4 @@
 ---
-import { microLabelClassName } from '@constants/constClassNames'
 
 /**
  * Eyebrow Component
@@ -21,7 +20,7 @@ interface Props {
 const { icon = false, class: className } = Astro.props
 ---
 
-<p class:list={[className, 'inline-flex items-center gap-1 text-(--color-accent-rose-dark)', microLabelClassName]}>
+<p class:list={[className, 'inline-flex items-center gap-1 text-(--color-accent-rose-dark) micro-label']}>
   {icon && <span class="inline-block h-2.5 w-2.5 bg-(--foreground-color)" aria-hidden="true" />}
   <slot />
 </p>

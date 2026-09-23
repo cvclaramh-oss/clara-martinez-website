@@ -26,7 +26,7 @@ const [firstName, ...surnames] = t('name').split(' ')
     <div class="mt-6 flex flex-wrap items-center gap-2 lg:mt-10">
       <div class="h-1 w-4 border border-(--border-color) bg-(--color-accent-rose)"></div>
       <p
-        class="font-(family-name:--font-family-special) text-xs font-bold tracking-[0.2em] text-(--foreground-color) uppercase lg:text-sm lg:leading-4.5"
+        class="font-(family-name:--font-family-special) text-(length:--font-size--1) font-bold tracking-[0.2em] text-(--foreground-color) uppercase"
       >
         {t('tagline')}
       </p>
@@ -36,7 +36,7 @@ const [firstName, ...surnames] = t('name').split(' ')
 
     <div class="grid grid-cols-1 items-end gap-6 lg:grid-cols-12">
       <p
-        class="max-w-4xl font-(family-name:--font-family-special) text-xl leading-[1.3] font-medium text-(--foreground-color) lg:col-span-8 lg:text-[1.75rem] lg:tracking-[-0.01em]"
+        class="max-w-4xl font-(family-name:--font-family-special) text-(length:--font-size-2) leading-[1.3] font-medium text-(--foreground-color) lg:col-span-8 lg:tracking-[-0.01em]"
       >
         {t('short_bio')}
       </p>

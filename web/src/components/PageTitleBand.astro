@@ -29,7 +29,7 @@ const { title, eyebrow, subtitle, buttonHref, buttonLabel } = Astro.props
     <h1 class="mb-4 text-(length:--font-size-6) leading-(--font-size-7) tracking-tight text-(--foreground-color) uppercase">
       {title}
     </h1>
-    {subtitle && <p class="max-w-2xl text-lg leading-relaxed text-(--color-on-surface-variant)">{subtitle}</p>}
+    {subtitle && <p class="max-w-2xl text-(length:--font-size-1) leading-relaxed text-(--color-on-surface-variant)">{subtitle}</p>}
     {buttonHref && buttonLabel && <Button href={buttonHref} class="mt-(--space-m)">{buttonLabel}</Button>}
 
 </section>

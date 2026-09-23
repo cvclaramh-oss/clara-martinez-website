@@ -2,3 +2,13 @@
 
 @source '../../src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}';
 @custom-variant dark (&:where(.darkmode, .darkmode *));
+
+/* Small uppercase label: breadcrumbs, eyebrows, badges, chips, pagination, fact-sheet terms, submenu (ADR 0022). */
+@utility micro-label {
+  font-family: var(--font-family-special);
+  font-size: var(--font-size--2);
+  line-height: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}

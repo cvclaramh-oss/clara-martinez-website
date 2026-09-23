@@ -6,7 +6,7 @@ import type { CatalogItemCategory } from '@lib/sanity/catalogItemsQuery'
 import { urlFor, imageSize } from '@lib/sanity/imageUrlBuilder'
 import { portableTextToHtml } from '@lib/sanity/renders/portableTextRender'
 import { CATEGORY_LABEL_KEYS } from '@constants/constLabels'
-import { linkResetClassName, microLabelClassName } from '@constants/constClassNames'
+import { linkResetClassName } from '@constants/constClassNames'
 import VideoEmbed from '@components/VideoEmbed.astro'
 import { getExternalLinkAttributes } from '@utils/externalLinkAttributes'
 import Button from '@components/Button.astro'
@@ -93,7 +93,7 @@ const videos = (data?.videos ?? []).filter((video) => video.url || video.fileUrl
           ]}
         />
         {data.tags.length > 0 && (
-          <div class={`flex flex-wrap items-center gap-2 border-t border-(--border-color) px-(--grid-gutter) py-2 md:border-t-0 md:border-l ${microLabelClassName}`}>
+          <div class={`flex flex-wrap items-center gap-2 border-t border-(--border-color) px-(--grid-gutter) py-2 md:border-t-0 md:border-l micro-label`}>
             <span class="text-(--color-accent-rose-dark)">{t('detail.tags')}:</span>
             <ul class="flex flex-wrap gap-1">
               {data.tags.map((tag) => (
@@ -123,7 +123,7 @@ const videos = (data?.videos ?? []).filter((video) => video.url || video.fileUrl
             <h1 class="mb-4 text-(length:--font-size-6) leading-(length:--font-size-7) tracking-tight text-(--foreground-color) uppercase">
               {data.title}
             </h1>
-            <p class="mb-6 max-w-2xl text-lg leading-relaxed text-(--color-on-surface-variant)">{data.subtitle}</p>
+            <p class="mb-6 max-w-2xl text-(length:--font-size-1) leading-relaxed text-(--color-on-surface-variant)">{data.subtitle}</p>
           </div>
           {buttonHref && (
             <div class="mt-6 border-t border-(--border-color) pt-4">
@@ -158,7 +158,7 @@ const videos = (data?.videos ?? []).filter((video) => video.url || video.fileUrl
               <h2 class="mb-4 border-b border-(--border-color) pb-1 text-(length:--font-size-1) leading-(length:--font-size-2) tracking-tight text-(--foreground-color) uppercase">
                 {t('detail.description')}
               </h2>
-              <div class="detail-body text-base leading-relaxed text-(--color-on-surface-variant)" set:html={bodyHtml} />
+              <div class="detail-body text-(length:--font-size-0) leading-relaxed text-(--color-on-surface-variant)" set:html={bodyHtml} />
               {data.sections.map((section) => (
                 <div class="mt-6">
                   {section.title && <h3 class="mb-1 text-(length:--font-size-0) leading-(length:--font-size-1) tracking-tight text-(--foreground-color) uppercase">{section.title}</h3>}
@@ -172,44 +172,44 @@ const videos = (data?.videos ?? []).filter((video) => video.url || video.fileUrl
           <h2 class="mb-4 border-b border-(--border-color) pb-1 text-(length:--font-size-1) leading-(length:--font-size-2) tracking-tight text-(--foreground-color) uppercase">
             {t('detail.fact_sheet')}
           </h2>
-          <dl class="divide-y divide-(--border-color) border border-(--border-color) text-sm">
+          <dl class="divide-y divide-(--border-color) border border-(--border-color) text-(length:--font-size--1)">
             <div class="grid grid-cols-1 sm:grid-cols-3">
-              <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.category')}</dt>
+              <dt class={`bg-(--color-surface-container-low) p-2 text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) micro-label`}>{t('detail.category')}</dt>
               <dd class="p-2 font-medium text-(--foreground-color) sm:col-span-2">{catalogPage !== category ? `${categoryLabel} / ${catalogLabel}` : categoryLabel}</dd>
             </div>
             {data.year && (
               <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.year')}</dt>
+                <dt class={`bg-(--color-surface-container-low) p-2 text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) micro-label`}>{t('detail.year')}</dt>
                 <dd class="p-2 text-(--foreground-color) sm:col-span-2">{data.year}</dd>
               </div>
             )}
             {data.createdBy && (
               <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.created_by')}</dt>
+                <dt class={`bg-(--color-surface-container-low) p-2 text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) micro-label`}>{t('detail.created_by')}</dt>
                 <dd class="p-2 font-medium whitespace-pre-line text-(--foreground-color) sm:col-span-2">{data.createdBy}</dd>
               </div>
             )}
             {data.designedBy && (
               <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.designed_by')}</dt>
+                <dt class={`bg-(--color-surface-container-low) p-2 text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) micro-label`}>{t('detail.designed_by')}</dt>
                 <dd class="p-2 whitespace-pre-line text-(--foreground-color) sm:col-span-2">{data.designedBy}</dd>
               </div>
             )}
             {data.institutionalAuthorship && (
               <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.institutional_authorship')}</dt>
+                <dt class={`bg-(--color-surface-container-low) p-2 text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) micro-label`}>{t('detail.institutional_authorship')}</dt>
                 <dd class="p-2 whitespace-pre-line text-(--foreground-color) sm:col-span-2">{data.institutionalAuthorship}</dd>
               </div>
             )}
             {data.myWork && (
               <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.my_work')}</dt>
+                <dt class={`bg-(--color-surface-container-low) p-2 text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) micro-label`}>{t('detail.my_work')}</dt>
                 <dd class="p-2 whitespace-pre-line text-(--foreground-color) sm:col-span-2">{data.myWork}</dd>
               </div>
             )}
             {data.externalLink && (
               <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.external_link')}</dt>
+                <dt class={`bg-(--color-surface-container-low) p-2 text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) micro-label`}>{t('detail.external_link')}</dt>
                 <dd class="p-2 sm:col-span-2">
                   <a href={data.externalLink} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 break-all">
                     {externalHost}
@@ -221,7 +221,7 @@ const videos = (data?.videos ?? []).filter((video) => video.url || video.fileUrl
             )}
             {documents.length > 0 && (
               <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.documents')}</dt>
+                <dt class={`bg-(--color-surface-container-low) p-2 text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) micro-label`}>{t('detail.documents')}</dt>
                 <dd class="p-2 sm:col-span-2">
                   <ul class="space-y-1">
                     {documents.map((doc) => (
@@ -280,8 +280,8 @@ const videos = (data?.videos ?? []).filter((video) => video.url || video.fileUrl
             >
               <Icon aria-hidden="true" name="lucide:arrow-left" size="1.5rem" />
               <span class="flex flex-col gap-1">
-                <span class={`text-(--color-on-surface-variant) ${microLabelClassName}`}>{t('detail.previous')}</span>
-                <span class="font-(family-name:--font-family-special) text-xl leading-6.5 font-bold uppercase">{previousItem.data.title}</span>
+                <span class="micro-label text-(--color-on-surface-variant)">{t('detail.previous')}</span>
+                <span class="font-(family-name:--font-family-special) text-(length:--font-size-0) leading-tight font-bold uppercase">{previousItem.data.title}</span>
               </span>
             </a>
           )}
@@ -292,8 +292,8 @@ const videos = (data?.videos ?? []).filter((video) => video.url || video.fileUrl
               class={`flex items-center justify-between gap-4 p-(--grid-gutter) text-right md:col-start-2 ${linkResetClassName} hover:bg-(--color-surface-container-low)`}
             >
               <span class="ml-auto flex flex-col gap-1">
-                <span class={`text-(--color-on-surface-variant) ${microLabelClassName}`}>{t('detail.next')}</span>
-                <span class="font-(family-name:--font-family-special) text-xl leading-6.5 font-bold uppercase">{nextItem.data.title}</span>
+                <span class="micro-label text-(--color-on-surface-variant)">{t('detail.next')}</span>
+                <span class="font-(family-name:--font-family-special) text-(length:--font-size-0) leading-tight font-bold uppercase">{nextItem.data.title}</span>
               </span>
               <Icon aria-hidden="true" name="lucide:arrow-right" size="1.5rem" />
             </a>

@@ -35,17 +35,17 @@ const cvFileUrl = await getCvFileUrl()
 
   <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[max-content_1fr_1fr_1fr]">
     <div class="cell flex flex-col gap-1">
-      <p class="text-sm font-bold tracking-tight text-(--foreground-color) uppercase lg:text-lg">
+      <p class="font-(family-name:--font-family-special) text-(length:--font-size-0) font-bold tracking-tight text-(--foreground-color) uppercase">
         {themeConfig.name}
       </p>
-      <p class="text-xs tracking-widest text-(--color-on-surface-variant) uppercase">{t('tagline')}</p>
+      <p class="micro-label text-(--color-on-surface-variant)">{t('tagline')}</p>
     </div>
 
     <div class="cell">
-      <span class="mb-4 block text-xs font-bold tracking-widest text-(--color-accent-rose-dark) uppercase">
+      <span class="micro-label mb-4 block text-(--color-accent-rose-dark)">
         {t('footer.portfolio_index')}
       </span>
-      <ul class="columns-2 gap-x-4 text-xs font-bold tracking-wide uppercase">
+      <ul class="columns-2 gap-x-4 text-(length:--font-size--2) font-bold tracking-wide uppercase">
         <li><Link href={getHref('/', false, locale)} class="footer-link">{t('home.label')}</Link></li>
         <li><Link href={getHref('/projects', false, locale)} class="footer-link">{t('projects.label')}</Link></li>
         <li><Link href={getHref('/materials', false, locale)} class="footer-link">{t('materials.label')}</Link></li>
@@ -58,19 +58,19 @@ const cvFileUrl = await getCvFileUrl()
 
     <div class="cell flex flex-col gap-1">
       <div class="flex flex-col gap-2">
-        <span class="block text-xs font-bold tracking-widest text-(--color-accent-rose-dark) uppercase">
+        <span class="micro-label block text-(--color-accent-rose-dark)">
           {t('footer.contact_heading')}
         </span>
-        <Link href={`mailto:${themeConfig.contactEmail}`} class="footer-link text-sm font-bold tracking-wide">
+        <Link href={`mailto:${themeConfig.contactEmail}`} class="footer-link text-(length:--font-size--1) font-bold tracking-wide">
           {themeConfig.contactEmail}
         </Link>
       </div>
       {
         themeConfig.socials && themeConfig.socials.length > 0 && (
-          <ul class="flex flex-col gap-1 text-sm">
+          <ul class="flex flex-col gap-1 text-(length:--font-size--1)">
             {themeConfig.socials.map((social) => (
               <li>
-                <Link href={social.href} isExternal={social.external} hideIcon class="footer-link text-xs font-bold tracking-wide uppercase">
+                <Link href={social.href} isExternal={social.external} hideIcon class="footer-link text-(length:--font-size--2) font-bold tracking-wide uppercase">
                   {social.label}
                   {social.external && <span class="sr-only">{t('detail.new_tab')}</span>}
                 </Link>
@@ -95,19 +95,19 @@ const cvFileUrl = await getCvFileUrl()
 
     <div class="cell flex flex-col gap-1">
       <div class="flex flex-col gap-2">
-        <span class="block text-xs font-bold tracking-widest text-(--color-accent-rose-dark) uppercase">
+        <span class="micro-label block text-(--color-accent-rose-dark)">
           {t('footer.accessibility_heading')}
         </span>
-        <p class="text-sm text-(--color-on-surface-variant)">{t('footer.accessibility_description')}</p>
+        <p class="text-(length:--font-size--1) text-(--color-on-surface-variant)">{t('footer.accessibility_description')}</p>
         <Link
           href={getHref('/accessibility-statement', false, locale)}
-          class="footer-link text-xs font-bold tracking-wide uppercase"
+          class="footer-link text-(length:--font-size--2) font-bold tracking-wide uppercase"
         >
           {t('accessibility.label')}
         </Link>
       </div>
       <span
-        class="inline-block self-start border border-(--border-color) bg-(--color-surface-container-high) px-2 py-1 text-xs font-bold tracking-wide text-(--foreground-color) uppercase"
+        class="inline-block self-start border border-(--border-color) bg-(--color-surface-container-high) px-2 py-1 text-(length:--font-size--2) font-bold tracking-wide text-(--foreground-color) uppercase"
       >
         {t('footer.wcag_badge')}
       </span>
@@ -115,7 +115,7 @@ const cvFileUrl = await getCvFileUrl()
   </section>
 
   <section
-    class="flex flex-col items-center justify-center gap-2 border-t border-(--border-color) bg-(--color-surface-container-low) px-(--grid-gutter) py-4 text-center text-xs tracking-wide text-(--color-on-surface-variant) uppercase md:flex-row md:justify-between"
+    class="flex flex-col items-center justify-center gap-2 border-t border-(--border-color) bg-(--color-surface-container-low) px-(--grid-gutter) py-4 text-center text-(length:--font-size--2) tracking-wide text-(--color-on-surface-variant) uppercase md:flex-row md:justify-between"
   >
     <p>&copy; {currentYear} {themeConfig.name}. {t('footer.rights')}</p>
     <Link href={getHref('/sitemap', false, locale)} class="footer-link">{t('sitemap.label')}</Link>
