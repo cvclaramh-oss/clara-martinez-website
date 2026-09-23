@@ -112,6 +112,9 @@
   --grid-gutter: clamp(1rem, 0.6522rem + 1.7391vw, 2rem);
   --grid-columns: 12;
 
+  // fixed header bar (Navigation.astro): the offset of <main>, the scroll padding and the mobile menu height
+  --header-height: 4rem;
+
   // border radius — Radical Clarity: esquinas rectas (ADR 0005)
   --radius-xs: 0;
   --radius-s: 0;
