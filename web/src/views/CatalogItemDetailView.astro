@@ -6,10 +6,13 @@ import type { CatalogItemCategory } from '@lib/sanity/catalogItemsQuery'
 import { urlFor, imageSize } from '@lib/sanity/imageUrlBuilder'
 import { portableTextToHtml } from '@lib/sanity/renders/portableTextRender'
 import { CATEGORY_LABEL_KEYS } from '@constants/constLabels'
+import { linkResetClassName, microLabelClassName } from '@constants/constClassNames'
 import VideoEmbed from '@components/VideoEmbed.astro'
 import { getExternalLinkAttributes } from '@utils/externalLinkAttributes'
 import Button from '@components/Button.astro'
 import Breadcrumb from '@components/Breadcrumb.astro'
+import Eyebrow from '@components/Eyebrow.astro'
+import Insignia from '@components/Insignia.astro'
 
 /**
  * CatalogItemDetail Component
@@ -71,9 +74,6 @@ const documents = (data?.documents ?? []).filter((doc) => doc.fileUrl)
 const gallery = data?.gallery ?? []
 const videos = (data?.videos ?? []).filter((video) => video.url || video.fileUrl)
 
-const labelClass =
-  'font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
-const linkReset = 'text-(--foreground-color)! no-underline!'
 ---
 
 {
@@ -83,7 +83,7 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
         <div class="flex min-w-0 flex-wrap items-stretch">
           <a
             href={getHref(`/${catalogPage}`, false, locale)}
-            class={`flex items-center gap-1 border-r border-(--border-color) px-4 py-2 md:px-6 lg:px-8 font-(family-name:--font-family-special) text-xs font-semibold tracking-wider uppercase ${linkReset} hover:bg-(--color-accent-rose) hover:text-(--color-on-accent)!`}
+            class={`flex items-center gap-1 border-r border-(--border-color) px-4 py-2 md:px-6 lg:px-8 font-(family-name:--font-family-special) text-xs font-semibold tracking-wider uppercase ${linkResetClassName} hover:bg-(--color-accent-rose) hover:text-(--color-on-accent)!`}
           >
             <Icon aria-hidden="true" name="lucide:arrow-left" size="1rem" />
             <span>
@@ -103,7 +103,7 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
           />
         </div>
         {data.tags.length > 0 && (
-          <div class={`flex flex-wrap items-center gap-2 border-t border-(--border-color) px-4 py-2 md:border-t-0 md:border-l md:px-6 lg:px-8 ${labelClass}`}>
+          <div class={`flex flex-wrap items-center gap-2 border-t border-(--border-color) px-4 py-2 md:border-t-0 md:border-l md:px-6 lg:px-8 ${microLabelClassName}`}>
             <span class="text-(--color-accent-rose-dark)">{t('detail.tags')}:</span>
             <ul class="flex flex-wrap gap-1">
               {data.tags.map((tag) => (
@@ -129,12 +129,7 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
           ]}
         >
           <div>
-            <p
-              class={`mb-4 inline-flex items-center gap-1 border border-(--border-color) bg-(--color-accent-rose) px-2 py-1 text-(--color-on-accent) ${labelClass}`}
-            >
-              <span class="inline-block h-2 w-2 bg-(--color-on-accent)" />
-              {catalogLabel}
-            </p>
+            <Eyebrow icon class="mb-1">{catalogLabel}</Eyebrow>
             <h1 class="mb-4 text-(length:--font-size-6) leading-(length:--font-size-7) tracking-tight text-(--foreground-color) uppercase">
               {data.title}
             </h1>
@@ -189,42 +184,42 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
           </h2>
           <dl class="divide-y divide-(--border-color) border border-(--border-color) text-sm">
             <div class="grid grid-cols-1 sm:grid-cols-3">
-              <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.category')}</dt>
+              <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.category')}</dt>
               <dd class="p-2 font-medium text-(--foreground-color) sm:col-span-2">{catalogPage !== category ? `${categoryLabel} / ${catalogLabel}` : categoryLabel}</dd>
             </div>
             {data.year && (
               <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.year')}</dt>
+                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.year')}</dt>
                 <dd class="p-2 text-(--foreground-color) sm:col-span-2">{data.year}</dd>
               </div>
             )}
             {data.createdBy && (
               <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.created_by')}</dt>
+                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.created_by')}</dt>
                 <dd class="p-2 font-medium whitespace-pre-line text-(--foreground-color) sm:col-span-2">{data.createdBy}</dd>
               </div>
             )}
             {data.designedBy && (
               <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.designed_by')}</dt>
+                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.designed_by')}</dt>
                 <dd class="p-2 whitespace-pre-line text-(--foreground-color) sm:col-span-2">{data.designedBy}</dd>
               </div>
             )}
             {data.institutionalAuthorship && (
               <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.institutional_authorship')}</dt>
+                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.institutional_authorship')}</dt>
                 <dd class="p-2 whitespace-pre-line text-(--foreground-color) sm:col-span-2">{data.institutionalAuthorship}</dd>
               </div>
             )}
             {data.myWork && (
               <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.my_work')}</dt>
+                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.my_work')}</dt>
                 <dd class="p-2 whitespace-pre-line text-(--foreground-color) sm:col-span-2">{data.myWork}</dd>
               </div>
             )}
             {data.externalLink && (
               <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.external_link')}</dt>
+                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.external_link')}</dt>
                 <dd class="p-2 sm:col-span-2">
                   <a href={data.externalLink} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 break-all">
                     {externalHost}
@@ -236,7 +231,7 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
             )}
             {documents.length > 0 && (
               <div class="grid grid-cols-1 sm:grid-cols-3">
-                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${labelClass}`}>{t('detail.documents')}</dt>
+                <dt class={`bg-(--color-surface-container-low) p-2 tracking-wider text-(--color-accent-rose-dark) sm:border-r sm:border-(--border-color) ${microLabelClassName}`}>{t('detail.documents')}</dt>
                 <dd class="p-2 sm:col-span-2">
                   <ul class="space-y-1">
                     {documents.map((doc) => (
@@ -271,12 +266,11 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
                   loading="lazy"
                   decoding="async"
                 />
-                <span
-                  class="absolute top-2 left-2 border border-(--border-color) bg-(--background-color) px-1.5 py-0.5 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--foreground-color) uppercase"
-                  aria-hidden="true"
-                >
-                  {t('detail.figure')} {String(position + 1).padStart(2, '0')}
-                </span>
+                <Insignia tone="light" class="absolute top-2 left-2">
+                  {t('detail.figure')}
+                  {' '}
+                  {String(position + 1).padStart(2, '0')}
+                </Insignia>
               </div>
             ))}
             {videos.map((video, position) => (
@@ -292,11 +286,11 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
             <a
               rel="prev"
               href={getHref(`/${category}/${previousItem.slug}`, false, locale)}
-              class={`flex items-center gap-4 border-b border-(--border-color) p-4 md:col-start-1 md:border-r md:border-b-0 md:p-6 lg:p-8 ${linkReset} hover:bg-(--color-surface-container-low)`}
+              class={`flex items-center gap-4 border-b border-(--border-color) p-4 md:col-start-1 md:border-r md:border-b-0 md:p-6 lg:p-8 ${linkResetClassName} hover:bg-(--color-surface-container-low)`}
             >
               <Icon aria-hidden="true" name="lucide:arrow-left" size="1.5rem" />
               <span class="flex flex-col gap-1">
-                <span class={`text-(--color-on-surface-variant) ${labelClass}`}>{t('detail.previous')}</span>
+                <span class={`text-(--color-on-surface-variant) ${microLabelClassName}`}>{t('detail.previous')}</span>
                 <span class="font-(family-name:--font-family-special) text-xl leading-6.5 font-bold uppercase">{previousItem.data.title}</span>
               </span>
             </a>
@@ -305,10 +299,10 @@ const linkReset = 'text-(--foreground-color)! no-underline!'
             <a
               rel="next"
               href={getHref(`/${category}/${nextItem.slug}`, false, locale)}
-              class={`flex items-center justify-between gap-4 p-4 text-right md:col-start-2 md:p-6 lg:p-8 ${linkReset} hover:bg-(--color-surface-container-low)`}
+              class={`flex items-center justify-between gap-4 p-4 text-right md:col-start-2 md:p-6 lg:p-8 ${linkResetClassName} hover:bg-(--color-surface-container-low)`}
             >
               <span class="ml-auto flex flex-col gap-1">
-                <span class={`text-(--color-on-surface-variant) ${labelClass}`}>{t('detail.next')}</span>
+                <span class={`text-(--color-on-surface-variant) ${microLabelClassName}`}>{t('detail.next')}</span>
                 <span class="font-(family-name:--font-family-special) text-xl leading-6.5 font-bold uppercase">{nextItem.data.title}</span>
               </span>
               <Icon aria-hidden="true" name="lucide:arrow-right" size="1.5rem" />

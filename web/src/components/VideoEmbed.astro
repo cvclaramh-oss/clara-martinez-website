@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations } from '@utils/i18n'
+import Insignia from '@components/Insignia.astro'
 
 /**
  * VideoEmbed Component
@@ -57,8 +58,6 @@ function getEmbedUrl(link?: string | null): string | undefined {
 
 const embedUrl = fileUrl ? undefined : getEmbedUrl(url)
 const label = title?.trim() || `${t('detail.video')} ${String(index).padStart(2, '0')}`
-const badgeClass =
-  'absolute border border-(--border-color) px-1.5 py-0.5 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
 ---
 
 <div class="relative aspect-4/3 overflow-hidden border-r border-b border-(--border-color) bg-(--color-surface-container-low)">
@@ -90,19 +89,12 @@ const badgeClass =
       </a>
     ) : null
   }
-  <span class:list={[badgeClass, 'top-2 left-2 bg-(--background-color) text-(--foreground-color)']} aria-hidden="true">
-    {t('detail.video')} {String(index).padStart(2, '0')}
-  </span>
-  {
-    title && (
-      <span
-        class:list={[badgeClass, 'right-2 bottom-2 bg-(--foreground-color) text-(--background-color)']}
-        aria-hidden="true"
-      >
-        {title}
-      </span>
-    )
-  }
+  <Insignia tone="light" class="absolute top-2 left-2">
+    {t('detail.video')}
+    {' '}
+    {String(index).padStart(2, '0')}
+  </Insignia>
+  {title && <Insignia tone="dark" class="absolute right-2 bottom-2">{title}</Insignia>}
 </div>
 
 <script>

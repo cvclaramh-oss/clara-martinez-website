@@ -1,5 +1,6 @@
 ---
 import CatalogCard from '@components/CatalogCard.astro'
+import Eyebrow from '@components/Eyebrow.astro'
 import { getLangFromUrl, useTranslations } from '@utils/i18n'
 import { getFeaturedCatalogItems } from '@lib/sanity/catalogItemsQuery'
 
@@ -38,14 +39,7 @@ const featuredCatalogItems = (await getFeaturedCatalogItems(locale)).slice(0, li
     class="flex flex-col justify-between gap-2 border-b border-(--border-color) px-4 py-4 md:flex-row md:items-end md:px-6 lg:px-8 lg:py-6"
   >
     <div>
-      <div class="mb-1 flex items-center gap-1">
-        <span class="inline-block h-2.5 w-2.5 bg-(--foreground-color)"></span>
-        <span
-          class="font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--color-accent-rose-dark) uppercase"
-        >
-          {t('featured_projects.eyebrow')}
-        </span>
-      </div>
+      <Eyebrow icon class="mb-1">{t('featured_projects.eyebrow')}</Eyebrow>
       <h2
         class="tracking-tight text-(--foreground-color) uppercase"
       >

@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 import { urlFor } from '@lib/sanity/imageUrlBuilder'
 import { CATEGORY_LABEL_KEYS } from '@constants/constLabels'
+import Insignia from '@components/Insignia.astro'
 import type { CatalogItem } from '@lib/sanity/catalogItemsQuery'
 
 /**
@@ -64,12 +65,9 @@ const rowSpan = showCategory ? 'row-span-5' : 'row-span-4'
   {
     showCategory && (
       <div class="flex items-center border-b border-(--border-color) bg-(--color-surface-container-low) px-4 py-1">
-        <a
-          href={getHref(`/${catalogPage}`, false, locale)}
-          class="relative z-10 border border-(--border-color) bg-(--color-accent-rose) px-1 py-0.5 font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-wider text-(--color-on-accent)! uppercase no-underline! hover:bg-(--color-on-accent) hover:text-white!"
-        >
+        <Insignia href={getHref(`/${catalogPage}`, false, locale)} class="relative z-10">
           {t(CATEGORY_LABEL_KEYS[catalogPage])}
-        </a>
+        </Insignia>
       </div>
     )
   }

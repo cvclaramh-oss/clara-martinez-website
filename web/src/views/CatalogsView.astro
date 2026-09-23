@@ -49,9 +49,6 @@ const totalPages = activeTag ? 1 : Math.max(1, Math.ceil(items.length / CATALOGS
 const startIndex = activeTag ? 0 : (pageNum - 1) * CATALOGS_PAGE_SIZE
 const pageItems = activeTag ? filteredItems : items.slice(startIndex, startIndex + CATALOGS_PAGE_SIZE)
 
-const labelClass =
-  'font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
-
 const breadcrumbItems = [
   { label: t('home.label'), href: getHref('/', false, locale) },
   ...(isMaterialsSubcategory ? [{ label: t('materials.label'), href: getHref('/materials', false, locale) }] : []),
@@ -78,16 +75,10 @@ const breadcrumbItems = [
 {
   pageItems.length === 0 ? (
     <section class="border-b border-(--border-color) px-4 py-12 md:px-6 lg:px-8 lg:py-16">
-      <h2 class="mb-2 text-(length:--font-size-2) leading-(length:--font-size-3) text-(--foreground-color) uppercase">
+      <h2 class="mb-2 text-(length:--font-size-2) leading-(--font-size-3) text-(--foreground-color) uppercase">
         {t('catalog.empty_title')}
       </h2>
       <p class="mb-4 max-w-2xl text-(--color-on-surface-variant)">{t('catalog.empty_text')}</p>
-      <a
-        href={getHref('/', false, locale)}
-        class={`${labelClass} text-(--foreground-color)! underline! hover:no-underline!`}
-      >
-        {t('back_home')}
-      </a>
     </section>
   ) : (
     <div class="overflow-hidden">

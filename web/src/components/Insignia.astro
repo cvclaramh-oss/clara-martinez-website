@@ -1,0 +1,45 @@
+---
+import { microLabelClassName } from '@constants/constClassNames'
+
+/**
+ * Insignia Component
+ *
+ * @description Small filled badge: category tag, video/position marker. Renders a link when `href` is set,
+ * otherwise a decorative span (always `aria-hidden`, since the surrounding content already conveys the
+ * meaning it marks).
+ */
+interface Props {
+  href?: string
+  /**
+   * @default 'rose'
+   */
+  tone?: 'rose' | 'light' | 'dark'
+  /**
+   * Additional classes, typically position
+   */
+  class?: string
+}
+
+const { href, tone = 'rose', class: className } = Astro.props
+const Tag = href ? 'a' : 'span'
+
+const toneClassName = {
+  rose: 'bg-(--color-accent-rose) text-(--color-on-accent)!',
+  light: 'bg-(--background-color) text-(--foreground-color)',
+  dark: 'bg-(--foreground-color) text-(--background-color)',
+}[tone]
+---
+
+<Tag
+  href={href}
+  aria-hidden={href ? undefined : 'true'}
+  class:list={[
+    className,
+    'border border-(--border-color) p-(--space-3xs)',
+    toneClassName,
+    microLabelClassName,
+    href && 'no-underline! hover:bg-(--color-on-accent) hover:text-white!',
+  ]}
+>
+  <slot />
+</Tag>

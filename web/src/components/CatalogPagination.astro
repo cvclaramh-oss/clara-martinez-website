@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
+import { linkResetClassName, microLabelClassName } from '@constants/constClassNames'
 
 /**
  * CatalogPagination Component
@@ -52,17 +53,14 @@ const pageNumbers = (() => {
   return pages.flatMap((page, index) => (index > 0 && page - pages[index - 1] > 1 ? ['…', page] : [page]))
 })()
 
-const labelClass =
-  'font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
-const linkReset = 'text-(--foreground-color)! no-underline!'
-const cellClass = `flex items-center justify-center gap-1 border-r border-(--border-color) px-2 py-1 last:border-r-0 md:px-3 ${labelClass}`
+const cellClass = `flex items-center justify-center gap-1 border-r border-(--border-color) px-2 py-1 last:border-r-0 md:px-3 ${microLabelClassName}`
 ---
 
 {
   totalPages > 1 && (
     <div class="flex flex-col items-center gap-3 border-b border-(--border-color) px-4 py-3 text-center md:flex-row md:justify-between md:px-6 md:text-left lg:px-8">
       <p
-        class={`flex flex-col items-center gap-1 text-(--color-on-surface-variant) md:flex-row md:gap-4 ${labelClass}`}
+        class={`flex flex-col items-center gap-1 text-(--color-on-surface-variant) md:flex-row md:gap-4 ${microLabelClassName}`}
       >
         <span class="text-(--foreground-color)">
           {t('catalog.page')} {twoDigits(pageNum)} {t('catalog.of')} {twoDigits(totalPages)}
@@ -81,7 +79,7 @@ const cellClass = `flex items-center justify-center gap-1 border-r border-(--bor
             rel="prev"
             href={pageHref(pageNum - 1)}
             aria-label={t('catalog.previous_page')}
-            class={`${cellClass} ${linkReset} hover:bg-(--color-surface-container-low)`}
+            class={`${cellClass} ${linkResetClassName} hover:bg-(--color-surface-container-low)`}
           >
             <Icon aria-hidden="true" name="lucide:arrow-left" size="1rem" />
             <span>{t('detail.previous')}</span>
@@ -111,7 +109,7 @@ const cellClass = `flex items-center justify-center gap-1 border-r border-(--bor
             <a
               href={pageHref(Number(page))}
               aria-label={`${t('catalog.page')} ${page}`}
-              class={`${cellClass} ${linkReset} hover:bg-(--color-surface-container-low) max-md:hidden`}
+              class={`${cellClass} ${linkResetClassName} hover:bg-(--color-surface-container-low) max-md:hidden`}
             >
               {page}
             </a>
@@ -122,7 +120,7 @@ const cellClass = `flex items-center justify-center gap-1 border-r border-(--bor
             rel="next"
             href={pageHref(pageNum + 1)}
             aria-label={t('catalog.next_page')}
-            class={`${cellClass} ${linkReset} hover:bg-(--color-surface-container-low)`}
+            class={`${cellClass} ${linkResetClassName} hover:bg-(--color-surface-container-low)`}
           >
             <span>{t('detail.next')}</span>
             <Icon aria-hidden="true" name="lucide:arrow-right" size="1rem" />

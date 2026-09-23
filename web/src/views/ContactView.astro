@@ -6,8 +6,10 @@ import themeConfig from '@theme-config'
 import Button from '@components/Button.astro'
 import Breadcrumb from '@components/Breadcrumb.astro'
 import PageTitleBand from '@components/PageTitleBand.astro'
+import Eyebrow from '@components/Eyebrow.astro'
 import { getCvFileUrl } from '@lib/sanity/siteSettingsQuery'
 import { getExternalLinkAttributes } from '@utils/externalLinkAttributes'
+import { microLabelClassName } from '@constants/constClassNames'
 
 /**
  * ContactView Component
@@ -20,9 +22,7 @@ const t = useTranslations(locale)
 const linkedin = themeConfig.socials?.find((social) => social.label === 'LinkedIn')
 const cvFileUrl = await getCvFileUrl()
 
-const labelClass =
-  'font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest uppercase'
-const channelHeaderClass = `flex items-center justify-between gap-2 border-b border-(--border-color) pb-1 ${labelClass}`
+const channelHeaderClass = `flex items-center justify-between gap-2 border-b border-(--border-color) pb-1 ${microLabelClassName}`
 const channelLinkClass =
   'inline-flex items-center gap-2 break-all font-(family-name:--font-family-special) text-xl leading-[1.625rem] font-bold tracking-tight text-(--foreground-color)! no-underline! hover:underline!'
 ---
@@ -40,9 +40,9 @@ const channelLinkClass =
     class="flex flex-col gap-6 border-b border-(--border-color) px-4 py-8 md:px-6 lg:border-r lg:border-b-0 lg:px-8"
   >
     <div>
-      <p class={`mb-1 text-(--color-accent-rose-dark) ${labelClass}`}>{t('contact.channels.eyebrow')}</p>
+      <Eyebrow class="mb-1">{t('contact.channels.eyebrow')}</Eyebrow>
       <h2
-        class="mb-2 text-(length:--font-size-1) leading-(length:--font-size-2) tracking-tight text-(--foreground-color) uppercase"
+        class="mb-2 text-(length:--font-size-1) leading-(--font-size-2) tracking-tight text-(--foreground-color) uppercase"
       >
         {t('contact.channels.title')}
       </h2>
@@ -51,7 +51,7 @@ const channelLinkClass =
 
     <div class="flex flex-col gap-2 border-t border-(--border-color) pt-4">
       <div class={channelHeaderClass}>
-        <h3 class={`text-(--color-accent-rose-dark) ${labelClass}`}>{t('contact.channel.email.title')}</h3>
+        <h3 class={`text-(--color-accent-rose-dark) ${microLabelClassName}`}>{t('contact.channel.email.title')}</h3>
         <span class="text-(--color-on-surface-variant)">{t('contact.channel.email.badge')}</span>
       </div>
       <p class="text-sm text-(--color-on-surface-variant)">{t('contact.channel.email.text')}</p>
@@ -65,7 +65,7 @@ const channelLinkClass =
       linkedin && (
         <div class="flex flex-col gap-2">
           <div class={channelHeaderClass}>
-            <h3 class={`text-(--color-accent-rose-dark) ${labelClass}`}>{t('contact.channel.linkedin.title')}</h3>
+            <h3 class={`text-(--color-accent-rose-dark) ${microLabelClassName}`}>{t('contact.channel.linkedin.title')}</h3>
             <span class="text-(--color-on-surface-variant)">{t('contact.channel.linkedin.badge')}</span>
           </div>
           <p class="text-sm text-(--color-on-surface-variant)">{t('contact.channel.linkedin.text')}</p>
@@ -80,7 +80,7 @@ const channelLinkClass =
 
     <div class="flex flex-col gap-2">
       <div class={channelHeaderClass}>
-        <h3 class={`text-(--color-accent-rose-dark) ${labelClass}`}>{t('contact.channel.cv.title')}</h3>
+        <h3 class={`text-(--color-accent-rose-dark) ${microLabelClassName}`}>{t('contact.channel.cv.title')}</h3>
         <span class="text-(--color-on-surface-variant)">{t('contact.channel.cv.badge')}</span>
       </div>
       <p class="text-sm text-(--color-on-surface-variant)">{t('contact.channel.cv.text')}</p>

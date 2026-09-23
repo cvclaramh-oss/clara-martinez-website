@@ -3,6 +3,7 @@ import { Form, Input, Textarea } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
 import { getLangFromUrl, useTranslations, getHref } from '@utils/i18n'
 import Button from '@components/Button.astro'
+import Eyebrow from '@components/Eyebrow.astro'
 
 /**
  * ContactForm Component
@@ -27,11 +28,8 @@ const controlClass =
 ---
 
 <div class="mb-6 flex items-end justify-between gap-4 border-b border-(--border-color) pb-2">
-  <h2
-    class="text-[0.6875rem] leading-3.5 tracking-widest text-(--color-accent-rose-dark) uppercase"
-  >
-    {t('contact.form.eyebrow')}
-  </h2>
+  <h2 class="sr-only">{t('contact.form.eyebrow')}</h2>
+  <Eyebrow>{t('contact.form.eyebrow')}</Eyebrow>
   <p
     class="font-(family-name:--font-family-special) text-[0.6875rem] leading-3.5 font-bold tracking-widest text-(--color-on-surface-variant) uppercase"
   >
