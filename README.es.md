@@ -121,6 +121,7 @@ El Studio está en `studio/` (`npm ci && npm run dev`) y requiere acceso al proy
 ## Cómo se ha hecho este proyecto
 
 - **Las decisiones están documentadas.** 24 [registros de decisiones de arquitectura](docs/adr/) explican por qué las cosas son como son, incluidas las que más tarde se sustituyeron.
+- **Un diario de sesión** recoge el proceso: qué se hizo, decisiones, verificación y próximos pasos, con una entrada por sesión de trabajo. Cada sesión se cierra revisando si alguna decisión necesita un ADR, y un comando `/retomar` permite al agente continuar desde la última entrada en un chat nuevo. El diario es privado porque contiene datos personales y detalles de la infraestructura.
 - **Pull requests pequeños** hacia `dev`, cada uno con CI y vista previa en Cloudflare; `dev` pasa a `main` (producción) solo cuando está listo para publicar.
 - **Con ayuda de IA, con decisión humana.** El desarrollo se hizo con un agente de programación con IA (Claude Code) que trabaja con un protocolo escrito en [`AGENTS.md`](AGENTS.md): el agente explica cada cambio antes de hacerlo, pregunta antes de tocar configuración o dependencias, nunca hace commit sin aprobación explícita y muestra la salida real de `check` y `build`. El conocimiento del proyecto para el agente vive en skills versionadas en [`.agents/skills/`](.agents/skills/). Las decisiones de diseño y arquitectura las toma la desarrolladora y quedan registradas como ADR.
 

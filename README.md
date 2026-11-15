@@ -121,6 +121,7 @@ The Studio lives in `studio/` (`npm ci && npm run dev`) and requires access to t
 ## How this project was built
 
 - **Decisions are documented.** 24 [architecture decision records](docs/adr/) (in Spanish) explain why things are the way they are, including the ones that were later replaced.
+- **A session journal** keeps the process: what was done, decisions, verification and next steps, one entry per working session. Each session closes by reviewing whether any decision needs an ADR, and a `/retomar` command lets the agent resume from the last entry in a fresh chat. The journal stays private because it holds personal data and infrastructure details.
 - **Small pull requests** into `dev`, each with CI and a Cloudflare preview; `dev` is promoted to `main` (production) only when it's ready to ship.
 - **AI-assisted, human-led.** Development was done with an AI coding agent (Claude Code) working under a written protocol in [`AGENTS.md`](AGENTS.md): the agent explains each change before making it, asks before touching configuration or dependencies, never commits without explicit approval, and reports the real output of `check` and `build`. Project knowledge for the agent lives in versioned skills under [`.agents/skills/`](.agents/skills/). Design and architecture decisions are made by the developer and recorded as ADRs.
 
