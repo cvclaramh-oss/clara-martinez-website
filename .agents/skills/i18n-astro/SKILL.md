@@ -14,19 +14,29 @@ description: Patrones de internacionalización CA/ES en Astro SSG de este proyec
 ## 1. Configuración
 
 - Rutas: `/` para catalán (default, sin prefijo), `/es/` para español (`prefixDefaultLocale: false` en `astro.config.mjs`).
-- Fallback automático a CAT si falta traducción en ES.
+- Fallback automático a CAT si falta traducción en ES, por dos mecanismos distintos:
+  - Rutas: `fallback: { es: 'ca' }` en `astro.config.mjs`.
+  - Textos: `t()` devuelve el texto catalán si falta la clave en `es`, y la propia clave si falta en los dos.
 - **Sin persistencia por cookie.** Selector visible en el navbar (`LanguagePicker.astro`); cada visita empieza en catalán salvo que la URL indique lo contrario. Decisión deliberada: simplifica el desarrollo y evita banner de cookies.
-- Diccionario: `src/i18n/ui.ts`, un objeto plano `as const` con un bloque `ca` y otro `es` (este tipado desde `ca`, así que ambos comparten exactamente las mismas claves), consumido vía helper `src/utils/i18n.ts` (`getLangFromUrl` + `useTranslations`). `t()` solo acepta `TranslationKey`: una clave mal escrita es un error de `astro check`. Los textos van agrupados por página en secciones (`// Projects`, `// Contact form`...); una clave por concepto, y las de una página llevan su prefijo (`contact.form.send`).
+- Cómo resuelve el selector la URL del otro idioma: en páginas estáticas usa `localizeUrl()`; en fichas usa `getAlternateItemHref()` (`src/lib/sanity/translationsQuery.ts`), porque el slug de una ficha es distinto en cada idioma y no se puede traducir segmento a segmento. Si no encuentra la traducción, vuelve a `localizeUrl()`.
+- Diccionario: `src/i18n/ui.ts`, un objeto plano `as const` con un bloque `ca` y otro `es` (este tipado desde `ca`, así que ambos comparten exactamente las mismas claves), consumido vía helper `src/utils/i18n.ts` (`getLangFromUrl` + `useTranslations`). `t()` solo acepta `TranslationKey`: una clave mal escrita es un error de `astro check`. Convención de claves (fuente de verdad: la cabecera de `ui.ts`): una clave por concepto, nombrada por lo que es y no por dónde se usa; prefijo solo para texto propio de una zona (`footer.rights`); los nombres de página son `<page>.label`.
 
 ## 2. Router unificado
 
-`src/pages/[...slug].astro` gestiona **todas** las rutas del sitio (páginas estáticas y proyectos) vía `getStaticPaths` + `routes.ts`. No dupliques páginas manualmente bajo `src/pages/es/` — genera conflicto con el router.
+`src/pages/[...slug].astro` gestiona **todas** las rutas del sitio (páginas estáticas, listados paginados, páginas por etiqueta `/<catálogo>/etiqueta/<slug>` — ADR 0019 — y fichas) vía `getStaticPaths` + `routes.ts`, y reparte cada `pageType` a una vista de `src/views/`. No dupliques páginas manualmente bajo `src/pages/es/` — genera conflicto con el router.
 
-Las rutas de proyectos se generan en ambos idiomas desde el mismo router: `/projectes/project-01` (CA) y `/es/proyectos/project-01` (ES). Los directorios internos se mantienen **en inglés** (`projects/`, `contact/`); las rutas visibles se traducen vía `src/i18n/routes.ts`.
+Excepción: `src/pages/404.astro` es una página aparte; detecta el idioma por la URL con `getLangFromUrl`.
+
+Las fichas se generan en ambos idiomas desde el mismo router: `/projectes/<slug>-ca` (CA) y `/es/proyectos/<slug>-es` (ES). Cada idioma tiene su propio slug; el cambio de idioma de una ficha va por `translationsQuery`, no por `localizeUrl`.
+
+Las claves canónicas de `routes.ts` van **en inglés** (`projects`, `contact`, `materials-guides`…); los segmentos visibles se traducen ahí por idioma.
 
 ## 3. `getHref()` — enlaces internos
 
-Función centralizada en `src/utils/i18n.ts`, usada por **todos** los componentes con enlaces (`NavigationItems`, `Footer`, `Hero`, `Logo`, `FeaturedProjects`, `thank-you`, `404`, `PageHeader`). No dupliques la lógica de construir la URL traducida en un componente nuevo — importa y usa `getHref()`.
+Función centralizada en `src/utils/i18n.ts`, usada por **todos** los componentes y vistas con enlaces internos (`grep -rl getHref src` para la lista actual). No dupliques la lógica de construir la URL traducida en un componente nuevo — importa y usa `getHref()`.
+
+- `getHref(baseHref, isExternal, locale)` — para enlaces escritos en el código.
+- `localizeUrl(path, locale)` — para traducir una URL ya existente; traduce los segmentos conocidos y conserva los desconocidos (slugs, números de página, etiquetas). La usan `LanguagePicker` y `translationsQuery`; `getHref()` la envuelve.
 
 `getHref()` recibe el `locale` como parámetro explícito — no puede detectarlo internamente porque es una función pura. Si añades un componente nuevo con enlaces, pásale el locale desde donde ya lo tengas disponible (normalmente `Astro.currentLocale` o el que resuelva `getLangFromUrl`).
 

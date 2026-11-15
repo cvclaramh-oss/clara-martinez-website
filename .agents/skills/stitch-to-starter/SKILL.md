@@ -1,9 +1,11 @@
 ---
 name: stitch-to-starter
-description: Cómo traducir un diseño de Stitch (HTML con clases de Tailwind y tokens M3) a componentes de este proyecto sin perder lo que aporta el starter. Úsala SIEMPRE antes de construir o rehacer un componente o página a partir de un prototipo de Stitch, y cuando haya que elegir un color, un tamaño de texto, un espaciado o un breakpoint.
+description: HISTÓRICA — no usar. Traducción de prototipos de Stitch al starter; retirada al dejar Stitch de ser referencia (2026-09-23).
 ---
 
 # De Stitch al starter — Radical Clarity
+
+> **Histórica — no usar.** Los prototipos de Stitch dejaron de ser referencia el 2026-09-23 y varias reglas de abajo están superadas (ADR 0023, 0024). Se conserva solo como registro. Para color, tipografía y espaciado: ADR 0014, 0015, 0016, 0022–0024 y `web/src/styles/base/_root.scss`.
 
 Referencias locales (fuera de git, `docs/private/design/`): `DESIGN.md` (sistema de Stitch), `stitch_design/HOME_2_code.html` (original) y `stitch_design/HOME_final_code.html` (ya traducido a las clases de este proyecto; solo lectura, no se compila). Decisión de fondo: ADR 0014.
 
