@@ -83,7 +83,7 @@ Infraestructura (Cloudflare, ramas, CI): ver la última entrada de `docs/private
 
 - **Fase 1 — HECHA**: schemas + `structure.ts` + build/lint verificados. Frontend intacto.
 - **Fase 2 — HECHA**: frontend↔Sanity conectado (GROQ, listados, detalle, filtro por etiquetas y subcategorías de Materials, Bio/Contacto, PortableText).
-- **Fase 3 — EN CURSO**: hecho: Studio desplegado, Cloudflare Pages conectado, `dev` en preview con datos reales y Clara cargando contenido en `production`. Pendiente: Access en producción y webhook de publicación Sanity → Cloudflare.
+- **Fase 3 — EN CURSO**: hecho: Studio desplegado, Cloudflare Pages conectado, `dev` en preview con datos reales y Clara cargando contenido en `production`. Webhook de publicación Sanity → Cloudflare activo desde el 2026-11-15 (dataset `production`, filtro `catalogItem`/`tag`/`siteSettings`, sin borradores) sobre la rama `dev`; al publicar la web habrá que apuntarlo a `main`. Pendiente: dominio, variables de producción y lanzamiento.
 - **Después de la 1ª entrega**: reorganización general de la documentación (pendiente), identidad visual, README del repo.
 
 ## 4. Notas técnicas para quien toque el Studio
