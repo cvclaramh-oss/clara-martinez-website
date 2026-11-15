@@ -49,7 +49,7 @@ In development, not launched yet. Structure, features and the content workflow a
 └── docs/adr/   architecture decision records
 ```
 
-- **Content is fetched at build time.** The site is fully static: GROQ queries run during `astro build` (in batches, to stay within API limits) and the output is plain HTML. Publishing new content means rebuilding the site.
+- **Content is fetched at build time.** The site is fully static: GROQ queries run during `astro build` (in batches, to stay within API limits) and the output is plain HTML. Publishing in the Studio triggers a Sanity webhook that calls a Cloudflare Pages deploy hook, so the site rebuilds itself in a minute or two.
 - **One router for both languages.** `getStaticPaths` generates every page — static pages, paginated listings, tag pages and item pages — from a single file, using a table of translated route segments. No duplicated pages under `/es/`.
 - **Typed translations.** All interface text lives in one dictionary; `t()` only accepts existing keys, so a typo is a type error caught by `astro check`.
 

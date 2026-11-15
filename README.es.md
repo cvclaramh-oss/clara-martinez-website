@@ -49,7 +49,7 @@ En desarrollo, todavía sin lanzar. La estructura, las funcionalidades y el fluj
 └── docs/adr/   registros de decisiones de arquitectura
 ```
 
-- **El contenido se obtiene al construir.** El sitio es totalmente estático: las consultas GROQ se ejecutan durante `astro build` (por lotes, para no superar los límites de la API) y el resultado es HTML. Publicar contenido nuevo implica volver a construir el sitio.
+- **El contenido se obtiene al construir.** El sitio es totalmente estático: las consultas GROQ se ejecutan durante `astro build` (por lotes, para no superar los límites de la API) y el resultado es HTML. Al publicar en el Studio, un webhook de Sanity llama a un deploy hook de Cloudflare Pages y el sitio se reconstruye solo en uno o dos minutos.
 - **Un solo router para los dos idiomas.** `getStaticPaths` genera todas las páginas (estáticas, listados paginados, páginas por etiqueta y fichas) desde un único archivo, con una tabla de segmentos de ruta traducidos. No hay páginas duplicadas en `/es/`.
 - **Traducciones tipadas.** Todos los textos de la interfaz están en un diccionario; `t()` solo acepta claves que existen, así que una errata es un error de tipos que detecta `astro check`.
 
